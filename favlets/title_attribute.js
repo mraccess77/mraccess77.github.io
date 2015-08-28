@@ -11,6 +11,7 @@ if (el.length>0) {
 			s.appendChild(t);
 			s.style.backgroundColor = 'antiqueWhite';
 			s.style.color = 'black';
+			e.style.fontSize = "x-small";
 			el.item(i).parentNode.insertBefore(s,el.item(i));
 	}
 }
