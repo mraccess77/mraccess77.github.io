@@ -13,6 +13,7 @@ if (el.length>0) {
 			s.border = "thin solid black";
 			s.style.color = 'black';
 			s.style.fontSize = "x-small";
+			s.zIndex = "99999";
 			el.item(i).parentNode.insertBefore(s,el.item(i));
 	}
 }
