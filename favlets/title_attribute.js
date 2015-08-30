@@ -9,7 +9,8 @@ if (el.length>0) {
 			s = document.createElement('Span');
 			t = document.createTextNode(" Title="+el.item(i).title +" ");
 			s.appendChild(t);
-			s.style.backgroundColor = 'antiqueWhite';
+			s.style.backgroundColor = 'gold';
+			s.border = "thin solid black";
 			s.style.color = 'black';
 			s.style.fontSize = "x-small";
 			el.item(i).parentNode.insertBefore(s,el.item(i));
