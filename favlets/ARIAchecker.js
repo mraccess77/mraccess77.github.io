@@ -93,7 +93,7 @@ function checkARIA(doc,_ARIAObj){
 								span1.style.color='black';
 								span1.style.fontSize="small";
 								span1.style.fontWeight="bold";
-								span1.style.backgroundColor="rgb(90, 171, 218)";
+								span1.style.backgroundColor="gold";
 								span1.style.border=".5px solid #000000";
 								span1.style.padding="1px";
 								span1.style.marginRight="3px";
@@ -127,7 +127,7 @@ function checkARIA(doc,_ARIAObj){
       span2.style.color="#00437A";
 			span2.style.fontSize="small";
 			span2.style.fontWeight="bold";
-		  span2.style.backgroundColor="#fbc55b";
+		  span2.style.backgroundColor="gold";
 			span2.style.border="1px solid black";
 			span2.style.padding="1px";
 			span2.style.marginRight="2px";
