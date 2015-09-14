@@ -160,8 +160,19 @@ function run(doc){
   // Recurse through document and frames
   _ARIAObj = traverseFrames(doc,_ARIAObj);
 
+	 var text = document.createTextNode("ARIA Favlet: " + _ARIAObj.foundCount + " ARIA element(s) found. " + _ARIAObj.landmarkCount + " landmarks" );
+
+	 var node = document.createElement("div");
+	 node.style.color = "black";
+	 node.style.backgroundColor = "gold";
+	 node.style.fontSize = "small";
+	 node.style.border = "thin solid black";
+	 node.style.position = "block";
+	 node.appendChild(text);
+	 document.body.insertBefore(node, document.body.firstChild);  
+
   // Display alert dialog with message with count of found properties
-  alert(_ARIAObj.foundCount + " ARIA element(s) found. " + _ARIAObj.landmarkCount + " landmarks");
+  //alert(_ARIAObj.foundCount + " ARIA element(s) found. " + _ARIAObj.landmarkCount + " landmarks");
 }
 
 run(document);
