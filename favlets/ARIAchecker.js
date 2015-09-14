@@ -167,7 +167,7 @@ function run(doc){
 	 node.style.backgroundColor = "gold";
 	 node.style.fontSize = "small";
 	 node.style.border = "thin solid black";
-	 node.style.position = "block";
+	 node.style.position = "static";
 	 node.appendChild(text);
 	 document.body.insertBefore(node, document.body.firstChild);  
 
