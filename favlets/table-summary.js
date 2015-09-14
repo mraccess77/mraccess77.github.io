@@ -45,14 +45,14 @@ function run(doc) {
   
   traverseFrames(doc, foundCount);
   
-	 var text = document.createTextNode("Summary Favlet:" + foundCount + "summary attributes found" );
+	 var text = document.createTextNode("Summary Favlet: " + foundCount + " summary attributes found" );
 
 	 var node = document.createElement("div");
 	 node.style.color = "black";
 	 node.style.backgroundColor = "gold";
 	 node.style.fontSize = "small";
 	 node.style.border = "thin solid black";
-	 node.style.position = "absolute";
+	 node.style.position = "block";
 	 node.appendChild(text);
 	 document.body.insertBefore(node, document.body.firstChild);  
 }
