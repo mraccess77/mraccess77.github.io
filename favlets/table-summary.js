@@ -25,18 +25,18 @@ function showSummary(doc) {
 
      if ( col[i].hasAttribute("summary") ) {
 
-      var text = document.createTextNode("summary=" + col[i].getAttribute('summary'));
+       var text = document.createTextNode("summary=" + col[i].getAttribute('summary'));
+    
+			 var node = document.createElement("span");
+			 node.style.color = "black";
+			 node.style.backgroundColor = "gold";
+			 node.style.fontSize = "small";
+			 node.style.border = "thin solid black";
+			 node.style.position = "absolute";
+			 node.appendChild(text);
+			 col[i].parentNode.insertBefore(node, col[i]);
      }
-   
-     var node = document.createElement("span");
-     node.style.color = "black";
-     node.style.backgroundColor = "gold";
-     node.style.fontSize = "small";
-     node.style.border = "thin solid black";
-     node.style.position = "absolute";
-     node.appendChild(text);
-     col[i].parentNode.insertBefore(node, col[i]);
-  }
+ }
 }
 
 traverseFrames(document);
