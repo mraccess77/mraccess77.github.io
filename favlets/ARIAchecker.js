@@ -124,7 +124,7 @@ function checkARIA(doc,_ARIAObj){
 			span2.appendChild(textNode2);
 
 			//style indicator
-      span2.style.color="#00437A";
+      span2.style.color="black";
 			span2.style.fontSize="small";
 			span2.style.fontWeight="bold";
 		  span2.style.backgroundColor="gold";
