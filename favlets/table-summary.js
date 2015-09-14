@@ -1,7 +1,7 @@
 // ***********************************************
 function traverseFrames(doc) {
 
-  showAlt(doc)
+  showSummary(doc)
 	// go through for each frame's document if there are any frames
 	var frametypes= ['frame','iframe'];
 	for (var i=0;i<frametypes.length;i++) {
