@@ -2,27 +2,27 @@
 <head>
   <title> CSS Checkboxes</title>
 <style>
-fieldset legend{
-font-weight:bold;
+fieldset legend {
+  font-weight:bold;
 }
 
-.custom{
-padding-bottom:25px;
+.custom {
+  padding-bottom:25px;
 }
 
-#a11yForm > .custom  fieldset div{
-position:relative;
-z-index:1;
+#a11yForm > .custom  fieldset div {
+  position:relative;
+  z-index:1;
 }
 
 #a11yForm > .custom  fieldset input {
-height: 16px;
-left: 0;
-margin: 0;
-padding: 0;
-position: absolute;
-width: 16px;
-z-index:1;
+  height: 16px;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  width: 16px;
+  z-index:1;
 }
 
 #a11yForm > .custom  input + label {
@@ -54,22 +54,23 @@ outline:1px solid green;
 
 /* FOR IE 10 AND ABOVE; must be placed at end of css */
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-#a11yForm > .custom  input + label {
-background-color: transparent;
-}
+  #a11yForm > .custom  input + label {
+  background-color: transparent;
+  }
 }
 </style>
 </head>
 <body>
-<form id=”a11yForm”>
-<div class=”custom checkbox”>
-<h3>Check boxes</h3>
-<fieldset>
-<legend>Favorite Music</legend>
-<div>
-<input type=”checkbox” value=”rock” id=”cbRockandRoll” />
-<label for=”cbRockandRoll”>Rock and Roll</label>
-</div>
+  <main>
+  <form id=”a11yForm”>
+    <div class=”custom checkbox”>
+      <h3>Check boxes</h3>
+      <fieldset>
+        <legend>Favorite Music</legend>
+        <div>
+          <input type=”checkbox” value=”rock” id=”cbRockandRoll” />
+          <label for=”cbRockandRoll”>Rock and Roll</label>
+        </div>
 <div>
 <input type=”checkbox” value=”Jazz” id=”cbJazz”/>
 <label for=”cbJazz”>Jazz</label>
@@ -92,5 +93,6 @@ background-color: transparent;
 </fieldset>
 </div>
 </form>
+</main>
 </body>
 </html>
