@@ -1,4 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>
+     ARIA Mobile Browser Support
+  </title>
+</head>
+<body>
 <h1>Mobile Browser support for ARIA roles, states, and properties</h1>
+<p>Last updated October 21, 2015</p>
 
 <h2>Discussion</h2>
 <div>
@@ -7,13 +16,13 @@
     <li>Tested with:
       <ul>
         <li>VoiceOver on iOS 9.1, 8.4.1, and 8.1.3</li>
-        <li>Talkback 3.6.03/4.31 on Android 5.0.2/6.0 •
+        <li>Talkback 3.6.03/4.31 on Android 5.0.2/6.0
           <ul>
             <li>Firefox 36.0/41.0.2 </li>
             <li>Chrome 40.0.22/46.0.24... </li>
           </ul>
         </li>
-        <li>WP8.1 IE/W10 E </li>
+        <li>Windows Phone 8.1 IE browser (WP8.1) /Windows 10 Edge browser (W10E)</li>
       </ul>
     </li>
     <li>Overall support is good with exceptions</li>
@@ -35,21 +44,21 @@
     <td dir="ltr" width="166"><strong>Android  &amp; Talkback w/ Chrome</strong></td>
   </tr>
   <tr>
-    <td dir="ltr" width="64">Yes</td>
+    <th scope="row" dir="ltr" width="64">Yes</th>
     <td dir="ltr" width="107">20</td>
     <td dir="ltr" width="108">16</td>
     <td dir="ltr" width="64">10/12</td>
     <td dir="ltr" width="166">7</td>
   </tr>
   <tr>
-    <td dir="ltr" width="64">Partial</td>
+    <th scope="row" dir="ltr" width="64">Partial</th>
     <td dir="ltr" width="107">7</td>
     <td dir="ltr" width="108">9</td>
     <td dir="ltr" width="64">9</td>
     <td dir="ltr" width="166">13</td>
   </tr>
   <tr>
-    <td dir="ltr" width="64">No</td>
+    <th scope="row" dir="ltr" width="64">No</th>
     <td dir="ltr" width="107">3</td>
     <td dir="ltr" width="108">5</td>
     <td dir="ltr" width="64">9/11</td>
@@ -107,8 +116,232 @@
   <li>Safari Developer Tools on Mac (iOS)<br />
   </li>
 </ul>
-<h2>Finding by ARIA propert, state, and role</h2>
+<h2>Findings by ARIA property, state, and role</h2>
 <h3>Results Table</h3>
+<table cellspacing="0" cellpadding="0">
+  <col width="40%" />
+  <col width="15%" />
+  <col width="15%" />
+  <col width="15%" />
+  <col width="15%" />
+  <tr>
+    <th scope="col" width="64">Role, state, or property</th>
+    <th scope="col" align="left" width="64">iOS VoiceOver</th>
+    <th scope="col" align="left" width="64">Talkback Firefox</th>
+    <th scope="col" align="left" width="64">Talkback Chrome</th>
+    <th scope="col" align="left" width="64">WP8.1 IE/W10 E</th>
+  </tr>
+  <tr>
+    <th scope="row" align="left">Landmarks</th>
+    <td dir="ltr" width="64">Yes</td>
+    <td dir="ltr" width="64">Yes</td>
+    <td dir="ltr" width="64">No</td>
+    <td dir="ltr" width="64">No</td>
+  </tr>
+  <tr>
+    <th scope="row" align="left">Checkbox</th>
+    <td align="left">Yes</td>
+    <td align="left">Yes</td>
+    <td align="left">Yes</td>
+    <td align="left">Yes</td>
+  </tr>
+  <tr>
+    <th scope="row" align="left">Radio</th>
+    <td align="left">Yes</td>
+    <td align="left">Yes</td>
+    <td align="left">Yes</td>
+    <td align="left">Yes</td>
+  </tr>
+  <tr>
+    <th scope="row" align="left">Links</th>
+    <td align="left">Yes</td>
+    <td align="left">Yes</td>
+    <td align="left">Partial</td>
+    <td align="left">Partial</td>
+  </tr>
+  <tr>
+    <td scope="row" align="left">Radiogroup, region, group</td>
+    <td align="left">Partial</td>
+    <td align="left">Yes</td>
+    <td align="left">Partial</td>
+    <td align="left">No</td>
+  </tr>
+  <tr>
+    <td scope="row" align="left">Alert</td>
+    <td align="left">Yes</td>
+    <td align="left">No</td>
+    <td align="left">No</td>
+    <td align="left">No</td>
+  </tr>
+  <tr>
+    <td scope="row" align="left">Heading and level</td>
+    <td align="left">Yes</td>
+    <td align="left">Yes</td>
+    <td align="left">Partial/No</td>
+    <td align="left">No</td>
+  </tr>
+  <tr>
+    <td scope="row" align="left">Button w/ aria-pressed</td>
+    <td align="left">Yes</td>
+    <td align="left">Yes</td>
+    <td align="left">No/Yes</td>
+    <td align="left">Partial</td>
+  </tr>
+  <tr>
+    <td scope="row" align="left">Combobox</td>
+    <td align="left">No</td>
+    <td align="left">No</td>
+    <td align="left">Partial</td>
+    <td align="left">No</td>
+  </tr>
+  <tr>
+    <td scope="row" align="left">Listbox</td>
+    <td align="left">Partial</td>
+    <td align="left">Yes</td>
+    <td align="left">Partial</td>
+    <td align="left">Yes</td>
+  </tr>
+  <tr>
+    <td scope="row" align="left">AlertDialog</td>
+    <td align="left">Yes</td>
+    <td align="left">Yes</td>
+    <td align="left">yes/partial</td>
+    <td align="left">No/Yes</td>
+  </tr>
+  <tr>
+    <td scope="row" align="left">Dialog</td>
+    <td align="left">No</td>
+    <td align="left">Partial</td>
+    <td align="left">No</td>
+    <td align="left">No/Yes</td>
+  </tr>
+  <tr>
+    <td scope="row" align="left">Grid</td>
+    <td align="left">Partial</td>
+    <td align="left">Yes</td>
+    <td align="left">Partial</td>
+    <td align="left">Partial</td>
+  </tr>
+  <tr>
+    <td scope="row" align="left">Menu</td>
+    <td align="left">Partial</td>
+    <td align="left">Partial</td>
+    <td align="left">Partial</td>
+    <td align="left">Yes</td>
+  </tr>
+  <tr>
+    <td scope="row" align="left">Presentation</td>
+    <td align="left">Yes</td>
+    <td align="left">Yes</td>
+    <td align="left">Yes</td>
+    <td align="left">Yes</td>
+  </tr>
+  <tr>
+    <td scope="row" align="left">Slider</td>
+    <td align="left">Partial</td>
+    <td align="left">Partial</td>
+    <td align="left">Partial</td>
+    <td align="left">Partial</td>
+  </tr>
+  <tr>
+    <td scope="row" align="left">Progressbar</td>
+    <td align="left">Partial</td>
+    <td align="left">Partial</td>
+    <td align="left">No</td>
+    <td align="left">Partial</td>
+  </tr>
+  <tr>
+    <td scope="row" align="left">Spinbutton</td>
+    <td align="left">No</td>
+    <td align="left">Partial</td>
+    <td align="left">No</td>
+    <td align="left">Partial</td>
+  </tr>
+  <tr>
+    <td scope="row" align="left">Tab, tablist</td>
+    <td align="left">yes</td>
+    <td align="left">Yes</td>
+    <td align="left">No</td>
+    <td align="left">Partial</td>
+  </tr>
+  <tr>
+    <td scope="row" align="left">Toolbar</td>
+    <td align="left">Partial</td>
+    <td align="left">Yes</td>
+    <td align="left">Partial</td>
+    <td align="left">Partial</td>
+  </tr>
+  <tr>
+    <td scope="row" align="left">Tree</td>
+    <td align="left">No</td>
+    <td align="left">Yes</td>
+    <td align="left">No</td>
+    <td align="left">Yes</td>
+  </tr>
+  <tr>
+    <td scope="row" align="left">Tooltip</td>
+    <td align="left">Yes</td>
+    <td align="left">Yes</td>
+    <td align="left">Yes</td>
+    <td align="left">Yes</td>
+  </tr>
+  <tr>
+    <td scope="row" align="left">aria-label, aria-labelledby,    aria-describedby</td>
+    <td align="left">Yes</td>
+    <td align="left">Yes</td>
+    <td align="left">Partial</td>
+    <td align="left">Partial</td>
+  </tr>
+  <tr>
+    <td scope="row" align="left">aria-live</td>
+    <td align="left">Yes</td>
+    <td align="left">Yes</td>
+    <td align="left">Yes</td>
+    <td align="left">No</td>
+  </tr>
+  <tr>
+    <th scope="row" align="left">aria-expaznded</th>
+    <td align="left">Partial</td>
+    <td align="left">Partial</td>
+    <td align="left">No</td>
+    <td align="left">Yes</td>
+  </tr>
+  <tr>
+    <th scope="row" align="left">aria-grabbed, aria-dropeffect</th>
+    <td align="left">No</td>
+    <td align="left">No</td>
+    <td align="left">No</td>
+    <td align="left">No</td>
+  </tr>
+  <tr>
+    <th scope="row" align="left">aria-haspopup</th>
+    <td align="left">Partial</td>
+    <td align="left">Yes</td>
+    <td align="left">Partial</td>
+    <td align="left">No</td>
+  </tr>
+  <tr>
+    <th scope="row" align="left">aria-required, aria-invalid</th>
+    <td align="left">Yes</td>
+    <td align="left">Partial</td>
+    <td align="left">Partial</td>
+    <td align="left">No</td>
+  </tr>
+  <tr>
+    <th scope="row" align="left">aria-disabled</th>
+    <td align="left">Yes</td>
+    <td align="left">Yes</td>
+    <td align="left">Yes</td>
+    <td align="left">Yes</td>
+  </tr>
+  <tr>
+    <th scope="row" align="left">aria-hidden</th>
+    <td align="left">Yes</td>
+    <td align="left">Yes</td>
+    <td align="left">Yes</td>
+    <td align="left">Yes</td>
+  </tr>
+</table>
 <p>&nbsp;</p>
 
 <h2>Specific Finding</h2>
@@ -490,32 +723,6 @@
 http://www.microsoft.com/en-gb/developers/articles/week03oct15/accessibility-microsoft-edge-and-windows-10</p>
 <h3>Contact</h3>
 <p>Jonathan Avila: jon.avila@ssbbartgroup.com </p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p></p>
-<p>&nbsp; </p>
-<p></p>
-<p><br />
-</p>
-<p></p>
-<p></p>
-<p></p>
-<h3><br />
-  <br />
-  <br />
-</h3>
-<p><br />
-  <br />
-</p>
-<p></p>
-<p>&nbsp;</p>
-<p><br />
-</p>
-
-<h3></h3>
-<p></p>
-<p></p>
-<p></p>
-
+</body>
+</html>
 
