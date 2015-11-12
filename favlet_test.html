@@ -2,10 +2,15 @@
 <html>
 <title> test </title>
 <head>
-  <script src="./favlets/enhanceFocus.js" type="text/javascript" />
+  <script>
+    function run() {
+      var src = document.createElement("script");
+      src.src="./favlets/enhanceFocus.js";
+      document.body.appendChild(src);
+    }
   </script>
 </head>
-<body>
+<body onload="run();">
     <input type="text" />
     <button> test </button>
 </body>
