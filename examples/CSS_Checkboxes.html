@@ -2,6 +2,7 @@
 <html>
 <head>
   <title> CSS Checkboxes</title>
+
 <style type="text/css">
 fieldset legend {
   font-weight:bold;
@@ -33,24 +34,24 @@ fieldset legend {
   position:relative;
   z-index:2;
 }
-checkbox
-#a11yForm > .custom.  input + label {
-background-position: 0 -1px;
-}
-#a11yForm > .custom.chckbox  input:checked + label {
-background-position: 0 -80px;
+
+checkbox #a11yForm > .custom.input + label {
+  background-position: 0 -1px;
 }
 
-#a11yForm > .custom.rdio  input + label {
-background-position: 0 -162px;
-}
-#a11yForm > .custom.radio  input:checked + label {
-background-position: 0 -260px;
+#a11yForm > .custom.chckbox input:checked + label {
+  background-position: 0 -80px;
 }
 
-#a11yForm > .custom  input:focus + label,
-#a11yForm > .custom  input:hover + label{
-outline:1px solid green;
+#a11yForm > .custom.rdio input + label {
+  background-position: 0 -162px;
+}
+#a11yForm > .custom.radio input:checked + label {
+  background-position: 0 -260px;
+}
+
+#a11yForm > .custom  input:focus + label, #a11yForm > .custom  input:hover + label {
+  outline:1px solid green;
 }
 
 /* FOR IE 10 AND ABOVE; must be placed at end of css */
@@ -60,36 +61,37 @@ outline:1px solid green;
   }
 }
 </style>
+
 </head>
 <body>
   <main>
-  <form id=”a11yForm”>
-    <div class=”custom chckbox”>
+  <form id="a11yForm">
+    <div class="custom chckbox">
       <h3>Check boxes</h3>
       <fieldset>
         <legend>Favorite Music</legend>
         <div>
-          <input type=”checkbox” value=”rock” id=”cbRockandRoll” />
-          <label for=”cbRockandRoll”>Rock and Roll</label>
+          <input type="checkbox" value="rock" id="cbRockandRoll" />
+          <label for="cbRockandRoll">Rock and Roll</label>
         </div>
 <div>
-<input type=”checkbox” value=”Jazz” id=”cbJazz”/>
-<label for=”cbJazz”>Jazz</label>
+  <input type="checkbox" value="Jazz" id="cbJazz"/>
+  <label for="cbJazz">Jazz</label>
 </div>
 </fieldset>
 </div>
 
-<div class=”custom rdio”>
+<div class="custom rdio">
 <h3>Radio buttons</h3>
 <fieldset>
 <legend>Gender</legend>
 <div>
-<input type=”radio” value=”male” id=”rbMale” name=”gender” />
-<label for=”rbMale”>Male</label>
+<input type="radio" value="male" id="rbMale" name="gender" />
+<label for="rbMale">Male</label>
 </div>
 <div>
-<input type=”radio” value=”female” id=”rbFemale” name=”gender”/>
-<label for=”rbFemale”>Female</label>
+<input type="radio" value="female" id="rbFemale" name="gender"/>
+<label for="rbFemale">Female</label>
 </div>
 </fieldset>
 </div>
