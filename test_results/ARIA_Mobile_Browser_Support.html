@@ -1,8 +1,26 @@
 <h1>Mobile Browser support for ARIA roles, states, and properties</h1>
 
 <h2>Discussion</h2>
+<div>
+  <ul>
+    <li>Tested 30 different ARIA roles (landmarks  and widgets) with key aria properties (e.g. aria-expanded, aria-checked, etc.)</li>
+    <li>Tested with:
+      <ul>
+        <li>VoiceOver on iOS 9.1, 8.4.1, and 8.1.3</li>
+        <li>Talkback 3.6.03/4.31 on Android 5.0.2/6.0 •
+          <ul>
+            <li>Firefox 36.0/41.0.2 </li>
+            <li>Chrome 40.0.22/46.0.24... </li>
+          </ul>
+        </li>
+        <li>WP8.1 IE/W10 E </li>
+      </ul>
+    </li>
+    <li>Overall support is good with exceptions</li>
+  </ul>
+</div>
 
-<h2>Overall Results</h2>
+<h2>Overall Results Tally</h2>
 <table cellspacing="0" cellpadding="0">
   <col width="64" />
   <col width="107" />
@@ -38,12 +56,466 @@
     <td dir="ltr" width="166">10</td>
   </tr>
 </table>
+<h2>Methodology</h2>
+
+  <ul>
+    <li>Wanted to provide specific details on combinations of roles and properties</li>
+    <li> Tested in different modes such as swipe, rotor, item chooser, etc.</li>
+    <li> Tested using three different ARIA test suites to ensure valid implementations<br />
+    Share results with community and send bug reports to platform vendors</li>
+    <li> Use of standard terms in results
+      <ul>
+        <li> E.g. accessible name used here to indicate use of aria-label or aria-labelledby</li>
+        <li> E.g. role is the ARIA role of the control</li>
+        <li> E.g. state is an ARIA state such as checked, selected, expanded        </li>
+      </ul>
+    </li>
+  </ul>
+
+  <h2>Testing Criteria </h2>
+
+<ul>
+  <li>Focused testing of aria-label, aria-labelled, and aria-describedby on non-generic elements 
+    <ul>
+      <li>focus on widgets and landmarks with default implied or explicit roles<br />
+      </li>
+    </ul>
+  </li>
+  <li>Use valid ARIA markup
+    <ul>
+      <li> E.g. aria-selected is only valid on certain roles such as option, menu, gridcell, tab, etc. </li>
+    </ul>
+  </li>
+</ul>
+<h2>Notes on Mobile Testing</h2>
+<ul>
+  <li>Testing embedded content
+    <ul>
+      <li> AMP Mobile Accessibility Checker will pull DOM from app in Xcode, Android Studio, &amp; Eclipse and send to AMP for testing</li>
+      <li> If you have the app code – use Xcode with Safari</li>
+    </ul>
+  </li>
+  <li> Limitations of browser choice in embedded content
+    <ul>
+      <li>Limited to Chrome on Android and Safari on iOS</li>
+    </ul>
+  </li>
+  <li>Obtaining mobile content DOM</li>
+  <li>Responsive sites may not expose mobile DOM on desktop</li>
+  <li>Pull mobile DOM from mobile browser</li>
+  <li>Adobe Edge Inspect (iOS and Android)</li>
+  <li>Safari Developer Tools on Mac (iOS)<br />
+  </li>
+</ul>
 <h2>Finding by ARIA propert, state, and role</h2>
+<h3>Results Table</h3>
+<p>&nbsp;</p>
 
 <h2>Specific Finding</h2>
+<p>Exceptions are noted below. When nothing is noted then the item was found to be working as expected.</p>
 
-<h3>ARIA Landmarks</h3>
+<h3>Landmark Results</h3>
+<ul>
+  <li>iOS: All except role form are announced in swipe and are in rotor
+    <ul>
+      <li>Type of landmark, aria-label/aria-labelledby, and then text is announced</li>
+      <li>Boundary of landmark is indicated while swiping forward only</li>
+    </ul>
+  </li>
+  <li>Talkback FF:  All except role application and form are announced in swipe and neither are in rotor
+    <ul>
+      <li>Text, then aria-label/aria-labelledby, and then type of landmark is announced</li>
+      <li>Boundary of landmark indicated while swiping forward and reverse</li>
+    </ul>
+  </li>
+</ul>
+<h3>Role Checkbox Results</h3>
+<ul>
+  <li>Talkback with Chrome and Firefox 
+    <ul>
+      <li>State change is not automatically announced on toggle </li>
+    </ul>
+  </li>
+</ul>
+<h3>Role Radio Button</h3>
+<ul>
+  <li>Talkback Chrome &amp; Firefox and WP8.1 IE/W10 E
+    <ul>
+      <li>Position in set is not announced</li>
+      <li>Changes in state are not announced automatically or announced incorrectly</li>
+    </ul>
+  </li>
+  <li>*Refer to role group for further support </li>
+</ul>
+<h3>Role Link Results</h3>
+<ul>
+  <li>Talkback Chrome and WP8.1 IE/W10 E
+    <ul>
+      <li>Aria-label supported</li>
+      <li>aria-labelledby and aria-describedby not supported</li>
+    </ul>
+  </li>
+</ul>
+<h3>Roles Radiogroup Region and Group</h3>
+<ul>
+  <li>iOS 
+    <ul>
+      <li>Visible group name is in swipe order only (new to 8.4)</li>
+    </ul>
+  </li>
+  <li>Talkback FF
+    <ul>
+      <li>Role is not indicated but accessible name is not</li>
+    </ul>
+  </li>
+  <li>Talkback Chrome
+    <ul>
+      <li>On radiogroup name is supported on nested controls</li>
+    </ul>
+  </li>
+  <li>WP8.1 IE/W10 E
+    <ul>
+      <li>No support</li>
+    </ul>
+  </li>
+</ul>
+<h3>Role Alert</h3>
+<ul>
+  <li>iOS
+    <ul>
+      <li>Text is announced, role is not</li>
+    </ul>
+  </li>
+</ul>
+<h3>Role Heading and aria-level</h3>
+<ul>
+  <li>Talkback Chrome
+    <ul>
+      <li>Role of heading is announced but no level information/No role or level is announced</li>
+    </ul>
+  </li>
+</ul>
+<h3>Role Button with aria-pressed</h3>
+<ul>
+  <li>iOS
+    <ul>
+      <li>Now working correctly in iOS9</li>
+    </ul>
+  </li>
+  <li>Talkback FF
+    <ul>
+      <li>Change of state is not announced when toggled</li>
+    </ul>
+  </li>
+  <li>Talkback Chrome
+    <ul>
+      <li>Correct Android 6.  Android 5: Indicated as switch control, state is always indicated as &quot;not checked&quot;.</li>
+      <li>Toggled state is not automatically announced</li>
+    </ul>
+  </li>
+  <li>WP8.1 IE/W10 E
+    <ul>
+      <li>Only aria-label supported, state correct</li>
+    </ul>
+  </li>
+</ul>
+<h3>Role Combobox</h3>
+<ul>
+  <li>iOS, Talkback FF, and WP8.1 IE/W10 E
+    <ul>
+      <li>Name, role, and state are indicated</li>
+      <li>Options cannot be selected</li>
+    </ul>
+  </li>
+  <li>Talkback Chrome
+    <ul>
+      <li>Role is indicated as edit box</li>
+      <li>Name, and state are not indicated</li>
+      <li>Arrows move to items but speak is cut off<br />
+      </li>
+    </ul>
+  </li>
+</ul>
+<h3>Role Listbox</h3>
+<ul>
+  <li>iOS and Talkback Chrome
+    <ul>
+      <li>Position in set is not announced</li>
+      <li>Selection state not automatically announced after selection</li>
+      <li>Role is not announced</li>
+    </ul>
+  </li>
+  <li>Talkback Chrome
+    <ul>
+      <li>Name, and selected are not announced</li>
+      <li>Arrows change selection but nothing is announced</li>
+    </ul>
+  </li>
+</ul>
+<h3>Role Alert Dialog</h3>
+<ul>
+  <li>iOS
+    <ul>
+      <li>VO announces aria-label/aria-labelledby/aria-describedby when it appears like an alert</li>
+      <li>When swiping to dialog content boundaries are not announced and aria-label/aria-labelled/aria-describedby are not indicated</li>
+    </ul>
+  </li>
+  <li>Talkback Chrome
+    <ul>
+      <li>Android 6 correct with no role:  Android 5: Only text is announced on appear and on swipe</li>
+    </ul>
+  </li>
+</ul>
+<h3>Role Dialog</h3>
+<ul>
+  <li>Talkback FF
+    <ul>
+      <li>Focus change overrides automatic announcement of dialog
+      </li>
+    </ul>
+  </li>
+  <ul>
+    <li>Name, description, and role are announced when entering dialog from forward or reverse swipe order</li>
+  </ul>
+  <li>Others
+    <ul>
+      <li>Nothing announced on open, text in swipe in order</li>
+    </ul>
+  </li>
+</ul>
+<h3>Role Grid </h3>
+<ul>
+  <li>iOS and Talkback Chrome
+    <ul>
+      <li>Headers are not announced as the user swipes through data table cells</li>
+    </ul>
+  </li>
+  <li>WP8.1/W10E
+    <ul>
+      <li>Aria-label and aria-labelledby references to current cell not supported</li>
+    </ul>
+  </li>
+</ul>
+<h3>Role Menu</h3>
+<ul>
+  <li>iOS
+    <ul>
+      <li>Only way to access menu items is to use lines option in rotor</li>
+    </ul>
+  </li>
+  <li>iOS, Talkback Firefox, and Chrome
+    <ul>
+      <li>Menu role and haspopup is not announced</li>
+    </ul>
+  </li>
+</ul>
+<h3>Role Presentation</h3>
+<ul>
+  <li>All
+    <ul>
+      <li>Correctly ignores role for lists (probably because lists aren't supported) but not for tables and images</li>
+    </ul>
+  </li>
+</ul>
+<h3>Role Slider</h3>
+<ul>
+  <li>All
+    <ul>
+      <li>Name, role, and value are announced</li>
+      <li>Value cannot be changed by double tapping gesture</li>
+      <li>Pass through gesture on iOS</li>
+      <li>Arrow keys on WP8.1/W10E</li>
+    </ul>
+  </li>
+</ul>
+<h3>Role Progressbar</h3>
+<ul>
+  <li>iOS, Talkback FF, Talkback Chrome and WP 8.1
+    <ul>
+      <li>Name, role, and value are announced</li>
+      <li>When value change nothing is announced</li>
+      <li>iOS 9 announces 1,1,1,....</li>
+      <li>Aria-live region could be used to control what is spoken</li>
+    </ul>
+  </li>
+  <li>Chrome: when focused “percent percent” spoken<br />
+  </li>
+</ul>
+<h3>Role Spinbutton</h3>
+<ul>
+  <li>iOS &amp; Talkback Chrome
+    <ul>
+      <li>Control is completely skipped over when swiping or with explore by touch</li>
+      <li>iOS 9 focuses the control but nothing is announced/operational</li>
+    </ul>
+  </li>
+  <li>Talkback FF
+    <ul>
+      <li>Unable to change values aor enter value as keyboard go away in editable spinner control</li>
+    </ul>
+  </li>
+  <li>WP 8.1
+    <ul>
+      <li>Spin buttons not available but edit box is accessible</li>
+    </ul>
+  </li>
+</ul>
+<h3>Role tab and tablist</h3>
+<ul>
+  <li>WP8.1 IE/W10 E
+    <ul>
+      <li>Change of selection is not automatically announced</li>
+      <li>Position of tabs is not announced</li>
+      <li>Tabs don't activate</li>
+    </ul>
+  </li>
+</ul>
+<h3>Role Toolbar</h3>
+<ul>
+  <li>iOS and WP 8.1
+    <ul>
+      <li>Name, role, boundaries of toolbar are not indicated</li>
+    </ul>
+  </li>
+  <li>Talkback Chrome
+    <ul>
+      <li>Accessible name is announced</li>
+      <li>Role and ending boundary are not indicated</li>
+    </ul>
+  </li>
+</ul>
+<h3>Role Tree</h3>
+<ul>
+  <li>WP 8.1
+    <ul>
+      <li>Tree role isn't announced but leaf node roles are</li>
+    </ul>
+  </li>
+</ul>
+<h3>Role Tooltip</h3>
+<ul>
+  <li>All
+    <ul>
+      <li>Text is announced when swiped to or referenced by aria-describedby</li>
+    </ul>
+  </li>
+  <li>WP8.1 IE/W10 E
+    <ul>
+      <li>Bonus: Role of tooltip is announced</li>
+    </ul>
+  </li>
+</ul>
+<h3>aria-label, aria-labelledby, and aria-describedby</h3>
+<ul>
+  <li>Talkback Chrome and WP8.1/W10E
+    <ul>
+      <li>Aria-describedby not supported</li>
+    </ul>
+  </li>
+</ul>
+<h3>aria-live</h3>
+<p>* Results may vary depending on how the  aria-live regions contents change.   For  example wither they are changed with display property or addition of DOM nodes  or DOM text nodes, etc.</p>
+<h3>aria-expanded</h3>
+<ul>
+  <li>iOS 
+    <ul>
+      <li>iOS 9 working correctly</li>
+      <li>iOS 8 State is  switched (&lt;8.4 always 8.4 on toggle), expanded is announced as collapsed and collapsed as expanded</li>
+      <li>iOS 8 VO identifies the buttons with aria-expanded as popup buttons.  iOS 9 just says button</li>
+    </ul>
+  </li>
+  <li>Talkback FF
+    <ul>
+      <li>State is not automatically announced on toggle</li>
+    </ul>
+  </li>
+</ul>
+<h3>aria-grabbed and aria-dropeffect</h3>
+<ul>
+  <li>All
+    <ul>
+      <li>No drag or drop state information is provided </li>
+    </ul>
+  </li>
+</ul>
+<h3>aria-haspopup</h3>
+<ul>
+  <li>iOS
+    <ul>
+      <li>iOS 9 all; iOS 8.4 Button and link only; &lt;iOS 8.4 button only</li>
+    </ul>
+  </li>
+  <li>Talkback FF
+    <ul>
+      <li>Not announced on menus</li>
+    </ul>
+  </li>
+  <li>Talkback Chrome
+    <ul>
+      <li>Button, ARIA button, or input type button with haspopup indicated as dropdown list</li>
+    </ul>
+  </li>
+</ul>
+<h3>aria-required and aria-invalid</h3>
+<ul>
+  <li>Talkback FF and Chrome
+    <ul>
+      <li>aria-invalid not announced</li>
+    </ul>
+  </li>
+</ul>
+<h3>aria-disabled</h3>
+<ul>
+  <li>All
+    <ul>
+      <li>Language varies from dimmed, disabled, to unavailable</li>
+    </ul>
+  </li>
+</ul>
+<h3>aria-hidden</h3>
+<ul>
+  <li>All
+    <ul>
+      <li>Correct. The item is not indicated by screen reader</li>
+    </ul>
+  </li>
+</ul>
+<h3>Resources</h3>
+<p>  Accessibility Management Platform (AMP) - https://amp.ssbbartgroup.com<br />
+  ARIA Specification - http://www.w3.org/TR/wai-aria/<br />
+  SSB Labs ARIA Test Suite - https://labs.ssbbartgroup.com/index.php/Main_Page<br />
+  Adobe Edge Inspect - https://creative.adobe.com/products/inspect<br />
+  ARIA Techniques for WCAG 2.0 - http://www.w3.org/TR/WCAG20-TECHS/aria<br />
+  Microsoft Edge and Accessibility<br />
+http://www.microsoft.com/en-gb/developers/articles/week03oct15/accessibility-microsoft-edge-and-windows-10</p>
+<h3>Contact</h3>
+<p>Jonathan Avila: jon.avila@ssbbartgroup.com </p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p></p>
+<p>&nbsp; </p>
+<p></p>
+<p><br />
+</p>
+<p></p>
+<p></p>
+<p></p>
+<h3><br />
+  <br />
+  <br />
+</h3>
+<p><br />
+  <br />
+</p>
+<p></p>
+<p>&nbsp;</p>
+<p><br />
+</p>
 
 <h3></h3>
+<p></p>
+<p></p>
+<p></p>
 
 
