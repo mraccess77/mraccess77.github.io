@@ -177,7 +177,7 @@ function displayImage(img) {
 		imageCanvas.height = sizeY; // img.height;
 
 		ctx.drawImage(img,0,0, sizeX,sizeY);
-		normalData = ctx.getImageData(0,0,imageCanvas.width, imageCanvas.height);
+		setTimeout(function() {normalData = ctx.getImageData(0,0,imageCanvas.width, imageCanvas.height);}, 1000);
 		imageLoaded = true;
 }
 
