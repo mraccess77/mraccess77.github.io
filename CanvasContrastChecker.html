@@ -24,21 +24,23 @@ var activeColor = "";  // id string of the active color1 or color2
 
 // ***********************************************
 function init() {
+  // input@type=file loader
 	imageLoader = document.getElementById('imageLoader');
 	imageLoader.addEventListener('change', handleImage, false);
 
+	// when the mouse leaves the canvas remove the magnified area
 	imageCanvas = document.getElementById("imageCanvas");
 	imageCanvas.addEventListener("mouseout", function(){
 		zoom.style.display = "none";
   });
 
 	imageCanvas.addEventListener("click", setColor);
-
+	
 	zoom = document.getElementById("zoom");
 	var zoomCtx = zoom.getContext("2d");
 
 	imageCanvas.addEventListener("mousemove", function(e){
-	    console.log(e);
+	    // console.log(e);
 
 			if (!imageLoaded || !displayZoom)
 				return;
@@ -84,6 +86,58 @@ function init() {
 	    updateColor(e);
 	});
 
+	// when the picker chanegs update the eye dropper and value display for color 1
+	document.getElementById("inputcolor1picker").addEventListener("change", function(e) {
+	   document.getElementById("inputcolor1").value = e.target.value;
+		 document.getElementById("color1").style.backgroundColor = e.target.value;		 
+	});
+
+		// when the color 1 input field changes
+	document.getElementById("inputcolor1").addEventListener("change", function(e) {
+	   // console.log("changed");
+		 var reg = new RegExp("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$");
+		 if (e.target.value.match(reg)) {
+			 document.getElementById("inputcolor1picker").value = e.target.value;
+			 document.getElementById("color1").style.backgroundColor = e.target.value;		 
+		 }
+	});
+	
+	// when the picker chanegs update the eye dropper and value display for color 2
+	document.getElementById("inputcolor2picker").addEventListener("change", function(e) {
+	   document.getElementById("inputcolor2").value = e.target.value;
+		 document.getElementById("color2").style.backgroundColor = e.target.value;		 
+	});
+	
+			// when the color 1 input field changes
+	document.getElementById("inputcolor2").addEventListener("change", function(e) {
+	var reg = new RegExp("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$");
+		 if (e.target.value.match(reg)) {
+			 document.getElementById("inputcolor2picker").value = e.target.value;
+		   document.getElementById("color2").style.backgroundColor = e.target.value;		 
+		 }
+	});
+	
+	// text size toggled
+	document.getElementById("defaulttext").addEventListener("click", function(e) {
+		 e.target.style.borderStyle = "inset";
+		 e.target.setAttribute("aria-pressed","true");
+		 document.getElementById("largetext").style.borderStyle = "outset";
+		 document.getElementById("largetext").setAttribute("aria-pressed",false);
+	});
+	
+	// text size toggled
+	document.getElementById("largetext").addEventListener("click", function(e) {
+		 e.target.style.borderStyle = "inset";
+		 e.target.setAttribute("aria-pressed","true");
+		 document.getElementById("defaulttext").style.borderStyle = "outset";
+		 document.getElementById("defaulttext").setAttribute("aria-pressed",false);		 
+	});
+		
+	// if IE turn off the color picker (input type=color) as it is not supported
+	if (msie() ) {
+		document.getElementById("inputcolor1picker").style.display = "none";
+		document.getElementById("inputcolor2picker").style.display = "none";	
+	}
 }
 
 // **********************************************
@@ -121,6 +175,8 @@ function rgbToHex(r, g, b) {
 }
 
 // ******************************************
+// user has clicked on canvas and we have selected that color and can now hide the magnified area
+// ******************************************
 function setColor(e) {
   displayZoom = false;
   activeColor = ""
@@ -134,7 +190,7 @@ function updateColor(e) {
 
 		e = e || window.event;
 		var pos = findPos(imageCanvas);
-    console.log(e);
+    //console.log(e);
 		var x = e.pageX - pos.x;
 		var y = e.pageY - pos.y;
 
@@ -143,16 +199,17 @@ function updateColor(e) {
 
 		var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
 		var average = ((p[0]+p[1]+p[2]) /3);
-		  console.log("right before color");
+		//  console.log("right before color");
 		if (activeColor) {
-		  console.log("color set");
+		  //console.log("color set");
 			document.getElementById("input"+ activeColor).value = hex;
+			document.getElementById("input"+ activeColor+"picker").value = hex;
 			document.getElementById(activeColor).style.backgroundColor = hex;
 			if (average > 127) { // dark background use light arrow
-			   console.log(average);
+			   // console.log(average);
 				 document.getElementById(activeColor).style.color = "black";
 			} else {
-			  console.log("dark");
+			  // console.log("dark");
 				document.getElementById(activeColor).style.color = "white";
 			}
 		}
@@ -197,9 +254,12 @@ function displayImage(img) {
 		imageCanvas.height = sizeY; // img.height;
 
 		ctx.drawImage(img,0,0, sizeX,sizeY);
-		console.log(imageCanvas.width);
+		// console.log(imageCanvas.width);
 		if (imageCanvas.width > 0)
 			setTimeout(function() {normalData = ctx.getImageData(0,0,imageCanvas.width, imageCanvas.height);}, 1000);
+		
+    //reset UI
+    document.getElementById("selectFilter").selectedIndex = 0;		
 		imageLoaded = true;
 }
 
@@ -235,7 +295,7 @@ function filter() {
 	if (selection == "Protanopia")
 		pdata = convertProtanopia(pdata);
 	else if (selection == "Deuteranopia")
-		pdata = convertProtanopia(pdata);
+		pdata = convertDeuteranopia(pdata);
 	else if (selection == "Tritanopia")
 		pdata = convertTritanopia(pdata);
 	else if (selection == "Grayscale")
@@ -462,6 +522,201 @@ function saveCopy() {
   document.getElementById('save').href = dataURL;
 }
 
+// ****************************************************************
+function msie() {
+
+  var ua = window.navigator.userAgent;
+  var msie = ua.indexOf("MSIE ");
+	var trident = ua.indexOf('Trident/');
+	if ((trident > 0) || (msie > 0) )
+		return true;
+	else
+		return false;
+}
+
+function check()
+{
+    var color1, color2;
+    var l1; // higher value
+    var l2; // lower value
+    var contrast;
+    var l1R, l1G, l1B, l2R, l2G, l2B;
+    var txtSizeOp;
+
+    color1 = document.getElementById('inputcolor1').value;
+    color2 = document.getElementById('inputcolor2').value;
+    if (document.getElementById("defaulttext").getAttribute("aria-pressed") == "true")
+		   txtSizeOp = "default";
+
+    // remove # sign from field value
+    if (color2.indexOf('#') == 0)
+	{
+	    color2 = color2.substr(1, color2.length-1);
+	}
+    if (color1.indexOf('#') == 0)
+	{
+	    color1 = color1.substr(1, color1.length-1);
+	}
+    // error checking
+    if ((color1.length != 6) || (color2.length != 6))
+	{/*
+	   var removednode=document.getElementById('error').removeChild(document.getElementById('errTxt'))
+	   var objNew = document.createElement('span');
+	   objNew.setAttribute('id', 'errTxt');
+	   var errTxt = document.createTextNode("Error: ");
+	   objNew.appendChild(errTxt);
+	   document.getElementById('error').insertBefore(objNew,document.getElementById('error').firstChild);
+	 */
+
+	    if (document.all){
+		document.getElementById('errTxt').innerText = "Error: ";
+	    }
+	    else{
+		document.getElementById('errTxt').textContent = "Error: ";
+	    }
+
+	    document.getElementById('error').style.display = "block";
+	    document.getElementById('error').tabIndex = -1;
+	    document.getElementById('error').focus();
+	    return;
+	}else {/*
+		 var removednode=document.getElementById('error').removeChild(document.getElementById('errTxt'))
+		 var objNew = document.createElement('span');
+		 objNew.setAttribute('id', 'errTxt');
+		 var errTxt = document.createTextNode("");
+		 objNew.appendChild(errTxt);
+		 document.getElementById('error').insertBefore(objNew,document.getElementById('error').firstChild);
+	       */
+
+	if (document.all){
+	    document.getElementById('errTxt').innerText = "";
+	}
+	else{
+	    document.getElementById('errTxt').textContent = "";
+	}
+	// clear error
+	document.getElementById('error').style.display = "none";
+    }
+
+    //Linearised R (for example) = (R/FS)^2.2 where FS is full scale value (255
+    //for 8 bit color channels). L1 is the higher value (of text or background)
+    //alert(parseInt("0x"+color1.substr(0,2)));
+    //Math.pow(n,x);
+    l1R = parseInt("0x"+color1.substr(0,2))/255;
+    if (l1R <= 0.03928)
+	{
+	    l1R = l1R/12.92;
+	}
+    else
+	{
+	    l1R = Math.pow(((l1R+0.055)/1.055),2.4);
+	}
+    l1G = parseInt("0x"+color1.substr(2,2))/255;
+    if (l1G <= 0.03928)
+	{
+	    l1G = l1G/12.92;
+	}
+    else
+	{
+	    l1G = Math.pow(((l1G+0.055)/1.055),2.4);
+	}
+    l1B = parseInt("0x"+color1.substr(4,2))/255;
+    if (l1B <= 0.03928)
+	{
+	    l1B = l1B/12.92;
+	}
+    else
+	{
+	    l1B = Math.pow(((l1B+0.055)/1.055),2.4);
+	}
+    l2R = parseInt("0x"+color2.substr(0,2))/255;
+    if (l2R <= 0.03928)
+	{
+	    l2R = l2R/12.92;
+	}
+    else
+	{
+	    l2R = Math.pow(((l2R+0.055)/1.055),2.4);
+	}
+    l2G = parseInt("0x"+color2.substr(2,2))/255;
+    if (l2G <= 0.03928)
+	{
+	    l2G = l2G/12.92;
+	}
+    else
+	{
+	    l2G = Math.pow(((l2G+0.055)/1.055),2.4);
+	}
+    l2B = parseInt("0x"+color2.substr(4,2))/255;
+    if (l2B <= 0.03928)
+	{
+	    l2B = l2B/12.92;
+	}
+    else
+	{
+	    l2B = Math.pow(((l2B+0.055)/1.055),2.4);
+	}
+    //where L is luminosity and is defined as
+    l1 = (.2126*l1R) + (.7152*l1G) + (.0722*l1B); //using linearised R, G, and B value
+    l2 = (.2126*l2R) + (.7152*l2G) + (.0722*l2B); //using linearised R, G, and B value
+    //and L2 is the lower value.
+    l1 = l1 + .05;
+    l2 = l2 + .05;
+    if (l1 < l2)
+	{
+	    temp = l1;
+	    l1 = l2;
+	    l2 = temp;
+	}
+    l1 = l1/l2;
+    l1 = l1.toFixed(1);
+    document.getElementById('contrast1').value = l1.toString();
+    document.getElementById('contrast2').value = 1;
+    document.getElementById('sample').style.color = "#"+ color1;
+    document.getElementById('sample').style.backgroundColor = "#"+color2;
+    document.getElementById('sample').style.borderColor = "#" + color1;
+    document.getElementById('sample').style.borderWidth = "thin";
+    document.getElementById('sample').style.borderStyle = "solid";
+    if (txtSizeOp == 1){
+	document.getElementById('sample').style.fontSize = "18pt";
+    }
+    else{
+	document.getElementById('sample').style.fontSize = "12pt";
+	document.getElementById('sample').style.fontWeight = "normal";
+    }
+
+    if (l1 >= 7)
+	{
+	    text = "Section 508 (1194.31 - Functional performance) and WCAG 2 - Level AAA Compliant";
+	}
+    else if (l1 >= 4.5) {
+	text = "Section 508 (1194.31 - Functional performance) and WCAG 2 - Level AA Compliant";
+    }
+    else if (l1 >=3) {
+	if (txtSizeOp == 1) {
+	    text = "Section 508 (1194.31 - Functional performance) and WCAG 2 - Level AA Compliant";
+	}
+	else {
+	    text = "Not compliant. Note: there are not any contrast requirements in WCAG 2 - Level A or Section 508 - Section 1194.22 Web Sites and Application. Thus, content may meet these requirements independent of the color palette used.";
+	}
+    }
+    else
+	{
+	    text = "Not compliant. Note: there are not any contrast requirements in WCAG 2 - Level A or Section 508 - Section 1194.22 Web Sites and Application. Thus, content may meet these requirements independent of the color palette used.";
+
+	}
+
+    if (document.all)
+	{
+	    document.getElementById('compliance').innerText = text;
+	}
+    else
+	{
+	    document.getElementById('compliance').textContent = text;
+	}
+    //return contrast;
+} // function def
+
 // ********************** end scripts ***********************
 </script>
 </head>
@@ -481,27 +736,27 @@ function saveCopy() {
 	</select>
 	<button onclick="filter();">Filter</button>
 	<a tabindex="0" href="javascript:void();" role="button" download="imagecopy.png" id="save" onclick="saveCopy();">Save Copy</a>
-  <label for="output1">Conforms?</label>
+  <label style="margin-left:2em;" for="output1">Conforms?</label>
   <output style="border:thin solid black;" id="output1">TBD</output>
 </div>
 
 <div id="toolbar2">
   Color 1:
   <button title="eye dropper color 1" id="color1" style="color: white; min-width:1.5em; min-height:1.5em; background-color:black;" onclick="color1clicked();">&#8689</button>
-  <input title="Color 1 value" size="7" id="inputcolor1" type="text" value="#000000"/>
+  <input pattern="^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$" title="Color 1 value" size="7" id="inputcolor1" type="text" value="#000000"/>
 	<input title="Color 1 pickter" id="inputcolor1picker" type="color" value="#000000"/>
   
 	Color 2:
   <button title="eye dropper colro 2" onclick="color2clicked();" id="color2" style="color:black; min-width:1.5em; min-height:1.5em; background-color:white;">&#8689</button>
-  <input title="Color 2 value" size="7" id="inputcolor2" type="text" value="#FFFFFF"/>
+  <input pattern="^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$" title="Color 2 value" size="7" id="inputcolor2" type="text" value="#FFFFFF"/>
 	<input title="Color 2 picker" id="inputcolor2picker" type="color" value="#FFFFFF"/>
   
 	<label for="contrast">Contrast:</label>
   <input type="text" size="6" id="contrast" />
 	
   <label>Text:</label>
-  <button aria-label="default text size" id="defaulttext" style="border-style:inset;" >Default</button>
-  <button aria-label="large text size" id="largetext">Large</button>
+  <button aria-pressed="true" aria-label="default text size" id="defaulttext" style="border-style:inset;" >Default</button>
+  <button aria-pressed="false" aria-label="large text size" id="largetext">Large</button>
 </div>
 
 <div id="workarea">
