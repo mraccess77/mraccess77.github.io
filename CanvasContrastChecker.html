@@ -9,6 +9,9 @@
      body {
        background-color:white;
      }
+		 input[type="color"] {
+		   max-width:1.5em;
+		 }
   </style>
 <script>
 var imageLoader; // image file load input type file
@@ -86,10 +89,14 @@ function init() {
 	    updateColor(e);
 	});
 
-	// when the picker chanegs update the eye dropper and value display for color 1
+	// display default contrast for black on white
+	checkContrast();
+	
+	// when the picker 1 chanegs update the eye dropper and value display for color 1
 	document.getElementById("inputcolor1picker").addEventListener("change", function(e) {
 	   document.getElementById("inputcolor1").value = e.target.value;
-		 document.getElementById("color1").style.backgroundColor = e.target.value;		 
+		 document.getElementById("color1").style.backgroundColor = e.target.value;		
+		 checkContrast();		 
 	});
 
 		// when the color 1 input field changes
@@ -98,14 +105,16 @@ function init() {
 		 var reg = new RegExp("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$");
 		 if (e.target.value.match(reg)) {
 			 document.getElementById("inputcolor1picker").value = e.target.value;
-			 document.getElementById("color1").style.backgroundColor = e.target.value;		 
+			 document.getElementById("color1").style.backgroundColor = e.target.value;
+			 checkContrast();
 		 }
 	});
 	
-	// when the picker chanegs update the eye dropper and value display for color 2
+	// when the picker 2 chanegs update the eye dropper and value display for color 2
 	document.getElementById("inputcolor2picker").addEventListener("change", function(e) {
 	   document.getElementById("inputcolor2").value = e.target.value;
-		 document.getElementById("color2").style.backgroundColor = e.target.value;		 
+		 document.getElementById("color2").style.backgroundColor = e.target.value;
+		 checkContrast();
 	});
 	
 			// when the color 1 input field changes
@@ -114,23 +123,26 @@ function init() {
 		 if (e.target.value.match(reg)) {
 			 document.getElementById("inputcolor2picker").value = e.target.value;
 		   document.getElementById("color2").style.backgroundColor = e.target.value;		 
+			 checkContrast();			 
 		 }
 	});
 	
 	// text size toggled
 	document.getElementById("defaulttext").addEventListener("click", function(e) {
-		 e.target.style.borderStyle = "inset";
-		 e.target.setAttribute("aria-pressed","true");
-		 document.getElementById("largetext").style.borderStyle = "outset";
-		 document.getElementById("largetext").setAttribute("aria-pressed",false);
+		e.target.style.borderStyle = "inset";
+		e.target.setAttribute("aria-pressed","true");
+		document.getElementById("largetext").style.borderStyle = "outset";
+		document.getElementById("largetext").setAttribute("aria-pressed",false);
+		checkContrast();		 
 	});
 	
 	// text size toggled
 	document.getElementById("largetext").addEventListener("click", function(e) {
-		 e.target.style.borderStyle = "inset";
-		 e.target.setAttribute("aria-pressed","true");
-		 document.getElementById("defaulttext").style.borderStyle = "outset";
-		 document.getElementById("defaulttext").setAttribute("aria-pressed",false);		 
+		e.target.style.borderStyle = "inset";
+		e.target.setAttribute("aria-pressed","true");
+		document.getElementById("defaulttext").style.borderStyle = "outset";
+		document.getElementById("defaulttext").setAttribute("aria-pressed",false);	
+		checkContrast();		 
 	});
 		
 	// if IE turn off the color picker (input type=color) as it is not supported
@@ -184,6 +196,9 @@ function setColor(e) {
 }
 
 // *******************************************
+// update based on eye dropper 
+// called on mouseMove
+// *******************************************
 function updateColor(e) {
 		if (!imageLoaded)
 			return
@@ -200,18 +215,19 @@ function updateColor(e) {
 		var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
 		var average = ((p[0]+p[1]+p[2]) /3);
 		//  console.log("right before color");
+		
+		// display color values and update
 		if (activeColor) {
 		  //console.log("color set");
 			document.getElementById("input"+ activeColor).value = hex;
 			document.getElementById("input"+ activeColor+"picker").value = hex;
 			document.getElementById(activeColor).style.backgroundColor = hex;
 			if (average > 127) { // dark background use light arrow
-			   // console.log(average);
-				 document.getElementById(activeColor).style.color = "black";
+			  document.getElementById(activeColor).style.color = "black";
 			} else {
-			  // console.log("dark");
-				document.getElementById(activeColor).style.color = "white";
+			  document.getElementById(activeColor).style.color = "white";
 			}
+			checkContrast();
 		}
 }
 
@@ -534,187 +550,117 @@ function msie() {
 		return false;
 }
 
-function check()
+function checkContrast()
 {
-    var color1, color2;
-    var l1; // higher value
-    var l2; // lower value
-    var contrast;
-    var l1R, l1G, l1B, l2R, l2G, l2B;
-    var txtSizeOp;
+  var color1, color2;  // fields
+  var l1; // higher value
+  var l2; // lower value
+	var l1R, l1G, l1B, l2R, l2G, l2B;
+  var txtSizeOp; // large or default text string
+	var result; // pass or fail string
 
-    color1 = document.getElementById('inputcolor1').value;
-    color2 = document.getElementById('inputcolor2').value;
-    if (document.getElementById("defaulttext").getAttribute("aria-pressed") == "true")
-		   txtSizeOp = "default";
+	color1 = document.getElementById('inputcolor1').value;
+	color2 = document.getElementById('inputcolor2').value;
+	if (document.getElementById("defaulttext").getAttribute("aria-pressed") == "true")
+		 txtSizeOp = "default";
+	else
+		 txtSizeOp = "large";
 
-    // remove # sign from field value
-    if (color2.indexOf('#') == 0)
-	{
-	    color2 = color2.substr(1, color2.length-1);
+	// remove # sign from field value
+	if (color2.indexOf('#') == 0)	
+		color2 = color2.substr(1, color2.length-1);
+	if (color1.indexOf('#') == 0)
+		color1 = color1.substr(1, color1.length-1);
+	   
+	//Linearised R (for example) = (R/FS)^2.2 where FS is full scale value (255
+	//for 8 bit color channels). L1 is the higher value (of text or background)
+	//alert(parseInt("0x"+color1.substr(0,2)));
+	//Math.pow(n,x);
+	l1R = parseInt("0x"+color1.substr(0,2))/255;
+	if (l1R <= 0.03928) {
+	  l1R = l1R/12.92;
 	}
-    if (color1.indexOf('#') == 0)
-	{
-	    color1 = color1.substr(1, color1.length-1);
+  else {
+	  l1R = Math.pow(((l1R+0.055)/1.055),2.4);
 	}
-    // error checking
-    if ((color1.length != 6) || (color2.length != 6))
-	{/*
-	   var removednode=document.getElementById('error').removeChild(document.getElementById('errTxt'))
-	   var objNew = document.createElement('span');
-	   objNew.setAttribute('id', 'errTxt');
-	   var errTxt = document.createTextNode("Error: ");
-	   objNew.appendChild(errTxt);
-	   document.getElementById('error').insertBefore(objNew,document.getElementById('error').firstChild);
-	 */
-
-	    if (document.all){
-		document.getElementById('errTxt').innerText = "Error: ";
-	    }
-	    else{
-		document.getElementById('errTxt').textContent = "Error: ";
-	    }
-
-	    document.getElementById('error').style.display = "block";
-	    document.getElementById('error').tabIndex = -1;
-	    document.getElementById('error').focus();
-	    return;
-	}else {/*
-		 var removednode=document.getElementById('error').removeChild(document.getElementById('errTxt'))
-		 var objNew = document.createElement('span');
-		 objNew.setAttribute('id', 'errTxt');
-		 var errTxt = document.createTextNode("");
-		 objNew.appendChild(errTxt);
-		 document.getElementById('error').insertBefore(objNew,document.getElementById('error').firstChild);
-	       */
-
-	if (document.all){
-	    document.getElementById('errTxt').innerText = "";
+	
+  l1G = parseInt("0x"+color1.substr(2,2))/255;
+  if (l1G <= 0.03928) {
+	  l1G = l1G/12.92;
 	}
-	else{
-	    document.getElementById('errTxt').textContent = "";
+  else {
+	  l1G = Math.pow(((l1G+0.055)/1.055),2.4);
 	}
-	// clear error
-	document.getElementById('error').style.display = "none";
-    }
-
-    //Linearised R (for example) = (R/FS)^2.2 where FS is full scale value (255
-    //for 8 bit color channels). L1 is the higher value (of text or background)
-    //alert(parseInt("0x"+color1.substr(0,2)));
-    //Math.pow(n,x);
-    l1R = parseInt("0x"+color1.substr(0,2))/255;
-    if (l1R <= 0.03928)
-	{
-	    l1R = l1R/12.92;
-	}
-    else
-	{
-	    l1R = Math.pow(((l1R+0.055)/1.055),2.4);
-	}
-    l1G = parseInt("0x"+color1.substr(2,2))/255;
-    if (l1G <= 0.03928)
-	{
-	    l1G = l1G/12.92;
-	}
-    else
-	{
-	    l1G = Math.pow(((l1G+0.055)/1.055),2.4);
-	}
-    l1B = parseInt("0x"+color1.substr(4,2))/255;
-    if (l1B <= 0.03928)
-	{
+	
+  l1B = parseInt("0x"+color1.substr(4,2))/255;
+  if (l1B <= 0.03928) {
 	    l1B = l1B/12.92;
 	}
-    else
-	{
+  else {
 	    l1B = Math.pow(((l1B+0.055)/1.055),2.4);
 	}
-    l2R = parseInt("0x"+color2.substr(0,2))/255;
-    if (l2R <= 0.03928)
-	{
-	    l2R = l2R/12.92;
+   
+  l2R = parseInt("0x"+color2.substr(0,2))/255;
+  if (l2R <= 0.03928) {
+	  l2R = l2R/12.92;
 	}
-    else
-	{
-	    l2R = Math.pow(((l2R+0.055)/1.055),2.4);
+  else {
+	  l2R = Math.pow(((l2R+0.055)/1.055),2.4);
 	}
-    l2G = parseInt("0x"+color2.substr(2,2))/255;
-    if (l2G <= 0.03928)
-	{
-	    l2G = l2G/12.92;
+  
+	l2G = parseInt("0x"+color2.substr(2,2))/255;
+  if (l2G <= 0.03928) {
+	  l2G = l2G/12.92;
 	}
-    else
-	{
-	    l2G = Math.pow(((l2G+0.055)/1.055),2.4);
+  else {
+	  l2G = Math.pow(((l2G+0.055)/1.055),2.4);
 	}
-    l2B = parseInt("0x"+color2.substr(4,2))/255;
-    if (l2B <= 0.03928)
-	{
-	    l2B = l2B/12.92;
+    
+	l2B = parseInt("0x"+color2.substr(4,2))/255;
+  if (l2B <= 0.03928) {
+	  l2B = l2B/12.92;
 	}
-    else
-	{
-	    l2B = Math.pow(((l2B+0.055)/1.055),2.4);
+  else 	{
+	  l2B = Math.pow(((l2B+0.055)/1.055),2.4);
 	}
-    //where L is luminosity and is defined as
-    l1 = (.2126*l1R) + (.7152*l1G) + (.0722*l1B); //using linearised R, G, and B value
-    l2 = (.2126*l2R) + (.7152*l2G) + (.0722*l2B); //using linearised R, G, and B value
-    //and L2 is the lower value.
-    l1 = l1 + .05;
-    l2 = l2 + .05;
-    if (l1 < l2)
-	{
-	    temp = l1;
-	    l1 = l2;
-	    l2 = temp;
+  
+  //where L is luminosity and is defined as
+	l1 = (.2126*l1R) + (.7152*l1G) + (.0722*l1B); //using linearised R, G, and B value
+	l2 = (.2126*l2R) + (.7152*l2G) + (.0722*l2B); //using linearised R, G, and B value
+	//and L2 is the lower value.
+	l1 = l1 + .05;
+	l2 = l2 + .05;
+	
+	// l1 should be larger - switch if not
+  if (l1 < l2) 	{
+		temp = l1;
+		l1 = l2;
+		l2 = temp;
 	}
-    l1 = l1/l2;
-    l1 = l1.toFixed(1);
-    document.getElementById('contrast1').value = l1.toString();
-    document.getElementById('contrast2').value = 1;
-    document.getElementById('sample').style.color = "#"+ color1;
-    document.getElementById('sample').style.backgroundColor = "#"+color2;
-    document.getElementById('sample').style.borderColor = "#" + color1;
-    document.getElementById('sample').style.borderWidth = "thin";
-    document.getElementById('sample').style.borderStyle = "solid";
-    if (txtSizeOp == 1){
-	document.getElementById('sample').style.fontSize = "18pt";
-    }
-    else{
-	document.getElementById('sample').style.fontSize = "12pt";
-	document.getElementById('sample').style.fontWeight = "normal";
-    }
-
-    if (l1 >= 7)
-	{
-	    text = "Section 508 (1194.31 - Functional performance) and WCAG 2 - Level AAA Compliant";
+	
+	l1 = l1/l2;
+	// to one decimal place
+	l1 = l1.toFixed(1);
+	// display contrast ratio
+	document.getElementById('contrast').value = l1.toString()+":1";
+	
+  if (txtSizeOp == "large") {
+	  if (l1 > 3) 
+	    result = "pass A/AA";
+	  else
+		  result = "fail A/AA";
+	} else { // default text size
+	  if (l1 > 4.5) 
+	    result = "pass A/AA";
+	  else
+		  result = "fail A/AA";
 	}
-    else if (l1 >= 4.5) {
-	text = "Section 508 (1194.31 - Functional performance) and WCAG 2 - Level AA Compliant";
-    }
-    else if (l1 >=3) {
-	if (txtSizeOp == 1) {
-	    text = "Section 508 (1194.31 - Functional performance) and WCAG 2 - Level AA Compliant";
-	}
-	else {
-	    text = "Not compliant. Note: there are not any contrast requirements in WCAG 2 - Level A or Section 508 - Section 1194.22 Web Sites and Application. Thus, content may meet these requirements independent of the color palette used.";
-	}
-    }
-    else
-	{
-	    text = "Not compliant. Note: there are not any contrast requirements in WCAG 2 - Level A or Section 508 - Section 1194.22 Web Sites and Application. Thus, content may meet these requirements independent of the color palette used.";
-
-	}
-
-    if (document.all)
-	{
-	    document.getElementById('compliance').innerText = text;
-	}
-    else
-	{
-	    document.getElementById('compliance').textContent = text;
-	}
-    //return contrast;
+	
+	// display pass/fail result
+	document.getElementById('output1').textContent = result;
+	document.getElementById("sample").style.color = "#"+color1;
+	document.getElementById("sample").style.backgroundColor = "#" + color2;	
+	
 } // function def
 
 // ********************** end scripts ***********************
@@ -737,7 +683,8 @@ function check()
 	<button onclick="filter();">Filter</button>
 	<a tabindex="0" href="javascript:void();" role="button" download="imagecopy.png" id="save" onclick="saveCopy();">Save Copy</a>
   <label style="margin-left:2em;" for="output1">Conforms?</label>
-  <output style="border:thin solid black;" id="output1">TBD</output>
+  <output style="padding:.1em; border:thin solid black;" id="output1">TBD</output>
+	<a style="font-size:large;" href="#" role="button"><i>i</i></a>
 </div>
 
 <div id="toolbar2">
@@ -751,8 +698,9 @@ function check()
   <input pattern="^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$" title="Color 2 value" size="7" id="inputcolor2" type="text" value="#FFFFFF"/>
 	<input title="Color 2 picker" id="inputcolor2picker" type="color" value="#FFFFFF"/>
   
+	<output id="sample" style="border:thin solid black; padding-left:.5em; margin-left:.5em; margin-right:.5em; padding-right:.5em;">Sample</output>
 	<label for="contrast">Contrast:</label>
-  <input type="text" size="6" id="contrast" />
+  <input type="text" size="4" id="contrast" />
 	
   <label>Text:</label>
   <button aria-pressed="true" aria-label="default text size" id="defaulttext" style="border-style:inset;" >Default</button>
