@@ -11,15 +11,16 @@
      }
   </style>
 <script>
-var imageLoader;
-var imageCanvas;
-var normalData;
-var imageLoaded;
-var imageScaled = true;
-var imageFile;
-var zoom;
-var displayZoom = false;
-var activeColor = "";
+var imageLoader; // image file load input type file
+var imageCanvas; // images canvas object
+var imageCtx; // image context object
+var normalData;  // image data after load unfiltered
+var imageLoaded;  // has the image been loaded?  If not UI is not functional
+var imageScaled = true;  // is the image scaled to fit the width of the display
+var imageFile;  // copy of image file used in case we need to rescale image
+var zoom;  // zoom canvas object
+var displayZoom = false;  // should we display the magnified canvas
+var activeColor = "";  // id string of the active color1 or color2
 
 // ***********************************************
 function init() {
@@ -61,12 +62,16 @@ function init() {
 			zoomCtx.strokeStyle="red";
 			zoomCtx.lineWidth="2";
  	    zoomCtx.stroke();
+			
+			// if pointer to far to right put magnified view on the left of pointer
  	    if (e.pageX+170 > window.innerWidth) {
 		    zoom.style.left = e.pageX - 160  + "px"
 		  }
 		  else {
 		    zoom.style.left = e.pageX + 10  + "px"
 		  }
+			
+			// if pointer to close to bottom put magnified view to top of pointer
  	    if (e.pageY+100 > window.innerHeight) {
 		    zoom.style.top = e.pageY - 160  + "px"
 		  }
@@ -74,8 +79,9 @@ function init() {
 		    zoom.style.top = e.pageY + 10  + "px"
 		  }
 
+			// display the magnified area
 	    zoom.style.display = "block";
-	    updateColor(this);
+	    updateColor(e);
 	});
 
 }
@@ -126,17 +132,29 @@ function updateColor(e) {
 		if (!imageLoaded)
 			return
 
-		var pos = findPos(e);
-		var x = event.pageX - pos.x;
-		var y = event.pageY - pos.y;
+		e = e || window.event;
+		var pos = findPos(imageCanvas);
+    console.log(e);
+		var x = e.pageX - pos.x;
+		var y = e.pageY - pos.y;
 
 		var ctx = imageCanvas.getContext('2d');
 		var p = ctx.getImageData(x, y, 1, 1).data;
 
 		var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+		var average = ((p[0]+p[1]+p[2]) /3);
+		  console.log("right before color");
 		if (activeColor) {
+		  console.log("color set");
 			document.getElementById("input"+ activeColor).value = hex;
 			document.getElementById(activeColor).style.backgroundColor = hex;
+			if (average > 127) { // dark background use light arrow
+			   console.log(average);
+				 document.getElementById(activeColor).style.color = "black";
+			} else {
+			  console.log("dark");
+				document.getElementById(activeColor).style.color = "white";
+			}
 		}
 }
 
@@ -150,21 +168,23 @@ function handleImage(e){
     reader.onload = function(event){
         var img = new Image();
         img.src = event.target.result;
-        img.onload = displayImage(img);
-        imageFile = img;
+				// delay after load because sometimes the image is not ready to be drawn and a blank screen appears.
+        setTimeout(function() {img.onload = displayImage(img);}, 1000);
+        imageFile = img;  //copy of image file so we can rescale later
     }
 
 }
 
 // *********************************************************
 function displayImage(img) {
-
+    //console.log(img.src);
 		var ctx = imageCanvas.getContext('2d');
 		var winWidth = window.innerWidth;
 		var winHeight = window.innerHeight;
 		var sizeX = img.width;
 		var sizeY = img.height;
 
+		// while the image is too width for the window scale by 90 until we find a usable value
 		if (imageScaled) {
 			while ((sizeX > winWidth-20) ) { // || (sizeY > winHeight-20) ) {
 
@@ -177,28 +197,36 @@ function displayImage(img) {
 		imageCanvas.height = sizeY; // img.height;
 
 		ctx.drawImage(img,0,0, sizeX,sizeY);
-		setTimeout(function() {normalData = ctx.getImageData(0,0,imageCanvas.width, imageCanvas.height);}, 1000);
+		console.log(imageCanvas.width);
+		if (imageCanvas.width > 0)
+			setTimeout(function() {normalData = ctx.getImageData(0,0,imageCanvas.width, imageCanvas.height);}, 1000);
 		imageLoaded = true;
 }
 
+// **********************************************
+// really full scale image
 // **********************************************
 function rescaleImage() {
 
  var ctx = imageCanvas.getContext('2d');
  var img = new Image();
  img.src = imageFile.src;
+ 
  imageCanvas.width = img.width; //img.width;
  imageCanvas.height = img.height; // img.height;
  ctx.drawImage(img,0,0, img.width,img.height);
 }
 
 //*************************************************************
+// Apply a user selected filter such as protanopia or grayscale
+//*************************************************************
 function filter() {
 
 	if (!imageLoaded) return;
-	var imageCanvas = document.getElementById("imageCanvas");
+	
 	var ctx = imageCanvas.getContext("2d");
 
+	// reset image to original before perfoming an filters
 	ctx.putImageData(normalData,0,0);
 
 	var pdata = ctx.getImageData(0,0,imageCanvas.width, imageCanvas.height);
@@ -217,6 +245,7 @@ function filter() {
 	else if (selection == "Typical")
 		pdata = normalData;
 
+	// draw altered image
 	ctx.putImageData(pdata,0,0);
 }
 
@@ -433,42 +462,49 @@ function saveCopy() {
   document.getElementById('save').href = dataURL;
 }
 
+// ********************** end scripts ***********************
 </script>
 </head>
 <body onload="init();">
 <div id="maincontainer">
-<div>
+<div id="toolbar1">
   <label for="imageLoader">Image:</label>
 	<input type="file" id="imageLoader" name="imageLoader"/>
 	<label for="scale">Scale?</label><input onclick="scaleImage(this);" id="scale" type="checkbox" checked/>
-	<select id="selectFilter">
-	  <option value="deuteranopia">Typical</option>
+	<select title="Select filter" id="selectFilter">
+	  <option value="typical">Typical</option>
 	  <option value="protanopia">Protanopia</option>
 	  <option value="deuteranopia">Deuteranopia</option>
- 	  <option value="deuteranopia">Tritanopia</option>
-	  <option value="deuteranopia">Grayscale</option>
-	  <option value="deuteranopia">Invert</option>
+ 	  <option value="tritanopia">Tritanopia</option>
+	  <option value="grayscale">Grayscale</option>
+	  <option value="invert">Invert</option>
 	</select>
 	<button onclick="filter();">Filter</button>
 	<a tabindex="0" href="javascript:void();" role="button" download="imagecopy.png" id="save" onclick="saveCopy();">Save Copy</a>
-</div>
-
-<div>
-  Color 1:
-  <button id="color1" style="min-width:1.5em; min-height:1.5em; background-color:black;" onclick="color1clicked();"></button>
-  <input size="7" id="inputcolor1" type="text" value="000000"/>
-  Color 2:
-  <button onclick="color2clicked();" id="color2" style="min-width:1.5em; min-height:1.5em; background-color:white;"></button>
-  <input size="7" id="inputcolor2" type="text" value="FFFFFF"/>
-  <label>Contrast:</label>
-  <input type="text" size="8" id="contrast" />
-  <label>Text:</label>
-  <button style="border-style:inset;" >Default</button>
-  <button>Large</button>
-  <label>Conforms?</label>
+  <label for="output1">Conforms?</label>
   <output style="border:thin solid black;" id="output1">TBD</output>
 </div>
-<div>
+
+<div id="toolbar2">
+  Color 1:
+  <button title="eye dropper color 1" id="color1" style="color: white; min-width:1.5em; min-height:1.5em; background-color:black;" onclick="color1clicked();">&#8689</button>
+  <input title="Color 1 value" size="7" id="inputcolor1" type="text" value="#000000"/>
+	<input title="Color 1 pickter" id="inputcolor1picker" type="color" value="#000000"/>
+  
+	Color 2:
+  <button title="eye dropper colro 2" onclick="color2clicked();" id="color2" style="color:black; min-width:1.5em; min-height:1.5em; background-color:white;">&#8689</button>
+  <input title="Color 2 value" size="7" id="inputcolor2" type="text" value="#FFFFFF"/>
+	<input title="Color 2 picker" id="inputcolor2picker" type="color" value="#FFFFFF"/>
+  
+	<label for="contrast">Contrast:</label>
+  <input type="text" size="6" id="contrast" />
+	
+  <label>Text:</label>
+  <button aria-label="default text size" id="defaulttext" style="border-style:inset;" >Default</button>
+  <button aria-label="large text size" id="largetext">Large</button>
+</div>
+
+<div id="workarea">
   <canvas id="imageCanvas" name="imageCanvas"style=""></canvas>
   <canvas id="zoom" width="150" height="150" style="position:absolute; top:0; left:0; display:none"></canvas>
   <div id="footer">
