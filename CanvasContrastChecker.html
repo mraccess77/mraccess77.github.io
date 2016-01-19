@@ -9,12 +9,16 @@
      body {
        background-color:white;
      }
+		 /* HTML5 color pickers */
 		 input[type="color"] {
 		   max-width:1.5em;
 		 }
+		 
+		 /* info pop-up */
 		 #popup {
 		   display:none;
 		 }
+		 <!-- info pop on hover and on focus -->
 		 a.pop:hover #popup, a.pop:focus #popup{
 		    position:absolute;
 				left: -10em;
@@ -30,6 +34,7 @@
 		 }
   </style>
 <script>
+// globals
 var imageLoader; // image file load input type file
 var imageCanvas; // images canvas object
 var imageCtx; // image context object
@@ -133,7 +138,7 @@ function init() {
 		 checkContrast();
 	});
 	
-			// when the color 1 input field changes
+	// when the color 1 input field changes
 	document.getElementById("inputcolor2").addEventListener("change", function(e) {
 	var reg = new RegExp("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$");
 		 if (e.target.value.match(reg)) {
@@ -168,12 +173,16 @@ function init() {
 	}
 }
 
-// **********************************************
+// ****************************************************
+// color1 button was clicked, turn on magnfication area and update color to color under mouse
+// ****************************************************
 function color1clicked() {
   displayZoom = true;
   activeColor = "color1";
 }
 
+// **********************************************
+// color2 button was clicked, turn on magnfication area and update color to color under mouse
 // **********************************************
 function color2clicked() {
   displayZoom = true;
@@ -259,11 +268,14 @@ function handleImage(e){
         img.src = event.target.result;
 				// delay after load because sometimes the image is not ready to be drawn and a blank screen appears.
         setTimeout(function() {img.onload = displayImage(img);}, 1000);
-        imageFile = img;  //copy of image file so we can rescale later
+				//copy of image file so we can rescale later
+        imageFile = img;  
     }
 
 }
 
+// *********************************************************
+// called once image is loaded from reader, this function draws to canvas
 // *********************************************************
 function displayImage(img) {
     //console.log(img.src);
@@ -342,7 +354,7 @@ function filter() {
 }
 
 // ************************************************************
-// protanopia
+// protanopia simulator
 // ************************************************************
 function convertProtanopia(pixels) {
 	var d = pixels.data;
@@ -359,8 +371,8 @@ function convertProtanopia(pixels) {
 
 	// Simulate protanopia
 		var l = (0 * L) + (2.02344 * M) + (-2.52581 * S);
-		var m = (0 * L) + (1.0 * M) + (0 * S);
-		var s = (0 * L) + (0 * M) + (1.0 * S);
+		var m = (0 * L) + (1 * M) + (0 * S);
+		var s = (0 * L) + (0 * M) + (1 * S);
 
 		// LMS to RGB conversion
 		var R = (0.0809 * l) + (-0.1305 * m) + (0.116 * s);
@@ -368,22 +380,40 @@ function convertProtanopia(pixels) {
 		var B = (-0.0003 * l) + (-0.0041 * m) + (0.6935 * s);
 
 		// Clean up values
-		if(R < 0) R = 0;
-		if(R > 255) R = 255;
-		if(G < 0) G = 0;
-		if(G > 255) G = 255;
-		if(B < 0) B = 0;
-		if(B > 255) B = 255;
+		if (R < 0) {
+		  R = 0;
+			console.log("r0");
+		}
+		if (R > 255) {
+		  console.log("r255");
+		  R = 255;
+		}
+		if (G < 0) {
+		  G = 0;
+			console.log("g0");
+		}
+		if (G > 255) {
+		  G = 255;
+			console.log("g255");
+	  }
+		if (B < 0) {
+		  B = 0;
+			console.log("b0");
+		}
+		if (B > 255) {
+		  B = 255;
+      console.log("b255");			
+		}
 
 		d[i] = R;
 		d[i+1] = G;
 		d[i+2] = B;
 
-/*  rgb approximation
-		d[i] = .567*r + .433*g;
-		d[i+1] = .558*r + .442*g;
-		d[i+2] = .242*g + .758*b;
-*/
+   //rgb approximation
+		/*d[i] = .467*r + .433*g;	
+		d[i+1] = .478*r + .412*g;
+		d[i+2] = .442*g + .778*b;  */
+
 	}
 	return pixels;
 }
@@ -414,12 +444,30 @@ function convertDeuteranopia(pixels) {
 		var B = (-0.0003 * l) + (-0.0041 * m) + (0.6935 * s);
 
 		// Clean up values
-		if(R < 0) R = 0;
-		if(R > 255) R = 255;
-		if(G < 0) G = 0;
-		if(G > 255) G = 255;
-		if(B < 0) B = 0;
-		if(B > 255) B = 255;
+		if (R < 0) {
+		  R = 0;
+			console.log("r0");
+		}
+		if (R > 255) {
+		  console.log("r255");
+		  R = 255;
+		}
+		if (G < 0) {
+		  G = 0;
+			console.log("g0");
+		}
+		if (G > 255) {
+		  G = 255;
+			console.log("g255");
+	  }
+		if (B < 0) {
+		  B = 0;
+			console.log("b0");
+		}
+		if (B > 255) {
+		  B = 255;
+      console.log("b255");			
+		}
 
 		d[i] = R;
 		d[i+1] = G;
@@ -460,32 +508,31 @@ function convertTritanopia(pixels) {
 		var G = (-0.0102 * l) + (0.0540 * m) + (-0.1136 * s);
 		var B = (-0.0003 * l) + (-0.0041 * m) + (0.6935 * s);
 
-		R = r - R;
-		G = g - G;
-		B = b - B;
-
-    // error
-
-	  RR = (0.0 * R) + (0.0 * G) + (0.0 * B);
-		GG = (0.7 * R) + (1.0 * G) + (0.0 * B);
-		BB = (0.7 * R) + (0.0 * G) + (1.0 * B);
-*/
-/*
-	  RR = (1.0 * R) + (0 * G) + (0 * B);
-		GG = (0 * R) + (1.0 * G) + (0.0 * B);
-		BB = (0.7 * R) + (0.7 * G) + (1.0 * B);
-
-		R = RR+r;
-		G = GG+g;
-		B = BB+b;
-
 		// Clean up values
-		if(R < 0) R = 0;
-		if(R > 255) R = 255;
-		if(G < 0) G = 0;
-		if(G > 255) G = 255;
-		if(B < 0) B = 0;
-		if(B > 255) B = 255;
+		if (R < 0) {
+		  R = 0;
+			console.log("r0");
+		}
+		if (R > 255) {
+		  console.log("r255");
+		  R = 255;
+		}
+		if (G < 0) {
+		  G = 0;
+			console.log("g0");
+		}
+		if (G > 255) {
+		  G = 255;
+			console.log("g255");
+	  }
+		if (B < 0) {
+		  B = 0;
+			console.log("b0");
+		}
+		if (B > 255) {
+		  B = 255;
+      console.log("b255");			
+		}
 
 		d[i] = R;
 		d[i+1] = G;
@@ -508,6 +555,7 @@ function convertGrayscale(pixels) {
 		var g = d[i+1];
 		var b = d[i+2];
 		var average = (d[i] + d[i+1] + d[i+2] ) /3;
+		
 		d[i] = average;
 		d[i+1] = average;
 		d[i+2] = average;
@@ -547,6 +595,7 @@ function scaleImage(e) {
  }
    displayImage(imageFile);
 }
+
 // **************************************************
 function saveCopy() {
 	if (!imageLoaded) return;
@@ -555,6 +604,8 @@ function saveCopy() {
 }
 
 // ****************************************************************
+// Is the IE browser in use?
+// *****************************************************************
 function msie() {
 
   var ua = window.navigator.userAgent;
@@ -566,6 +617,9 @@ function msie() {
 		return false;
 }
 
+// **************************************************************
+// set contrast ration of text
+// **************************************************************
 function checkContrast()
 {
   var color1, color2;  // fields
@@ -677,7 +731,7 @@ function checkContrast()
 	document.getElementById("sample").style.color = "#"+color1;
 	document.getElementById("sample").style.backgroundColor = "#" + color2;	
 	
-} // function def
+} // checkContrast
 
 // ********************** end scripts ***********************
 </script>
