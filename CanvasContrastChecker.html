@@ -12,6 +12,22 @@
 		 input[type="color"] {
 		   max-width:1.5em;
 		 }
+		 #popup {
+		   display:none;
+		 }
+		 a.pop:hover #popup, a.pop:focus #popup{
+		    position:absolute;
+				left: -10em;
+				top:1.5em;
+				width:9   em;
+				background-color:lightgray;
+				color:black;
+				border: thin solid black;
+				text-align:center;
+				display:block;
+		 	  border-radius:4px;
+        box-shadow: 5px 5px 8px #CCC;
+		 }
   </style>
 <script>
 var imageLoader; // image file load input type file
@@ -646,14 +662,14 @@ function checkContrast()
 	
   if (txtSizeOp == "large") {
 	  if (l1 > 3) 
-	    result = "pass A/AA";
+	    result = "Pass A/AA";
 	  else
-		  result = "fail A/AA";
+		  result = "Fail A/AA";
 	} else { // default text size
 	  if (l1 > 4.5) 
-	    result = "pass A/AA";
+	    result = "Pass A/AA";
 	  else
-		  result = "fail A/AA";
+		  result = "Fail A/AA";
 	}
 	
 	// display pass/fail result
@@ -667,7 +683,7 @@ function checkContrast()
 </script>
 </head>
 <body onload="init();">
-<div id="maincontainer">
+<div id="maincontainer" style="max-width:100%;" >
 <div id="toolbar1">
   <label for="imageLoader">Image:</label>
 	<input type="file" id="imageLoader" name="imageLoader"/>
@@ -682,20 +698,20 @@ function checkContrast()
 	</select>
 	<button onclick="filter();">Filter</button>
 	<a tabindex="0" href="javascript:void();" role="button" download="imagecopy.png" id="save" onclick="saveCopy();">Save Copy</a>
-  <label style="margin-left:2em;" for="output1">Conforms?</label>
+  <label style="margin-left:1em;" for="output1">Conforms?</label>
   <output style="padding:.1em; border:thin solid black;" id="output1">TBD</output>
-	<a style="font-size:large;" href="#" role="button"><i>i</i></a>
+	<a aria-label="Info" aria-describedby="popup" class="pop" id="info" style="position:relative; font-size:large;" href="#" role="button"><span id="popup">WCAG 2 A/AA conformance requires a contrast ratio of 4.5:1 for default size text & 3:1 for text that is 14pt+ and bold or 18pt+.</span><i>i</i></a>
 </div>
 
 <div id="toolbar2">
   Color 1:
   <button title="eye dropper color 1" id="color1" style="color: white; min-width:1.5em; min-height:1.5em; background-color:black;" onclick="color1clicked();">&#8689</button>
-  <input pattern="^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$" title="Color 1 value" size="7" id="inputcolor1" type="text" value="#000000"/>
+  <input pattern="^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$" title="Color 1 value" size="6" id="inputcolor1" type="text" value="#000000"/>
 	<input title="Color 1 pickter" id="inputcolor1picker" type="color" value="#000000"/>
   
 	Color 2:
   <button title="eye dropper colro 2" onclick="color2clicked();" id="color2" style="color:black; min-width:1.5em; min-height:1.5em; background-color:white;">&#8689</button>
-  <input pattern="^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$" title="Color 2 value" size="7" id="inputcolor2" type="text" value="#FFFFFF"/>
+  <input pattern="^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$" title="Color 2 value" size="6" id="inputcolor2" type="text" value="#FFFFFF"/>
 	<input title="Color 2 picker" id="inputcolor2picker" type="color" value="#FFFFFF"/>
   
 	<output id="sample" style="border:thin solid black; padding-left:.5em; margin-left:.5em; margin-right:.5em; padding-right:.5em;">Sample</output>
@@ -711,8 +727,9 @@ function checkContrast()
   <canvas id="imageCanvas" name="imageCanvas"style=""></canvas>
   <canvas id="zoom" width="150" height="150" style="position:absolute; top:0; left:0; display:none"></canvas>
   <div id="footer">
+	  
   </div>
-</div>
-</div>
+</div> <!-- workarea -->
+</div> <!-- maincontainer -->
 </body>
 </html>
