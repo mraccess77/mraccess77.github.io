@@ -9,29 +9,30 @@
      body {
        background-color:white;
      }
-		 /* HTML5 color pickers */
-		 input[type="color"] {
-		   max-width:1.5em;
-		 }
-		 
-		 /* info pop-up */
-		 #popup {
-		   display:none;
-		 }
-		 <!-- info pop on hover and on focus -->
-		 a.pop:hover #popup, a.pop:focus #popup{
-		    position:absolute;
-				left: -10em;
-				top:1.5em;
-				width:9   em;
-				background-color:lightgray;
-				color:black;
-				border: thin solid black;
-				text-align:center;
-				display:block;
-		 	  border-radius:4px;
-        box-shadow: 5px 5px 8px #CCC;
-		 }
+	 /* HTML5 color pickers */
+	 input[type="color"] {
+	   max-width:1.5em;
+	 }
+
+	 /* info pop-up */
+	 #popup {
+	   display:none;
+	 }
+
+	 /* info pop on hover and on focus */
+	 a.pop:hover #popup, a.pop:focus #popup{
+		position:absolute;
+		left: -10em;
+		top:1.5em;
+		width:9   em;
+		background-color:lightgray;
+		color:black;
+		border: thin solid black;
+		text-align:center;
+		display:block;
+		border-radius:4px;
+	    box-shadow: 5px 5px 8px #CCC;
+	 }
   </style>
 <script>
 // globals
@@ -59,7 +60,7 @@ function init() {
   });
 
 	imageCanvas.addEventListener("click", setColor);
-	
+
 	zoom = document.getElementById("zoom");
 	var zoomCtx = zoom.getContext("2d");
 
@@ -88,7 +89,7 @@ function init() {
 			zoomCtx.strokeStyle="red";
 			zoomCtx.lineWidth="2";
  	    zoomCtx.stroke();
-			
+
 			// if pointer to far to right put magnified view on the left of pointer
  	    if (e.pageX+170 > window.innerWidth) {
 		    zoom.style.left = e.pageX - 160  + "px"
@@ -96,7 +97,7 @@ function init() {
 		  else {
 		    zoom.style.left = e.pageX + 10  + "px"
 		  }
-			
+
 			// if pointer to close to bottom put magnified view to top of pointer
  	    if (e.pageY+100 > window.innerHeight) {
 		    zoom.style.top = e.pageY - 160  + "px"
@@ -112,12 +113,12 @@ function init() {
 
 	// display default contrast for black on white
 	checkContrast();
-	
+
 	// when the picker 1 chanegs update the eye dropper and value display for color 1
 	document.getElementById("inputcolor1picker").addEventListener("change", function(e) {
 	   document.getElementById("inputcolor1").value = e.target.value;
-		 document.getElementById("color1").style.backgroundColor = e.target.value;		
-		 checkContrast();		 
+		 document.getElementById("color1").style.backgroundColor = e.target.value;
+		 checkContrast();
 	});
 
 		// when the color 1 input field changes
@@ -130,46 +131,46 @@ function init() {
 			 checkContrast();
 		 }
 	});
-	
+
 	// when the picker 2 chanegs update the eye dropper and value display for color 2
 	document.getElementById("inputcolor2picker").addEventListener("change", function(e) {
 	   document.getElementById("inputcolor2").value = e.target.value;
 		 document.getElementById("color2").style.backgroundColor = e.target.value;
 		 checkContrast();
 	});
-	
+
 	// when the color 1 input field changes
 	document.getElementById("inputcolor2").addEventListener("change", function(e) {
 	var reg = new RegExp("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$");
 		 if (e.target.value.match(reg)) {
 			 document.getElementById("inputcolor2picker").value = e.target.value;
-		   document.getElementById("color2").style.backgroundColor = e.target.value;		 
-			 checkContrast();			 
+		   document.getElementById("color2").style.backgroundColor = e.target.value;
+			 checkContrast();
 		 }
 	});
-	
+
 	// text size toggled
 	document.getElementById("defaulttext").addEventListener("click", function(e) {
 		e.target.style.borderStyle = "inset";
 		e.target.setAttribute("aria-pressed","true");
 		document.getElementById("largetext").style.borderStyle = "outset";
 		document.getElementById("largetext").setAttribute("aria-pressed",false);
-		checkContrast();		 
+		checkContrast();
 	});
-	
+
 	// text size toggled
 	document.getElementById("largetext").addEventListener("click", function(e) {
 		e.target.style.borderStyle = "inset";
 		e.target.setAttribute("aria-pressed","true");
 		document.getElementById("defaulttext").style.borderStyle = "outset";
-		document.getElementById("defaulttext").setAttribute("aria-pressed",false);	
-		checkContrast();		 
+		document.getElementById("defaulttext").setAttribute("aria-pressed",false);
+		checkContrast();
 	});
-		
+
 	// if IE turn off the color picker (input type=color) as it is not supported
-	if (msie() ) {
+	if (msie() || isSafari() ) {
 		document.getElementById("inputcolor1picker").style.display = "none";
-		document.getElementById("inputcolor2picker").style.display = "none";	
+		document.getElementById("inputcolor2picker").style.display = "none";
 	}
 }
 
@@ -221,7 +222,7 @@ function setColor(e) {
 }
 
 // *******************************************
-// update based on eye dropper 
+// update based on eye dropper
 // called on mouseMove
 // *******************************************
 function updateColor(e) {
@@ -240,7 +241,7 @@ function updateColor(e) {
 		var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
 		var average = ((p[0]+p[1]+p[2]) /3);
 		//  console.log("right before color");
-		
+
 		// display color values and update
 		if (activeColor) {
 		  //console.log("color set");
@@ -269,7 +270,7 @@ function handleImage(e){
 				// delay after load because sometimes the image is not ready to be drawn and a blank screen appears.
         setTimeout(function() {img.onload = displayImage(img);}, 1000);
 				//copy of image file so we can rescale later
-        imageFile = img;  
+        imageFile = img;
     }
 
 }
@@ -301,9 +302,9 @@ function displayImage(img) {
 		// console.log(imageCanvas.width);
 		if (imageCanvas.width > 0)
 			setTimeout(function() {normalData = ctx.getImageData(0,0,imageCanvas.width, imageCanvas.height);}, 1000);
-		
+
     //reset UI
-    document.getElementById("selectFilter").selectedIndex = 0;		
+    document.getElementById("selectFilter").selectedIndex = 0;
 		imageLoaded = true;
 }
 
@@ -315,7 +316,7 @@ function rescaleImage() {
  var ctx = imageCanvas.getContext('2d');
  var img = new Image();
  img.src = imageFile.src;
- 
+
  imageCanvas.width = img.width; //img.width;
  imageCanvas.height = img.height; // img.height;
  ctx.drawImage(img,0,0, img.width,img.height);
@@ -327,7 +328,7 @@ function rescaleImage() {
 function filter() {
 
 	if (!imageLoaded) return;
-	
+
 	var ctx = imageCanvas.getContext("2d");
 
 	// reset image to original before perfoming an filters
@@ -402,7 +403,7 @@ function convertProtanopia(pixels) {
 		}
 		if (B > 255) {
 		  B = 255;
-      console.log("b255");			
+      console.log("b255");
 		}
 
 		d[i] = R;
@@ -410,7 +411,7 @@ function convertProtanopia(pixels) {
 		d[i+2] = B;
 
    //rgb approximation
-		/*d[i] = .467*r + .433*g;	
+		/*d[i] = .467*r + .433*g;
 		d[i+1] = .478*r + .412*g;
 		d[i+2] = .442*g + .778*b;  */
 
@@ -466,7 +467,7 @@ function convertDeuteranopia(pixels) {
 		}
 		if (B > 255) {
 		  B = 255;
-      console.log("b255");			
+      console.log("b255");
 		}
 
 		d[i] = R;
@@ -531,7 +532,7 @@ function convertTritanopia(pixels) {
 		}
 		if (B > 255) {
 		  B = 255;
-      console.log("b255");			
+      console.log("b255");
 		}
 
 		d[i] = R;
@@ -555,7 +556,7 @@ function convertGrayscale(pixels) {
 		var g = d[i+1];
 		var b = d[i+2];
 		var average = (d[i] + d[i+1] + d[i+2] ) /3;
-		
+
 		d[i] = average;
 		d[i+1] = average;
 		d[i+2] = average;
@@ -617,6 +618,12 @@ function msie() {
 		return false;
 }
 
+// ****************************************************************
+function isSafari() {
+  return navigator.vendor && navigator.vendor.indexOf('Apple') > -1 &&
+               navigator.userAgent && !navigator.userAgent.match('CriOS');
+}
+
 // **************************************************************
 // set contrast ration of text
 // **************************************************************
@@ -637,11 +644,11 @@ function checkContrast()
 		 txtSizeOp = "large";
 
 	// remove # sign from field value
-	if (color2.indexOf('#') == 0)	
+	if (color2.indexOf('#') == 0)
 		color2 = color2.substr(1, color2.length-1);
 	if (color1.indexOf('#') == 0)
 		color1 = color1.substr(1, color1.length-1);
-	   
+
 	//Linearised R (for example) = (R/FS)^2.2 where FS is full scale value (255
 	//for 8 bit color channels). L1 is the higher value (of text or background)
 	//alert(parseInt("0x"+color1.substr(0,2)));
@@ -653,7 +660,7 @@ function checkContrast()
   else {
 	  l1R = Math.pow(((l1R+0.055)/1.055),2.4);
 	}
-	
+
   l1G = parseInt("0x"+color1.substr(2,2))/255;
   if (l1G <= 0.03928) {
 	  l1G = l1G/12.92;
@@ -661,7 +668,7 @@ function checkContrast()
   else {
 	  l1G = Math.pow(((l1G+0.055)/1.055),2.4);
 	}
-	
+
   l1B = parseInt("0x"+color1.substr(4,2))/255;
   if (l1B <= 0.03928) {
 	    l1B = l1B/12.92;
@@ -669,7 +676,7 @@ function checkContrast()
   else {
 	    l1B = Math.pow(((l1B+0.055)/1.055),2.4);
 	}
-   
+
   l2R = parseInt("0x"+color2.substr(0,2))/255;
   if (l2R <= 0.03928) {
 	  l2R = l2R/12.92;
@@ -677,7 +684,7 @@ function checkContrast()
   else {
 	  l2R = Math.pow(((l2R+0.055)/1.055),2.4);
 	}
-  
+
 	l2G = parseInt("0x"+color2.substr(2,2))/255;
   if (l2G <= 0.03928) {
 	  l2G = l2G/12.92;
@@ -685,7 +692,7 @@ function checkContrast()
   else {
 	  l2G = Math.pow(((l2G+0.055)/1.055),2.4);
 	}
-    
+
 	l2B = parseInt("0x"+color2.substr(4,2))/255;
   if (l2B <= 0.03928) {
 	  l2B = l2B/12.92;
@@ -693,44 +700,44 @@ function checkContrast()
   else 	{
 	  l2B = Math.pow(((l2B+0.055)/1.055),2.4);
 	}
-  
+
   //where L is luminosity and is defined as
 	l1 = (.2126*l1R) + (.7152*l1G) + (.0722*l1B); //using linearised R, G, and B value
 	l2 = (.2126*l2R) + (.7152*l2G) + (.0722*l2B); //using linearised R, G, and B value
 	//and L2 is the lower value.
 	l1 = l1 + .05;
 	l2 = l2 + .05;
-	
+
 	// l1 should be larger - switch if not
   if (l1 < l2) 	{
 		temp = l1;
 		l1 = l2;
 		l2 = temp;
 	}
-	
+
 	l1 = l1/l2;
 	// to one decimal place
 	l1 = l1.toFixed(1);
 	// display contrast ratio
 	document.getElementById('contrast').value = l1.toString()+":1";
-	
+
   if (txtSizeOp == "large") {
-	  if (l1 > 3) 
+	  if (l1 > 3)
 	    result = "Pass A/AA";
 	  else
 		  result = "Fail A/AA";
 	} else { // default text size
-	  if (l1 > 4.5) 
+	  if (l1 > 4.5)
 	    result = "Pass A/AA";
 	  else
 		  result = "Fail A/AA";
 	}
-	
+
 	// display pass/fail result
 	document.getElementById('output1').textContent = result;
 	document.getElementById("sample").style.color = "#"+color1;
-	document.getElementById("sample").style.backgroundColor = "#" + color2;	
-	
+	document.getElementById("sample").style.backgroundColor = "#" + color2;
+
 } // checkContrast
 
 // ********************** end scripts ***********************
@@ -762,16 +769,16 @@ function checkContrast()
   <button title="eye dropper color 1" id="color1" style="color: white; min-width:1.5em; min-height:1.5em; background-color:black;" onclick="color1clicked();">&#8689</button>
   <input pattern="^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$" title="Color 1 value" size="6" id="inputcolor1" type="text" value="#000000"/>
 	<input title="Color 1 pickter" id="inputcolor1picker" type="color" value="#000000"/>
-  
+
 	Color 2:
   <button title="eye dropper colro 2" onclick="color2clicked();" id="color2" style="color:black; min-width:1.5em; min-height:1.5em; background-color:white;">&#8689</button>
   <input pattern="^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$" title="Color 2 value" size="6" id="inputcolor2" type="text" value="#FFFFFF"/>
 	<input title="Color 2 picker" id="inputcolor2picker" type="color" value="#FFFFFF"/>
-  
+
 	<output id="sample" style="border:thin solid black; padding-left:.5em; margin-left:.5em; margin-right:.5em; padding-right:.5em;">Sample</output>
 	<label for="contrast">Contrast:</label>
   <input type="text" size="4" id="contrast" />
-	
+
   <label>Text:</label>
   <button aria-pressed="true" aria-label="default text size" id="defaulttext" style="border-style:inset;" >Default</button>
   <button aria-pressed="false" aria-label="large text size" id="largetext">Large</button>
@@ -781,7 +788,7 @@ function checkContrast()
   <canvas id="imageCanvas" name="imageCanvas"style=""></canvas>
   <canvas id="zoom" width="150" height="150" style="position:absolute; top:0; left:0; display:none"></canvas>
   <div id="footer">
-	  
+
   </div>
 </div> <!-- workarea -->
 </div> <!-- maincontainer -->
