@@ -9,35 +9,62 @@
      body {
        background-color:white;
      }
+		 /* HTML5 color pickers */
+		 input[type="color"] {
+		   max-width:1.5em;
+		 }
+		 
+		 /* info pop-up */
+		 #popup {
+		   display:none;
+		 }
+		 <!-- info pop on hover and on focus -->
+		 a.pop:hover #popup, a.pop:focus #popup{
+		    position:absolute;
+				left: -10em;
+				top:1.5em;
+				width:9   em;
+				background-color:lightgray;
+				color:black;
+				border: thin solid black;
+				text-align:center;
+				display:block;
+		 	  border-radius:4px;
+        box-shadow: 5px 5px 8px #CCC;
+		 }
   </style>
 <script>
-var imageLoader;
-var imageCanvas;
-var normalData;
-var imageLoaded;
-var imageScaled = true;
-var imageFile;
-var zoom;
-var displayZoom = false;
-var activeColor = "";
+// globals
+var imageLoader; // image file load input type file
+var imageCanvas; // images canvas object
+var imageCtx; // image context object
+var normalData;  // image data after load unfiltered
+var imageLoaded;  // has the image been loaded?  If not UI is not functional
+var imageScaled = true;  // is the image scaled to fit the width of the display
+var imageFile;  // copy of image file used in case we need to rescale image
+var zoom;  // zoom canvas object
+var displayZoom = false;  // should we display the magnified canvas
+var activeColor = "";  // id string of the active color1 or color2
 
 // ***********************************************
 function init() {
+  // input@type=file loader
 	imageLoader = document.getElementById('imageLoader');
 	imageLoader.addEventListener('change', handleImage, false);
 
+	// when the mouse leaves the canvas remove the magnified area
 	imageCanvas = document.getElementById("imageCanvas");
 	imageCanvas.addEventListener("mouseout", function(){
 		zoom.style.display = "none";
   });
 
 	imageCanvas.addEventListener("click", setColor);
-
+	
 	zoom = document.getElementById("zoom");
 	var zoomCtx = zoom.getContext("2d");
 
 	imageCanvas.addEventListener("mousemove", function(e){
-	    console.log(e);
+	    // console.log(e);
 
 			if (!imageLoaded || !displayZoom)
 				return;
@@ -61,12 +88,16 @@ function init() {
 			zoomCtx.strokeStyle="red";
 			zoomCtx.lineWidth="2";
  	    zoomCtx.stroke();
+			
+			// if pointer to far to right put magnified view on the left of pointer
  	    if (e.pageX+170 > window.innerWidth) {
 		    zoom.style.left = e.pageX - 160  + "px"
 		  }
 		  else {
 		    zoom.style.left = e.pageX + 10  + "px"
 		  }
+			
+			// if pointer to close to bottom put magnified view to top of pointer
  	    if (e.pageY+100 > window.innerHeight) {
 		    zoom.style.top = e.pageY - 160  + "px"
 		  }
@@ -74,18 +105,84 @@ function init() {
 		    zoom.style.top = e.pageY + 10  + "px"
 		  }
 
+			// display the magnified area
 	    zoom.style.display = "block";
-	    updateColor(this);
+	    updateColor(e);
 	});
 
+	// display default contrast for black on white
+	checkContrast();
+	
+	// when the picker 1 chanegs update the eye dropper and value display for color 1
+	document.getElementById("inputcolor1picker").addEventListener("change", function(e) {
+	   document.getElementById("inputcolor1").value = e.target.value;
+		 document.getElementById("color1").style.backgroundColor = e.target.value;		
+		 checkContrast();		 
+	});
+
+		// when the color 1 input field changes
+	document.getElementById("inputcolor1").addEventListener("change", function(e) {
+	   // console.log("changed");
+		 var reg = new RegExp("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$");
+		 if (e.target.value.match(reg)) {
+			 document.getElementById("inputcolor1picker").value = e.target.value;
+			 document.getElementById("color1").style.backgroundColor = e.target.value;
+			 checkContrast();
+		 }
+	});
+	
+	// when the picker 2 chanegs update the eye dropper and value display for color 2
+	document.getElementById("inputcolor2picker").addEventListener("change", function(e) {
+	   document.getElementById("inputcolor2").value = e.target.value;
+		 document.getElementById("color2").style.backgroundColor = e.target.value;
+		 checkContrast();
+	});
+	
+	// when the color 1 input field changes
+	document.getElementById("inputcolor2").addEventListener("change", function(e) {
+	var reg = new RegExp("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$");
+		 if (e.target.value.match(reg)) {
+			 document.getElementById("inputcolor2picker").value = e.target.value;
+		   document.getElementById("color2").style.backgroundColor = e.target.value;		 
+			 checkContrast();			 
+		 }
+	});
+	
+	// text size toggled
+	document.getElementById("defaulttext").addEventListener("click", function(e) {
+		e.target.style.borderStyle = "inset";
+		e.target.setAttribute("aria-pressed","true");
+		document.getElementById("largetext").style.borderStyle = "outset";
+		document.getElementById("largetext").setAttribute("aria-pressed",false);
+		checkContrast();		 
+	});
+	
+	// text size toggled
+	document.getElementById("largetext").addEventListener("click", function(e) {
+		e.target.style.borderStyle = "inset";
+		e.target.setAttribute("aria-pressed","true");
+		document.getElementById("defaulttext").style.borderStyle = "outset";
+		document.getElementById("defaulttext").setAttribute("aria-pressed",false);	
+		checkContrast();		 
+	});
+		
+	// if IE turn off the color picker (input type=color) as it is not supported
+	if (msie() ) {
+		document.getElementById("inputcolor1picker").style.display = "none";
+		document.getElementById("inputcolor2picker").style.display = "none";	
+	}
 }
 
-// **********************************************
+// ****************************************************
+// color1 button was clicked, turn on magnfication area and update color to color under mouse
+// ****************************************************
 function color1clicked() {
   displayZoom = true;
   activeColor = "color1";
 }
 
+// **********************************************
+// color2 button was clicked, turn on magnfication area and update color to color under mouse
 // **********************************************
 function color2clicked() {
   displayZoom = true;
@@ -115,6 +212,8 @@ function rgbToHex(r, g, b) {
 }
 
 // ******************************************
+// user has clicked on canvas and we have selected that color and can now hide the magnified area
+// ******************************************
 function setColor(e) {
   displayZoom = false;
   activeColor = ""
@@ -122,21 +221,38 @@ function setColor(e) {
 }
 
 // *******************************************
+// update based on eye dropper 
+// called on mouseMove
+// *******************************************
 function updateColor(e) {
 		if (!imageLoaded)
 			return
 
-		var pos = findPos(e);
-		var x = event.pageX - pos.x;
-		var y = event.pageY - pos.y;
+		e = e || window.event;
+		var pos = findPos(imageCanvas);
+    //console.log(e);
+		var x = e.pageX - pos.x;
+		var y = e.pageY - pos.y;
 
 		var ctx = imageCanvas.getContext('2d');
 		var p = ctx.getImageData(x, y, 1, 1).data;
 
 		var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+		var average = ((p[0]+p[1]+p[2]) /3);
+		//  console.log("right before color");
+		
+		// display color values and update
 		if (activeColor) {
+		  //console.log("color set");
 			document.getElementById("input"+ activeColor).value = hex;
+			document.getElementById("input"+ activeColor+"picker").value = hex;
 			document.getElementById(activeColor).style.backgroundColor = hex;
+			if (average > 127) { // dark background use light arrow
+			  document.getElementById(activeColor).style.color = "black";
+			} else {
+			  document.getElementById(activeColor).style.color = "white";
+			}
+			checkContrast();
 		}
 }
 
@@ -150,21 +266,26 @@ function handleImage(e){
     reader.onload = function(event){
         var img = new Image();
         img.src = event.target.result;
-        img.onload = displayImage(img);
-        imageFile = img;
+				// delay after load because sometimes the image is not ready to be drawn and a blank screen appears.
+        setTimeout(function() {img.onload = displayImage(img);}, 1000);
+				//copy of image file so we can rescale later
+        imageFile = img;  
     }
 
 }
 
 // *********************************************************
+// called once image is loaded from reader, this function draws to canvas
+// *********************************************************
 function displayImage(img) {
-
+    //console.log(img.src);
 		var ctx = imageCanvas.getContext('2d');
 		var winWidth = window.innerWidth;
 		var winHeight = window.innerHeight;
 		var sizeX = img.width;
 		var sizeY = img.height;
 
+		// while the image is too width for the window scale by 90 until we find a usable value
 		if (imageScaled) {
 			while ((sizeX > winWidth-20) ) { // || (sizeY > winHeight-20) ) {
 
@@ -177,28 +298,39 @@ function displayImage(img) {
 		imageCanvas.height = sizeY; // img.height;
 
 		ctx.drawImage(img,0,0, sizeX,sizeY);
-		normalData = ctx.getImageData(0,0,imageCanvas.width, imageCanvas.height);
+		// console.log(imageCanvas.width);
+		if (imageCanvas.width > 0)
+			setTimeout(function() {normalData = ctx.getImageData(0,0,imageCanvas.width, imageCanvas.height);}, 1000);
+		
+    //reset UI
+    document.getElementById("selectFilter").selectedIndex = 0;		
 		imageLoaded = true;
 }
 
+// **********************************************
+// really full scale image
 // **********************************************
 function rescaleImage() {
 
  var ctx = imageCanvas.getContext('2d');
  var img = new Image();
  img.src = imageFile.src;
+ 
  imageCanvas.width = img.width; //img.width;
  imageCanvas.height = img.height; // img.height;
  ctx.drawImage(img,0,0, img.width,img.height);
 }
 
 //*************************************************************
+// Apply a user selected filter such as protanopia or grayscale
+//*************************************************************
 function filter() {
 
 	if (!imageLoaded) return;
-	var imageCanvas = document.getElementById("imageCanvas");
+	
 	var ctx = imageCanvas.getContext("2d");
 
+	// reset image to original before perfoming an filters
 	ctx.putImageData(normalData,0,0);
 
 	var pdata = ctx.getImageData(0,0,imageCanvas.width, imageCanvas.height);
@@ -207,7 +339,7 @@ function filter() {
 	if (selection == "Protanopia")
 		pdata = convertProtanopia(pdata);
 	else if (selection == "Deuteranopia")
-		pdata = convertProtanopia(pdata);
+		pdata = convertDeuteranopia(pdata);
 	else if (selection == "Tritanopia")
 		pdata = convertTritanopia(pdata);
 	else if (selection == "Grayscale")
@@ -217,11 +349,12 @@ function filter() {
 	else if (selection == "Typical")
 		pdata = normalData;
 
+	// draw altered image
 	ctx.putImageData(pdata,0,0);
 }
 
 // ************************************************************
-// protanopia
+// protanopia simulator
 // ************************************************************
 function convertProtanopia(pixels) {
 	var d = pixels.data;
@@ -238,8 +371,8 @@ function convertProtanopia(pixels) {
 
 	// Simulate protanopia
 		var l = (0 * L) + (2.02344 * M) + (-2.52581 * S);
-		var m = (0 * L) + (1.0 * M) + (0 * S);
-		var s = (0 * L) + (0 * M) + (1.0 * S);
+		var m = (0 * L) + (1 * M) + (0 * S);
+		var s = (0 * L) + (0 * M) + (1 * S);
 
 		// LMS to RGB conversion
 		var R = (0.0809 * l) + (-0.1305 * m) + (0.116 * s);
@@ -247,22 +380,40 @@ function convertProtanopia(pixels) {
 		var B = (-0.0003 * l) + (-0.0041 * m) + (0.6935 * s);
 
 		// Clean up values
-		if(R < 0) R = 0;
-		if(R > 255) R = 255;
-		if(G < 0) G = 0;
-		if(G > 255) G = 255;
-		if(B < 0) B = 0;
-		if(B > 255) B = 255;
+		if (R < 0) {
+		  R = 0;
+			console.log("r0");
+		}
+		if (R > 255) {
+		  console.log("r255");
+		  R = 255;
+		}
+		if (G < 0) {
+		  G = 0;
+			console.log("g0");
+		}
+		if (G > 255) {
+		  G = 255;
+			console.log("g255");
+	  }
+		if (B < 0) {
+		  B = 0;
+			console.log("b0");
+		}
+		if (B > 255) {
+		  B = 255;
+      console.log("b255");			
+		}
 
 		d[i] = R;
 		d[i+1] = G;
 		d[i+2] = B;
 
-/*  rgb approximation
-		d[i] = .567*r + .433*g;
-		d[i+1] = .558*r + .442*g;
-		d[i+2] = .242*g + .758*b;
-*/
+   //rgb approximation
+		/*d[i] = .467*r + .433*g;	
+		d[i+1] = .478*r + .412*g;
+		d[i+2] = .442*g + .778*b;  */
+
 	}
 	return pixels;
 }
@@ -293,12 +444,30 @@ function convertDeuteranopia(pixels) {
 		var B = (-0.0003 * l) + (-0.0041 * m) + (0.6935 * s);
 
 		// Clean up values
-		if(R < 0) R = 0;
-		if(R > 255) R = 255;
-		if(G < 0) G = 0;
-		if(G > 255) G = 255;
-		if(B < 0) B = 0;
-		if(B > 255) B = 255;
+		if (R < 0) {
+		  R = 0;
+			console.log("r0");
+		}
+		if (R > 255) {
+		  console.log("r255");
+		  R = 255;
+		}
+		if (G < 0) {
+		  G = 0;
+			console.log("g0");
+		}
+		if (G > 255) {
+		  G = 255;
+			console.log("g255");
+	  }
+		if (B < 0) {
+		  B = 0;
+			console.log("b0");
+		}
+		if (B > 255) {
+		  B = 255;
+      console.log("b255");			
+		}
 
 		d[i] = R;
 		d[i+1] = G;
@@ -339,32 +508,31 @@ function convertTritanopia(pixels) {
 		var G = (-0.0102 * l) + (0.0540 * m) + (-0.1136 * s);
 		var B = (-0.0003 * l) + (-0.0041 * m) + (0.6935 * s);
 
-		R = r - R;
-		G = g - G;
-		B = b - B;
-
-    // error
-
-	  RR = (0.0 * R) + (0.0 * G) + (0.0 * B);
-		GG = (0.7 * R) + (1.0 * G) + (0.0 * B);
-		BB = (0.7 * R) + (0.0 * G) + (1.0 * B);
-*/
-/*
-	  RR = (1.0 * R) + (0 * G) + (0 * B);
-		GG = (0 * R) + (1.0 * G) + (0.0 * B);
-		BB = (0.7 * R) + (0.7 * G) + (1.0 * B);
-
-		R = RR+r;
-		G = GG+g;
-		B = BB+b;
-
 		// Clean up values
-		if(R < 0) R = 0;
-		if(R > 255) R = 255;
-		if(G < 0) G = 0;
-		if(G > 255) G = 255;
-		if(B < 0) B = 0;
-		if(B > 255) B = 255;
+		if (R < 0) {
+		  R = 0;
+			console.log("r0");
+		}
+		if (R > 255) {
+		  console.log("r255");
+		  R = 255;
+		}
+		if (G < 0) {
+		  G = 0;
+			console.log("g0");
+		}
+		if (G > 255) {
+		  G = 255;
+			console.log("g255");
+	  }
+		if (B < 0) {
+		  B = 0;
+			console.log("b0");
+		}
+		if (B > 255) {
+		  B = 255;
+      console.log("b255");			
+		}
 
 		d[i] = R;
 		d[i+1] = G;
@@ -387,6 +555,7 @@ function convertGrayscale(pixels) {
 		var g = d[i+1];
 		var b = d[i+2];
 		var average = (d[i] + d[i+1] + d[i+2] ) /3;
+		
 		d[i] = average;
 		d[i+1] = average;
 		d[i+2] = average;
@@ -426,6 +595,7 @@ function scaleImage(e) {
  }
    displayImage(imageFile);
 }
+
 // **************************************************
 function saveCopy() {
 	if (!imageLoaded) return;
@@ -433,47 +603,187 @@ function saveCopy() {
   document.getElementById('save').href = dataURL;
 }
 
+// ****************************************************************
+// Is the IE browser in use?
+// *****************************************************************
+function msie() {
+
+  var ua = window.navigator.userAgent;
+  var msie = ua.indexOf("MSIE ");
+	var trident = ua.indexOf('Trident/');
+	if ((trident > 0) || (msie > 0) )
+		return true;
+	else
+		return false;
+}
+
+// **************************************************************
+// set contrast ration of text
+// **************************************************************
+function checkContrast()
+{
+  var color1, color2;  // fields
+  var l1; // higher value
+  var l2; // lower value
+	var l1R, l1G, l1B, l2R, l2G, l2B;
+  var txtSizeOp; // large or default text string
+	var result; // pass or fail string
+
+	color1 = document.getElementById('inputcolor1').value;
+	color2 = document.getElementById('inputcolor2').value;
+	if (document.getElementById("defaulttext").getAttribute("aria-pressed") == "true")
+		 txtSizeOp = "default";
+	else
+		 txtSizeOp = "large";
+
+	// remove # sign from field value
+	if (color2.indexOf('#') == 0)	
+		color2 = color2.substr(1, color2.length-1);
+	if (color1.indexOf('#') == 0)
+		color1 = color1.substr(1, color1.length-1);
+	   
+	//Linearised R (for example) = (R/FS)^2.2 where FS is full scale value (255
+	//for 8 bit color channels). L1 is the higher value (of text or background)
+	//alert(parseInt("0x"+color1.substr(0,2)));
+	//Math.pow(n,x);
+	l1R = parseInt("0x"+color1.substr(0,2))/255;
+	if (l1R <= 0.03928) {
+	  l1R = l1R/12.92;
+	}
+  else {
+	  l1R = Math.pow(((l1R+0.055)/1.055),2.4);
+	}
+	
+  l1G = parseInt("0x"+color1.substr(2,2))/255;
+  if (l1G <= 0.03928) {
+	  l1G = l1G/12.92;
+	}
+  else {
+	  l1G = Math.pow(((l1G+0.055)/1.055),2.4);
+	}
+	
+  l1B = parseInt("0x"+color1.substr(4,2))/255;
+  if (l1B <= 0.03928) {
+	    l1B = l1B/12.92;
+	}
+  else {
+	    l1B = Math.pow(((l1B+0.055)/1.055),2.4);
+	}
+   
+  l2R = parseInt("0x"+color2.substr(0,2))/255;
+  if (l2R <= 0.03928) {
+	  l2R = l2R/12.92;
+	}
+  else {
+	  l2R = Math.pow(((l2R+0.055)/1.055),2.4);
+	}
+  
+	l2G = parseInt("0x"+color2.substr(2,2))/255;
+  if (l2G <= 0.03928) {
+	  l2G = l2G/12.92;
+	}
+  else {
+	  l2G = Math.pow(((l2G+0.055)/1.055),2.4);
+	}
+    
+	l2B = parseInt("0x"+color2.substr(4,2))/255;
+  if (l2B <= 0.03928) {
+	  l2B = l2B/12.92;
+	}
+  else 	{
+	  l2B = Math.pow(((l2B+0.055)/1.055),2.4);
+	}
+  
+  //where L is luminosity and is defined as
+	l1 = (.2126*l1R) + (.7152*l1G) + (.0722*l1B); //using linearised R, G, and B value
+	l2 = (.2126*l2R) + (.7152*l2G) + (.0722*l2B); //using linearised R, G, and B value
+	//and L2 is the lower value.
+	l1 = l1 + .05;
+	l2 = l2 + .05;
+	
+	// l1 should be larger - switch if not
+  if (l1 < l2) 	{
+		temp = l1;
+		l1 = l2;
+		l2 = temp;
+	}
+	
+	l1 = l1/l2;
+	// to one decimal place
+	l1 = l1.toFixed(1);
+	// display contrast ratio
+	document.getElementById('contrast').value = l1.toString()+":1";
+	
+  if (txtSizeOp == "large") {
+	  if (l1 > 3) 
+	    result = "Pass A/AA";
+	  else
+		  result = "Fail A/AA";
+	} else { // default text size
+	  if (l1 > 4.5) 
+	    result = "Pass A/AA";
+	  else
+		  result = "Fail A/AA";
+	}
+	
+	// display pass/fail result
+	document.getElementById('output1').textContent = result;
+	document.getElementById("sample").style.color = "#"+color1;
+	document.getElementById("sample").style.backgroundColor = "#" + color2;	
+	
+} // checkContrast
+
+// ********************** end scripts ***********************
 </script>
 </head>
 <body onload="init();">
-<div id="maincontainer">
-<div>
+<div id="maincontainer" style="max-width:100%;" >
+<div id="toolbar1">
   <label for="imageLoader">Image:</label>
 	<input type="file" id="imageLoader" name="imageLoader"/>
 	<label for="scale">Scale?</label><input onclick="scaleImage(this);" id="scale" type="checkbox" checked/>
-	<select id="selectFilter">
-	  <option value="deuteranopia">Typical</option>
+	<select title="Select filter" id="selectFilter">
+	  <option value="typical">Typical</option>
 	  <option value="protanopia">Protanopia</option>
 	  <option value="deuteranopia">Deuteranopia</option>
- 	  <option value="deuteranopia">Tritanopia</option>
-	  <option value="deuteranopia">Grayscale</option>
-	  <option value="deuteranopia">Invert</option>
+ 	  <option value="tritanopia">Tritanopia</option>
+	  <option value="grayscale">Grayscale</option>
+	  <option value="invert">Invert</option>
 	</select>
 	<button onclick="filter();">Filter</button>
 	<a tabindex="0" href="javascript:void();" role="button" download="imagecopy.png" id="save" onclick="saveCopy();">Save Copy</a>
+  <label style="margin-left:1em;" for="output1">Conforms?</label>
+  <output style="padding:.1em; border:thin solid black;" id="output1">TBD</output>
+	<a aria-label="Info" aria-describedby="popup" class="pop" id="info" style="position:relative; font-size:large;" href="#" role="button"><span id="popup">WCAG 2 A/AA conformance requires a contrast ratio of 4.5:1 for default size text & 3:1 for text that is 14pt+ and bold or 18pt+.</span><i>i</i></a>
 </div>
 
-<div>
+<div id="toolbar2">
   Color 1:
-  <button id="color1" style="min-width:1.5em; min-height:1.5em; background-color:black;" onclick="color1clicked();"></button>
-  <input size="7" id="inputcolor1" type="text" value="000000"/>
-  Color 2:
-  <button onclick="color2clicked();" id="color2" style="min-width:1.5em; min-height:1.5em; background-color:white;"></button>
-  <input size="7" id="inputcolor2" type="text" value="FFFFFF"/>
-  <label>Contrast:</label>
-  <input type="text" size="8" id="contrast" />
+  <button title="eye dropper color 1" id="color1" style="color: white; min-width:1.5em; min-height:1.5em; background-color:black;" onclick="color1clicked();">&#8689</button>
+  <input pattern="^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$" title="Color 1 value" size="6" id="inputcolor1" type="text" value="#000000"/>
+	<input title="Color 1 pickter" id="inputcolor1picker" type="color" value="#000000"/>
+  
+	Color 2:
+  <button title="eye dropper colro 2" onclick="color2clicked();" id="color2" style="color:black; min-width:1.5em; min-height:1.5em; background-color:white;">&#8689</button>
+  <input pattern="^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$" title="Color 2 value" size="6" id="inputcolor2" type="text" value="#FFFFFF"/>
+	<input title="Color 2 picker" id="inputcolor2picker" type="color" value="#FFFFFF"/>
+  
+	<output id="sample" style="border:thin solid black; padding-left:.5em; margin-left:.5em; margin-right:.5em; padding-right:.5em;">Sample</output>
+	<label for="contrast">Contrast:</label>
+  <input type="text" size="4" id="contrast" />
+	
   <label>Text:</label>
-  <button style="border-style:inset;" >Default</button>
-  <button>Large</button>
-  <label>Conforms?</label>
-  <output style="border:thin solid black;" id="output1">TBD</output>
+  <button aria-pressed="true" aria-label="default text size" id="defaulttext" style="border-style:inset;" >Default</button>
+  <button aria-pressed="false" aria-label="large text size" id="largetext">Large</button>
 </div>
-<div>
+
+<div id="workarea">
   <canvas id="imageCanvas" name="imageCanvas"style=""></canvas>
   <canvas id="zoom" width="150" height="150" style="position:absolute; top:0; left:0; display:none"></canvas>
   <div id="footer">
+	  
   </div>
-</div>
-</div>
+</div> <!-- workarea -->
+</div> <!-- maincontainer -->
 </body>
 </html>
