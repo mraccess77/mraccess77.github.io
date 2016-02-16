@@ -30,9 +30,10 @@
 					margin-bottom: .5em;
 					padding:.5em;
 			 }
-			 .slidegroup input[type="text"] {
+			 .slidegroup input[type="number"] {
 			    vertical-align:top;
 					display:inline-block;
+					width:4em;
 			 }
 			 .topgroup input {
 			   	vertical-align:top;
@@ -64,7 +65,7 @@
 				  margin-bottom:1em;
 				}
 				input[type="range"] {
-
+					min-width:65%;
 				}
 				.slidegroup {
 				  height:2em;
@@ -353,22 +354,22 @@ function hexToRgb(hex) {
 				<div class="topgroup">
 					<label for="fg">Foreground RGB in Hex:</label>
 					<input id="fg" type="text" value="#000000" size="7" pattern="^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$" title="Enter # followed by a six digit hex number between #000000 and #ffffff">
-					<input id="fgc" type="color" value="#000000">
+					<input aria-label="Forground color picker" id="fgc" type="color" value="#000000">
 				</div>
 				<div class="slidegroup">
-					<label class="sliderlbl">Red:</label>
+					<label for "fgr" class="sliderlbl">Red:</label>
 					<input id="fgr" type="range" min="0" max="255" value="0">
-					<input id="fgri" size="3" type="number" min="0" max="255" value="0">
+					<input aria-label="foreground red" id="fgri" size="3" type="number" min="0" max="255" value="0">
 				</div>
 				<div class="slidegroup">
-					<label class="sliderlbl">Green:</label>
+					<label for="fgg" class="sliderlbl">Green:</label>
 					<input id="fgg" type="range" min="0" max="255" value="0">
-					<input id="fggi" size="3" type="number" min="0" max="255" value="0">
+					<input aria-label="foreground green" id="fggi" size="3" type="number" min="0" max="255" value="0">
 				</div>
 				<div class="slidegroup">
-					<label class="sliderlbl">Blue:</label>
+					<label for="fgb" class="sliderlbl">Blue:</label>
 					<input id="fgb" id="fgb" type="range" min="0" max="255" value="0">
-					<input id="fgbi" size="3" type="number" min="0" max="255" value="0">
+					<input aria-label="foreground blue" id="fgbi" size="3" type="number" min="0" max="255" value="0">
 				</div>
 			</div>
 
@@ -377,22 +378,22 @@ function hexToRgb(hex) {
 			<div class="topgroup">
 			  <label for="bg">Background RGB in Hex:</label>
         <input id="bg" type="text" value="#FFFFFF" size="7" >
-				<input id="bgc" type="color" value="#ffffff">
+				<input aria-label="Background color picker" id="bgc" type="color" value="#ffffff">
 			</div>
 			<div class="slidegroup">
-			  <label class="sliderlbl">Red:</label>
+			  <label for="bgr" class="sliderlbl">Red:</label>
 				<input id="bgr" type="range" min="0" max="255" value="255">
-				<input id="bgri" size="3" type="number" min="0" max="255" value="255">
+				<input aria-label="background red" id="bgri" size="3" type="number" min="0" max="255" value="255">
 		  </div>
 			<div class="slidegroup">
-			  <label class="sliderlbl">Green:</label>
+			  <label for="bgg" class="sliderlbl">Green:</label>
 				<input id="bgg" type="range" min="0" max="255" value="255">
-				<input id="bggi" size="3" type="number" min="0" max="255" value="255">
+				<input aria-label="background green" id="bggi" size="3" type="number" min="0" max="255" value="255">
 			</div>
 			<div class="slidegroup">
-			  <label class="sliderlbl">Blue:</label>
+			  <label for="bgb" class="sliderlbl">Blue:</label>
 				<input id="bgb" type="range" min="0" max="255" value="255">
-				<input id="bgbi" size="3" type="number" min="0" max="255" value="255">
+				<input aria-label="background blue" id="bgbi" size="3" type="number" min="0" max="255" value="255">
 			</div>
 			</div>
 
