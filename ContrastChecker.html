@@ -5,7 +5,8 @@
     <title>SSB BART Group - Contrast Checker</title>
 		<style type="text/css">
 		   #sample {
-		     style="width:70%;"
+		     width:70%;
+		     padding:.5em;
 			 }
 			 .float {
 			   float:left;
@@ -25,7 +26,7 @@
 			 .group {
 			    background-color:#f3f3f3;
 					border: thin solid darkgray;
-					width: 20em;
+					max-width: 100%;
 					margin-bottom: .5em;
 					padding:.5em;
 			 }
@@ -39,14 +40,14 @@
           margin-bottom:.5em;
 				}
 				form {
-				   width: 21em;
+				   width: 55%;
 					 float:left;
 
 				}
 				#right {
 				  float: left;
 					margin: 1em;
-					width:22em;
+					width:35%;
 				}
 				#footer {
 				  clear:both;
@@ -61,6 +62,12 @@
 				}
 				#samplegroup {
 				  margin-bottom:1em;
+				}
+				input[type="range"] {
+
+				}
+				.slidegroup {
+				  height:2em;
 				}
 		</style>
     <script type="text/javascript">
@@ -122,6 +129,7 @@ function check(e)
     txtSizeOp = document.getElementById('fontSize').selectedIndex;
 
 		// change of range, update rgb inputs
+		try {
 		if (e.target.tagName == "INPUT" && e.target.type == "range") {
       var id = e.target.id + "i";
       document.getElementById(id).value = e.target.value;
@@ -136,6 +144,9 @@ function check(e)
       document.getElementById(id).value = e.target.value;
 			synchHexToRGB();
 		}
+		}
+		catch(e) {
+		}
 
 		// check hex value for errors - display error and return
 		// |[A-Fa-f0-9]{3})$
@@ -148,14 +159,16 @@ function check(e)
 		  return;
 		}
 
-    if (e.target.id == "bgc")
-        document.getElementById("bg").value = e.target.value;
-    else if (e.target.id == "bg")
-        document.getElementById("bgc").value = e.target.value;
-    else if (e.target.id == "fg")
-        document.getElementById("fgc").value = e.target.value;
-    else if (e.target.id == "fgc")
-        document.getElementById("fg").value = e.target.value;
+		if (e) {
+			if (e.target.id == "bgc")
+					document.getElementById("bg").value = e.target.value;
+			else if (e.target.id == "bg")
+					document.getElementById("bgc").value = e.target.value;
+			else if (e.target.id == "fg")
+					document.getElementById("fgc").value = e.target.value;
+			else if (e.target.id == "fgc")
+					document.getElementById("fg").value = e.target.value;
+    }
 
 		var hexColors = ["bg","bgc","fg","fgc"];
 		if (hexColors.indexOf(e.target.id) > 0)
@@ -289,6 +302,14 @@ function check(e)
 } // check function
 
 // ****************************************************************
+function setup() {
+	if (msie()) {
+	   document.getElementById("fgc").style.display = "none";
+	   document.getElementById("bgc").style.display = "none";
+	}
+}
+
+// ****************************************************************
 // Is the IE browser in use?
 // *****************************************************************
 function msie() {
@@ -319,7 +340,7 @@ function hexToRgb(hex) {
 
   </script>
 </head>
-  <body onload="check(window.event);">
+  <body onload="check(window.event); setup();">
     <div id="error" class="error">
       <p>
       <span id="errtxt"></span>
@@ -334,17 +355,17 @@ function hexToRgb(hex) {
 					<input id="fg" type="text" value="#000000" size="7" pattern="^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$" title="Enter # followed by a six digit hex number between #000000 and #ffffff">
 					<input id="fgc" type="color" value="#000000">
 				</div>
-					<div class="slidegroup">
+				<div class="slidegroup">
 					<label class="sliderlbl">Red:</label>
 					<input id="fgr" type="range" min="0" max="255" value="0">
 					<input id="fgri" size="3" type="number" min="0" max="255" value="0">
 				</div>
-				<div>
+				<div class="slidegroup">
 					<label class="sliderlbl">Green:</label>
 					<input id="fgg" type="range" min="0" max="255" value="0">
 					<input id="fggi" size="3" type="number" min="0" max="255" value="0">
 				</div>
-				<div>
+				<div class="slidegroup">
 					<label class="sliderlbl">Blue:</label>
 					<input id="fgb" id="fgb" type="range" min="0" max="255" value="0">
 					<input id="fgbi" size="3" type="number" min="0" max="255" value="0">
@@ -363,12 +384,12 @@ function hexToRgb(hex) {
 				<input id="bgr" type="range" min="0" max="255" value="255">
 				<input id="bgri" size="3" type="number" min="0" max="255" value="255">
 		  </div>
-			<div>
+			<div class="slidegroup">
 			  <label class="sliderlbl">Green:</label>
 				<input id="bgg" type="range" min="0" max="255" value="255">
 				<input id="bggi" size="3" type="number" min="0" max="255" value="255">
 			</div>
-			<div>
+			<div class="slidegroup">
 			  <label class="sliderlbl">Blue:</label>
 				<input id="bgb" type="range" min="0" max="255" value="255">
 				<input id="bgbi" size="3" type="number" min="0" max="255" value="255">
