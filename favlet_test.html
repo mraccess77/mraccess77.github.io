@@ -8,10 +8,16 @@
       src.src="./favlets/enhanceFocus.js";
       document.body.appendChild(src);
     }
+    <style>
+      img::after {
+         content: attr(alt);
+      }
+    </style>
   </script>
 </head>
 <body onload="run();">
     <input type="text" />
     <button> test </button>
+    <img src="star.png" alt="rating" />
 </body>
 </html>
