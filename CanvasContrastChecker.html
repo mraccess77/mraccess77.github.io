@@ -167,7 +167,7 @@ function init() {
 	});
 
 	// if IE turn off the color picker (input type=color) as it is not supported
-	if (msie() ) {
+	if (msie() || isSafari() ) {
 		document.getElementById("inputcolor1picker").style.display = "none";
 		document.getElementById("inputcolor2picker").style.display = "none";
 	}
@@ -618,6 +618,12 @@ function msie() {
 		return true;
 	else
 		return false;
+}
+
+// ****************************************************************
+function isSafari() {
+  return navigator.vendor && navigator.vendor.indexOf('Apple') > -1 &&
+               navigator.userAgent && !navigator.userAgent.match('CriOS');
 }
 
 // **************************************************************
