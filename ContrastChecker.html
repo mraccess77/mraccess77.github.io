@@ -350,14 +350,14 @@ function hexToRgb(hex) {
     <div id="error" class="error">
       <p>
       <span id="errtxt"></span>
-			Enter a RGB foreground and background color in #hex or rgb format to check contrast for accessibility.</p>
+			Enter a RGB foreground and background color in #hex or integer format to check contrast for accessibility.</p>
     </div>
 
 		<form onchange="check(event);">
 		  <!-- foreground -->
 		  <div class="group">
 				<div class="topgroup">
-					<label for="fg">Foreground RGB in Hex:</label>
+					<label for="fg">Foreground RGB in hex:</label>
 					<input id="fg" type="text" value="#000000" size="7" pattern="^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$" title="Enter # followed by a six digit hex number between #000000 and #ffffff">
 					<input aria-label="Forground color picker" id="fgc" type="color" value="#000000">
 				</div>
@@ -381,7 +381,7 @@ function hexToRgb(hex) {
 			<!-- background -->
 			<div class="group">
 			<div class="topgroup">
-			  <label for="bg">Background RGB in Hex:</label>
+			  <label for="bg">Background RGB in hex:</label>
         <input id="bg" type="text" value="#FFFFFF" size="7" >
 				<input aria-label="Background color picker" id="bgc" type="color" value="#ffffff">
 			</div>
