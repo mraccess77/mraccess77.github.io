@@ -89,6 +89,7 @@ function synchHexToRGB() {
 
 // **********************************************************************
 function synchRGBToHex() {
+
 	var fgr = document.getElementById("fgr");
 	var fgg = document.getElementById("fgg");
 	var fgb = document.getElementById("fgb");
@@ -103,6 +104,8 @@ function synchRGBToHex() {
   fggi.value = hexToRgb(hex).g;
   fgb.value = hexToRgb(hex).b;
   fgbi.value = hexToRgb(hex).b;
+
+
 
   hex = document.getElementById("bg").value;
   bgr.value = hexToRgb(hex).r;
@@ -172,8 +175,10 @@ function check(e)
     }
 
 		var hexColors = ["bg","bgc","fg","fgc"];
-		if (hexColors.indexOf(e.target.id) > 0)
+
+		if (hexColors.indexOf(e.target.id) >= 0)
 			synchRGBToHex()
+
 
     // get colors again in case they have changed
 		color1 = document.getElementById('fg').value;
