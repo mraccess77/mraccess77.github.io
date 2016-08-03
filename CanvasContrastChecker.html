@@ -309,6 +309,11 @@ function displayImage(img) {
 		imageCanvas.width = sizeX; //img.width;
 		imageCanvas.height = sizeY; // img.height;
 
+         ctx.mozImageSmoothingEnabled = false;
+         ctx.webkitImageSmoothingEnabled = false;
+         ctx.msImageSmoothingEnabled = false;
+         ctx.imageSmoothingEnabled = false;
+         
 		ctx.drawImage(img,0,0, sizeX,sizeY);
 		// console.log(imageCanvas.width);
 		if (imageCanvas.width > 0)
