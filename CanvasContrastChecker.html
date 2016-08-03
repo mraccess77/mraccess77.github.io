@@ -62,6 +62,10 @@ function init() {
 
 	zoom = document.getElementById("zoom");
 	var zoomCtx = zoom.getContext("2d");
+	 zoomCtx.mozImageSmoothingEnabled = false;
+         zoomCtx.webkitImageSmoothingEnabled = false;
+         zoomCtx.msImageSmoothingEnabled = false;
+         zoomCtx.imageSmoothingEnabled = false;
 
 	imageCanvas.addEventListener("mousemove", function(e){
 	    // console.log(e);
