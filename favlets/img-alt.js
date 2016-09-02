@@ -18,7 +18,8 @@ function traverseFrames(doc) {
 // ***********************************************
 function showAlt(doc) {
 
-  var col = doc.getElementsByTagName('img');
+  //var col = doc.getElementsByTagName('img');
+  var col = doc.querySelectorAll("img,[role='img']");
 
   for (var i=0; i < col.length; i++) {
 
@@ -27,16 +28,16 @@ function showAlt(doc) {
 
       var text = document.createTextNode("aria-label=" + col[i].getAttribute('aria-label'));
      }
-     else if ( col[i].hasAttribute("alt") ) { 
+     else if ( col[i].hasAttribute("alt") ) {
        var text = document.createTextNode("alt=" + col[i].alt);
      }
-     else if ( col[i].hasAttribute("title") ) { 
+     else if ( col[i].hasAttribute("title") ) {
        var text = document.createTextNode("title=" + col[i].title);
      }
      else {
        var text = document.createTextNode("No alt");
      }
-   
+
      var node = document.createElement("span");
      node.style.color = "black";
      node.style.backgroundColor = "gold";
