@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+width=device-width?
+<head>
+  <title>Test</title>
+  <style>
+     #b1 {
+       display:block;
+       background-color:red;
+       height:50px;
+       width:50px;
+     }
+  </style>
+</head>
+<body>
+    <div id="b1"></div>
+</body>
+</html>
+
+
