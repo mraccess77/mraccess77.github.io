@@ -3,7 +3,7 @@
 	 var lostFocus;
 	 var errorsObj;
 	 
-	 function traverseFrames(doc,_SRObj) {
+	 function traverseFrames(doc) {
 
 	// check for sr-only class in current document and then check it's frames
 
@@ -15,15 +15,12 @@
 		var myframes=doc.getElementsByTagName(frametypes[i]);
 		for (var z=0;z<myframes.length;z++) {
 			try {
-		    traverseFrames(myframes[z].contentWindow.document,_SRObj);
+		    traverseFrames(myframes[z].contentWindow.document);
 		  } catch(e) {
-			  //errors are stored in _SRObj too
-				_SRObj.extFrameSrcList = _SRObj.extFrameSrcList + '\n' + myframes[z].src;
-				_SRObj.frameErrorCount=_SRObj.frameErrorCount + 1;
 			}
 		}
 	}
-	return _SRObj;
+	
 	}
 
       function rect(elem) {
@@ -49,7 +46,7 @@
 		 lostFocus = true;
 	 }
 	  function init() {
-	    traverseFrames(document, errorsObj)
+	    traverseFrames(document)
 	  }
 	  
 	  function initHelper() {
