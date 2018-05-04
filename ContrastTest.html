@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Contrast Test</title>
+		<style>
+		</style>
+    <script>
+
+// *************************************************************
+		function process() {
+		   var values = ["000000","000033", "000066", "000099","0000cc","0000ff","003300","003300","003366","003399","0033cc","0033ff","006600","006633","006666","006699","0066cc","0066ff","009900","009933","009966","009999","0099cc","0099ff","00cc00","00cc33","00cc66","00cc99","00cccc","00ccff", "00ff00","00ff33","00ff66","00ff99","00ffcc","00ffff",
+			 "330000","330033", "330066", "330099","3300cc","3300ff","333300","333300","333366","333399","3333cc","3333ff","336600","336633","336666","336699","3366cc","3366ff","339900","339933","339966","339999","3399cc","3399ff","33cc00","33cc33","33cc66","33cc99","33cccc","33ccff", "33ff00","33ff33","33ff66","33ff99","33ffcc","33ffff",
+			 "660000","660033", "660066", "660099","6600cc","6600ff","663300","663300","663366","663399","6633cc","6633ff","666600","666633","666666","666699","6666cc","6666ff","669900","669933","669966","669999","6699cc","6699ff","66cc00","66cc33","66cc66","66cc99","66cccc","66ccff", "66ff00","66ff33","66ff66","66ff99","66ffcc","66ffff",
+			 "990000","990033", "990066", "990099","9900cc","9900ff","993300","993300","993366","993399","9933cc","9933ff","996600","996633","996666","996699","9966cc","9966ff","999900","999933","999966","999999","9999cc","9999ff","99cc00","99cc33","99cc66","99cc99","99cccc","99ccff", "99ff00","99ff33","99ff66","99ff99","99ffcc","99ffff"
+			 
+			 
+			 ];
+			 for (i=0; i < values.length; i++) {
+			    check(values[i],"000000", 1);
+					check(values[i],"000000", 2);
+			 }
+		}
+// ******************************************************************
+function check(color1, color2, relative_value) {
+    
+    var l1; // higher value
+    var l2; // lower value
+    var contrast;
+    var l1R, l1G, l1B, l2R, l2G, l2B;
+    var txtSizeOp;
+		var normal_size_text = 0;
+	  var rel_old = 0.03928;
+		var rel_new = 0.04045;
+		var relative
+		
+		if (relative_value == 1)
+		  relative = rel_old;
+		else if (relative_value ==2)
+			relative = rel_new;
+			
+    txtSizeOp = normal_size_text; 
+
+	    //Linearised R (for example) = (R/FS)^2.2 where FS is full scale value (255
+    //for 8 bit color channels). L1 is the higher value (of text or background)
+    //alert(parseInt("0x"+color1.substr(0,2)));
+    //Math.pow(n,x);
+    l1R = parseInt("0x"+color1.substr(0,2))/255;
+		
+    if (l1R <= relative)
+        {
+            l1R = l1R/12.92;
+        }
+    else
+        {
+            l1R = Math.pow(((l1R+0.055)/1.055),2.4);
+        }
+    l1G = parseInt("0x"+color1.substr(2,2))/255;
+    if (l1G <= relative)
+        {
+            l1G = l1G/12.92;
+        }
+    else
+        {
+            l1G = Math.pow(((l1G+0.055)/1.055),2.4);
+        }
+    l1B = parseInt("0x"+color1.substr(4,2))/255;
+    if (l1B <= relative)
+        {
+            l1B = l1B/12.92;
+        }
+    else
+        {
+            l1B = Math.pow(((l1B+0.055)/1.055),2.4);
+        }
+    l2R = parseInt("0x"+color2.substr(0,2))/255;
+    if (l2R <= relative)
+        {
+            l2R = l2R/12.92;
+        }
+    else
+        {
+            l2R = Math.pow(((l2R+0.055)/1.055),2.4);
+        }
+    l2G = parseInt("0x"+color2.substr(2,2))/255;
+    if (l2G <= relative)
+        {
+            l2G = l2G/12.92;
+        }
+    else
+        {
+            l2G = Math.pow(((l2G+0.055)/1.055),2.4);
+        }
+    l2B = parseInt("0x"+color2.substr(4,2))/255;
+    if (l2B <= relative)
+        {
+            l2B = l2B/12.92;
+        }
+    else
+        {
+            l2B = Math.pow(((l2B+0.055)/1.055),2.4);
+        }
+    //where L is luminosity and is defined as
+    l1 = (.2126*l1R) + (.7152*l1G) + (.0722*l1B); //using linearised R, G, and B value
+    l2 = (.2126*l2R) + (.7152*l2G) + (.0722*l2B); //using linearised R, G, and B value
+    //and L2 is the lower value.
+    l1 = l1 + .05;
+    l2 = l2 + .05;
+    if (l1 < l2)
+        {
+            temp = l1;
+            l1 = l2;
+            l2 = temp;
+        }
+    l1 = l1/l2;
+    l1 = l1.toFixed(10);
+    
+		//console.log(relative);
+		
+		var d = document.createElement("div");
+		d.style.margin = ".1em";
+		var s1 = document.createElement("span");
+		s1.textContent = color1;
+		s1.style.minWidth = "3em";
+		s1.style.display = "inline-block";
+		var s2 = document.createElement("span");
+		s2.textContent = "sample";
+		s2.style.color = "#"+color1;
+		s2.style.backgroundColor = "#000000";
+		s2.style.padding = ".2em";
+		
+		var s3 = document.createElement("span");
+		s3.textContent = l1.toString();
+		var s4 = document.createElement("span");
+		if (relative_value ==1)
+		  s4.textContent = " Original " + relative;
+		else if (relative_value ==2) 
+			s4.textContent = " Proposed " + relative;
+				
+		d.appendChild(s1);
+		d.appendChild(s2);
+		d.appendChild(s3);
+		d.appendChild(s4);
+		document.getElementById("container").appendChild(d);
+
+} // check function
+
+// *******************************************************
+function rgbToHex(r, g, b) {
+    return "#" + ((1 << 24) + (parseInt(r,10) << 16) + (parseInt(g,10) << 8) + parseInt(b,10)).toString(16).slice(1);
+}
+
+// *******************************************************
+function hexToRgb(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+}
+
+  </script>
+</head>
+  <body onload="process();">
+    <div id="container">
+		</div>
+    <div id="footer">
+		</div>
+  </body>
+</html>
