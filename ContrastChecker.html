@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-  
     <title>Level Access - Contrast Checker</title>
 		<style>
 		   #sample {
@@ -285,21 +284,21 @@ function check(e)
     }
 
     if (l1 >= 7) {
-            text = "Section 508 (1194.31 - Functional performance) and WCAG 2 - Level AAA Compliant";
+            text = "Section 508 (revised 2017) and WCAG 2 - Level AAA Compliant";
     }
     else if (l1 >= 4.5) {
-        text = "Section 508 (1194.31 - Functional performance) and WCAG 2 - Level AA Compliant";
+        text = "Section 508 (revised 2017) and WCAG 2 - Level AA Compliant";
     }
     else if (l1 >=3) {
         if (txtSizeOp == 1) {
-            text = "Section 508 (1194.31 - Functional performance) and WCAG 2 - Level AA Compliant";
+            text = "Section 508 (revised 2017) and WCAG 2 - Level AA Compliant";
         }
         else {
-            text = "Not compliant. Note: there are not any contrast requirements in WCAG 2 - Level A or Section 508 - Section 1194.22 Web Sites and Application. Thus, content may meet these requirements independent of the color palette used.";
+            text = "Not compliant. Note: there are not any contrast requirements in WCAG 2 - Level A. Thus, content may meet these requirements independent of the color palette used.";
         }
     }
     else {
-				text = "Not compliant. Note: there are not any contrast requirements in WCAG 2 - Level A or Section 508 - Section 1194.22 Web Sites and Application. Thus, content may meet these requirements independent of the color palette used.";
+				text = "Not compliant. Note: there are not any contrast requirements in WCAG 2 - Level A.  Thus, content may meet these requirements independent of the color palette used.";
 
     }
 
