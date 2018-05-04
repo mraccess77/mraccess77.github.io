@@ -20,9 +20,42 @@
 			    check(values[i],"000000", 1);
 					check(values[i],"000000", 2);
 			 }
+			 
+			 i1 = 0;
+			 i2 = 0;
+			 ii1 = 0;
+			 ii2 = 0;
+			 iii1 = 0;
+			 iii2 = 0;
+			 
+			 while (i1 <=255) {
+			    ii1 = 0;
+			    while (ii1 <=255) {
+					  iii1 = 0;
+					  while (iii1 <=255) {
+						  i2 = 0;
+						  while (i2 <=255) {
+							  ii2 = 0;
+								while (ii2 <=255) {
+								  iii2 = 0;
+									while (iii2 <=255) {
+										check(rgbToHex(i1,ii1,iii1),rgbToHex(i2,ii2,iii2));
+										console.log(i1+","+ii1+","+iii1+","+i2+","+ii2+","+iii2);
+										iii2++;
+									}
+									ii2++;
+								}
+								i2++;
+							}
+							iii1++;
+					  }
+						ii1++;
+					}
+         i1++;	
+			 }
 		}
 // ******************************************************************
-function check(color1, color2, relative_value) {
+function check(color1, color2) {
     
     var l1; // higher value
     var l2; // lower value
@@ -34,9 +67,11 @@ function check(color1, color2, relative_value) {
 		var rel_new = 0.04045;
 		var relative
 		
-		if (relative_value == 1)
+		var pass = 0;
+		while (pass <=1) {
+		if (pass == 0)
 		  relative = rel_old;
-		else if (relative_value ==2)
+		else if (pass ==1)
 			relative = rel_new;
 			
     txtSizeOp = normal_size_text; 
@@ -113,10 +148,15 @@ function check(color1, color2, relative_value) {
             l2 = temp;
         }
     l1 = l1/l2;
-    l1 = l1.toFixed(10);
+		l1 = l1.toFixed(10);
+    if (pass==0) 
+		  firstPassl1 = l1;
     
 		//console.log(relative);
+		  pass++;
+		}
 		
+		if (firstPassl1 != l1) {
 		var d = document.createElement("div");
 		d.style.margin = ".1em";
 		var s1 = document.createElement("span");
@@ -130,19 +170,16 @@ function check(color1, color2, relative_value) {
 		s2.style.padding = ".2em";
 		
 		var s3 = document.createElement("span");
-		s3.textContent = l1.toString();
+		s3.textContent = "new " + l1.toString();
 		var s4 = document.createElement("span");
-		if (relative_value ==1)
-		  s4.textContent = " Original " + relative;
-		else if (relative_value ==2) 
-			s4.textContent = " Proposed " + relative;
+		s4.textContent = " Original " + firstPassl1.toString();
 				
 		d.appendChild(s1);
 		d.appendChild(s2);
 		d.appendChild(s3);
 		d.appendChild(s4);
 		document.getElementById("container").appendChild(d);
-
+    }
 } // check function
 
 // *******************************************************
