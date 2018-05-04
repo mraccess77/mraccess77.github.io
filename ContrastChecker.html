@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>SSB BART Group - Contrast Checker</title>
-		<style type="text/css">
+  
+    <title>Level Access - Contrast Checker</title>
+		<style>
 		   #sample {
 		     width:70%;
 		     padding:.5em;
@@ -71,7 +71,7 @@
 				  height:2em;
 				}
 		</style>
-    <script type="text/javascript">
+    <script>
 
 // *************************************************************************
 function synchHexToRGB() {
@@ -362,7 +362,7 @@ function hexToRgb(hex) {
 					<input aria-label="Forground color picker" id="fgc" type="color" value="#000000">
 				</div>
 				<div class="slidegroup">
-					<label for "fgr" class="sliderlbl">Red:</label>
+					<label for="fgr" class="sliderlbl">Red:</label>
 					<input id="fgr" type="range" min="0" max="255" value="0">
 					<input aria-label="foreground red" id="fgri" size="3" type="number" min="0" max="255" value="0">
 				</div>
@@ -373,7 +373,7 @@ function hexToRgb(hex) {
 				</div>
 				<div class="slidegroup">
 					<label for="fgb" class="sliderlbl">Blue:</label>
-					<input id="fgb" id="fgb" type="range" min="0" max="255" value="0">
+					<input id="fgb" type="range" min="0" max="255" value="0">
 					<input aria-label="foreground blue" id="fgbi" size="3" type="number" min="0" max="255" value="0">
 				</div>
 			</div>
@@ -404,8 +404,8 @@ function hexToRgb(hex) {
 
 			<div class="group">
 			<label for="fontSize">Text size:</label>
-			<select id="fontSize" value="1">
-				<option>Less than 18 points</option>
+			<select id="fontSize">
+				<option selected="selected">Less than 18 points</option>
 				<option>18 Points or larger or 14 points and bold</option>
 			</select>
 
@@ -422,7 +422,7 @@ function hexToRgb(hex) {
         <!-- right -->
         <label for="contrastRatio">Contrast ratio</label>
         <input title="contrast ratio" style="width:3em;" id="contrastRatio" type="text" maxlength="5" readonly /> :
-				<output tabindex="0" title="to" style="width:1em;" id="contrastRatio1" type="text" maxlength="5" > 1</output>
+				<output tabindex="0" title="to" style="width:1em;" id="contrastRatio1"> 1</output>
 			</div>
 
 			<div>
