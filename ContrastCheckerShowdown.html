@@ -123,11 +123,14 @@ function check(e)
     var color1, color2;
     var l1; // higher value
     var l2; // lower value
+    var l12; // higher value for 0.04045 calc
+    var l22; // lower value for 0.04045 calc
     var contrast;
     var l1R, l1G, l1B, l2R, l2G, l2B;
+    var l1R2, l1G2, l1B2, l2R2, l2G2, l2B2;
     var txtSizeOp;
 
-		color1 = document.getElementById('fg').value;
+    color1 = document.getElementById('fg').value;
     color2 = document.getElementById('bg').value;
     txtSizeOp = document.getElementById('fontSize').selectedIndex;
 
@@ -253,7 +256,65 @@ function check(e)
         {
             l2B = Math.pow(((l2B+0.055)/1.055),2.4);
         }
-    //where L is luminosity and is defined as
+
+// redundant set for 0.04045
+    l1R2 = parseInt("0x"+color1.substr(0,2))/255;
+    if (l1R2 <= 0.04045)
+        {
+            l1R2 = l1R2/12.92;
+        }
+    else
+        {
+            l1R2 = Math.pow(((l1R2+0.055)/1.055),2.4);
+        }
+    l1G2 = parseInt("0x"+color1.substr(2,2))/255;
+    if (l1G2 <= 0.04045)
+        {
+            l1G2 = l1G2/12.92;
+        }
+    else
+        {
+            l1G2 = Math.pow(((l1G2+0.055)/1.055),2.4);
+        }
+    l1B2 = parseInt("0x"+color1.substr(4,2))/255;
+    if (l1B2 <= 0.04045)
+        {
+            l1B2 = l1B2/12.92;
+        }
+    else
+        {
+            l1B2 = Math.pow(((l1B2+0.055)/1.055),2.4);
+        }
+    l2R2 = parseInt("0x"+color2.substr(0,2))/255;
+    if (l2R2 <= 0.04045)
+        {
+            l2R2 = l2R2/12.92;
+        }
+    else
+        {
+            l2R2 = Math.pow(((l2R2+0.055)/1.055),2.4);
+        }
+    l2G2 = parseInt("0x"+color2.substr(2,2))/255;
+    if (l2G2 <= 0.04045)
+        {
+            l2G2 = l2G2/12.92;
+        }
+    else
+        {
+            l2G2 = Math.pow(((l2G2+0.055)/1.055),2.4);
+        }
+    l2B2 = parseInt("0x"+color2.substr(4,2))/255;
+    if (l2B2 <= 0.04045)
+        {
+            l2B2 = l2B2/12.92;
+        }
+    else
+        {
+            l2B2 = Math.pow(((l2B2+0.055)/1.055),2.4);
+        }
+
+	
+	//where L is luminosity and is defined as
     l1 = (.2126*l1R) + (.7152*l1G) + (.0722*l1B); //using linearised R, G, and B value
     l2 = (.2126*l2R) + (.7152*l2G) + (.0722*l2B); //using linearised R, G, and B value
     //and L2 is the lower value.
@@ -268,7 +329,25 @@ function check(e)
     l1 = l1/l2;
     l1 = l1.toFixed(2);
 
+	// version for 0.04045
+	//where L is luminosity and is defined as
+    l12 = (.2126*l1R2) + (.7152*l1G2) + (.0722*l1B2); //using linearised R, G, and B value
+    l2 = (.2126*l2R2) + (.7152*l2G2) + (.0722*l2B2); //using linearised R, G, and B value
+    //and L2 is the lower value.
+    l12 = l12 + .05;
+    l22 = l22 + .05;
+    if (l12 < l22)
+        {
+            temp2 = l12;
+            l12 = l22;
+            l22 = temp2;
+        }
+    l12 = l12/l22;
+    l12 = l12.toFixed(2);
+	
+	
     document.getElementById('contrastRatio').value = l1.toString();
+    document.getElementById('contrastRatio2').value = l12.toString(); // for 0.04045 calc display
     document.getElementById('contrastRatio1').value = 1;
     document.getElementById('sample').style.color = "#"+ color1;
     document.getElementById('sample').style.backgroundColor = "#"+color2;
@@ -419,11 +498,18 @@ function hexToRgb(hex) {
 
       <div>
         <!-- right -->
-        <label for="contrastRatio">Contrast ratio</label>
+        <label for="contrastRatio">Contrast ratio (using 0.03928)</label>
         <input title="contrast ratio" style="width:3em;" id="contrastRatio" type="text" maxlength="5" readonly /> :
 				<output tabindex="0" title="to" style="width:1em;" id="contrastRatio1"> 1</output>
 			</div>
+      <div>
+        <!-- right -->
+        <label for="contrastRatio2">Contrast ratio (using 0.04045)</label>
+        <input title="contrast ratio" style="width:3em;" id="contrastRatio2" type="text" maxlength="5" readonly /> :
+				<output tabindex="0" title="to" style="width:1em;" id="contrastRatio3"> 1</output>
+			</div>
 
+	    
 			<div>
 				<h2>Compliance Level</h2>
 				<div id="compliance">
