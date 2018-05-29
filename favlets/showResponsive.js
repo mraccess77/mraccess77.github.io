@@ -26,6 +26,7 @@ function showResponsive() {
        this.setAttribute("aria-expanded","true");			
 			 s.style.display = "inline";
 		}
+		event.preventDefault();
 	});
   d.id = "__a11y_responsive1";
   var t = document.createTextNode("(scale) pixel ratio " + window.devicePixelRatio + "\n inner width " + window.innerWidth + "px");
