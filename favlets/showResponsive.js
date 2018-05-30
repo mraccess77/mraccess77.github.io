@@ -17,7 +17,7 @@ function showResponsive() {
 	b1.setAttribute("style","background-color:darkblue !important; color: white !important; background-image: initial");
 	
 	b1.appendChild(document.createTextNode("\u25BC"));
-	b1.addEventListener("click", function() {
+	b1.addEventListener("click", function(event) {
 		if (this.getAttribute("aria-expanded") == "true") {
        this.setAttribute("aria-expanded","false");
 			 s.style.display = "none";
