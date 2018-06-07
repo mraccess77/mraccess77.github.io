@@ -17,7 +17,7 @@ function showResponsive() {
 	b1.setAttribute("style","background-color:darkblue !important; color: white !important; background-image: initial");
 	
 	b1.appendChild(document.createTextNode("\u25BC"));
-	b1.addEventListener("click", function() {
+	b1.addEventListener("click", function(event) {
 		if (this.getAttribute("aria-expanded") == "true") {
        this.setAttribute("aria-expanded","false");
 			 s.style.display = "none";
@@ -26,6 +26,7 @@ function showResponsive() {
        this.setAttribute("aria-expanded","true");			
 			 s.style.display = "inline";
 		}
+		event.preventDefault();
 	});
   d.id = "__a11y_responsive1";
   var t = document.createTextNode("(scale) pixel ratio " + window.devicePixelRatio + "\n inner width " + window.innerWidth + "px");
