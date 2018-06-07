@@ -22,9 +22,10 @@ function traverseFrames(doc,_framesObj) {
 	return _framesObj;
 }
 
-function displayTitles(){
+function displayTitles(doc,_framesObj){
 
-	var el = document.querySelectorAll('[title]');
+	var el = doc.querySelectorAll('[title]');
+	_framesObj.foundCount = _framesObj.foundCount + el.length;
 	var str;
 	var headers=[];
 	var sentinel;
@@ -32,8 +33,8 @@ function displayTitles(){
 	if (el.length>0) {
 
 		for (var i=0; i<el.length; i++) {
-				s = document.createElement('Span');
-				t = document.createTextNode(" Title="+el.item(i).title +" ");
+				s = doc.createElement('Span');
+				t = doc.createTextNode(" Title="+el.item(i).title +" ");
 				s.appendChild(t);
 				s.style.backgroundColor = 'gold';
 				s.border = "thin solid black";
@@ -45,7 +46,7 @@ function displayTitles(){
 	}
 
 	else {
-		  alert('no elements with titles');
+	//	  alert('no elements with titles');
 	}
 	}
 
