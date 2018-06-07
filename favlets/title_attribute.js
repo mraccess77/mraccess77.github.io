@@ -15,7 +15,7 @@ function traverseFrames(doc,_framesObj) {
 		  } catch(e) {
 			  //errors are stored in _framesObj too
 				_framesObj.extFrameSrcList = _framesObj.extFrameSrcList + '\n' + myframes[z].src;
-				_framesObj.frameErrorCount=_framesbj.frameErrorCount + 1;
+				_framesObj.frameErrorCount= _framesObj.frameErrorCount + 1;
 			}
 		}
 	}
