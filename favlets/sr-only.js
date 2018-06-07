@@ -86,7 +86,7 @@ function run(doc){
   _SRObj = traverseFrames(doc,_SRObj);
 
   // Display alert dialog with message with count of found properties
-  alert(_SR.foundCount + " element(s) with sr-only class found. ");
+  alert(_SRObj.foundCount + " element(s) with sr-only class found. ");
 }
 
 run(document);
