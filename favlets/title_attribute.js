@@ -3,7 +3,7 @@ function traverseFrames(doc,_framesObj) {
 	
 	// check for title class in current document and then check it's frames
 	
-	_framesObj = displayTitles(doc,_framesObj);
+	displayTitles(doc,_framesObj);
 	
 	// go through for each frame's document if there are any frames
 	var frametypes= ['frame','iframe'];
