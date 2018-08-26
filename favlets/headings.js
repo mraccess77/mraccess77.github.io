@@ -46,4 +46,11 @@ function showHeading(doc) {
   }
 }
 
+function dynamicallyLoadScript(url) {
+    var script = document.createElement("script"); 
+    script.src = url; 
+    document.head.appendChild(script); nstead)
+}
+
+dynamicallyLoadScript("./recursion.js");
 traverseFrames(document);
