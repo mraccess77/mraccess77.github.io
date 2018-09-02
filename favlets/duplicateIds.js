@@ -1,5 +1,6 @@
 function runDuplicateIds() {
-	var col = document.querySelectorAll("[id]");
+	var clone = document.cloneNode(true);
+	var col = clone.querySelectorAll("[id]");
 	//alert(find_duplicate_ids(Array.prototype.slice.call( col, 0 )).length);
 	//
 	var results=[];			
@@ -8,6 +9,7 @@ function runDuplicateIds() {
 	
 	results.forEach(function(item) {
 		 //item.style.border = "thin solid magenta";
+		 item.innerHTML ="";
 		 strResults = strResults + item.outerHTML + "\n"
 	});
 	alert(strResults);
