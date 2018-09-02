@@ -49,7 +49,7 @@ function showHeading(doc) {
 function dynamicallyLoadScript(url) {
     var script = document.createElement("script"); 
     script.src = url; 
-    document.head.appendChild(script); nstead)
+    document.head.appendChild(script);
 }
 
 dynamicallyLoadScript("./recursion.js");

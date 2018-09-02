@@ -7,6 +7,7 @@ function runDuplicateIds() {
 	var strResults = results.length+" elements with duplicate ids"+"\n";
 	
 	results.forEach(function(item) {
+		 //item.style.border = "thin solid magenta";
 		 strResults = strResults + item.outerHTML + "\n"
 	});
 	alert(strResults);
