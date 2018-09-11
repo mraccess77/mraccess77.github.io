@@ -57,7 +57,7 @@ function checkARIA(doc,_ARIAObj){
 				if (((e[i].attributes[x].specified)) && 
 					((myRegExpAttr.test(strAttr) && e[i].getAttribute(strAttr)!==null) || (strAttr=="role" && e[i].getAttribute(strAttr)!==null))) {
 
-					myText = strAttr + '="' + e[i].getAttribute(strAttr) + '"'; 
+					myText = myText + strAttr + '="' + e[i].getAttribute(strAttr) + '"'+" "; 
 
 					if (strAttr=="role") {
 					  var landmarkArray = ["navigation","banner","main", "contentinfo", "complementary", "search", "form", "application"];
