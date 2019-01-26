@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39" />
+    <title>Mirror</title>
+    <style>
+#video2
+{
+    transform: rotateY(180deg);
+    -webkit-transform:rotateY(180deg); /* Safari and Chrome */
+    -moz-transform:rotateY(180deg); /* Firefox */
+}
+</style>
+<script>
+document.onreadystatechange = function () {
+    if (document.readyState === "interactive") {
+        init();
+    }
+}
+
+function init() {
+const video = document.querySelector("#video1");
+var constraints =  { video: true };
+
+if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) 
+  {
+     navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
+						//video.src = window.URL.createObjectURL(stream);
+						video.srcObject = stream;
+          video.play();
+     });
+  }
+}
+
+</script>
+  </head>
+  <body>
+    <div>
+    <video id="video1" width="640" height="480" autoplay=""></video> 
+    <!-- <button id="snap">Snap Photo</button>
+  <canvas id="canvas" width="640" height="480"></canvas> --></div>
+
+  </body>
+</html>
