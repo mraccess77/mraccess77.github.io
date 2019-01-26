@@ -9,7 +9,21 @@
 {
     transform: rotateY(180deg);
     -webkit-transform:rotateY(180deg); /* Safari and Chrome */
-    -moz-transform:rotateY(180deg); /* Firefox */
+		    -moz-transform:rotateY(180deg); /* Firefox */
+				max-height:100%;
+}
+
+html {
+    height: 100%;
+}
+body {
+  height:100%;
+	margin: 0;
+	padding: 0;
+	border:0;
+}
+div#main {
+ height:95%; 
 }
 </style>
 <script>
@@ -103,11 +117,13 @@ if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)
 </script>
   </head>
   <body>
-    <div>
-    <video id="video1" width="640" height="480" playsinline autoplay=""></video> 
+    <div id="main">
+    <video id="video1" playsinline autoplay=""></video> 
+		
     <!-- <button id="snap">Snap Photo</button>
   <canvas id="canvas" width="640" height="480"></canvas> --></div>
     <select id="audioSource"> </select>
 		<select id="videoSource"> </select>
+		</div>
   </body>
 </html>
