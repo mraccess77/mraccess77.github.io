@@ -71,6 +71,27 @@
 				}
 		</style>
     <script>
+// *************************************************************************
+function checkQSP() {
+	// grab query string parameter from url
+	var qsp = location.search;
+		// if exists update grab the values and update the fields
+		if(qsp){
+			var params = new URLSearchParams(qsp),
+			fg = params.get('fg'),
+			bg = params.get('bg');
+			setTimeout(function() {
+				// update text inputs
+				document.getElementById("fg").value = '#' + fg;
+				document.getElementById("bg").value = '#' + bg;
+				// update color inputs
+				document.getElementById("fgc").value = document.getElementById("fg").value;
+  			document.getElementById("bgc").value = document.getElementById("bg").value;
+				// update sliders
+				synchRGBToHex();
+			},0);
+		}
+}
 
 // *************************************************************************
 function synchHexToRGB() {
@@ -343,6 +364,9 @@ function hexToRgb(hex) {
     } : null;
 }
 
+// Check for query string parameters
+checkQSP();
+
   </script>
 </head>
   <body onload="check(window.event); setup();">
@@ -442,5 +466,5 @@ function hexToRgb(hex) {
       <p>The algorithm used in this tool and subsequent results are based on the luminosity algorithm recommended in the WCAG 2.0
     guidelines to test for contrast. This tool is for general assessment purposes only and not a guarantee of compliance.</p>
 		</div>
-  </body>
+	</body>
 </html>
