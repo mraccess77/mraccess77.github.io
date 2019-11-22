@@ -10,7 +10,7 @@ doc.querySelectorAll('.callout-trigger').forEach(function (n) { n.setAttribute('
 		var myframes=doc.getElementsByTagName(frametypes[i]);
 		for (var z=0;z<myframes.length;z++) {
 			try {
-		    traverseFrames(myframes[z].contentWindow.document,_SRObj);
+		    traverseFrames(myframes[z].contentWindow.document);
 		  } catch(e) {
 			  //errors are stored in _SRObj too
 			}
