@@ -36,6 +36,8 @@ function displayAlt(doc,_framesObj){
 				s = doc.createElement('Span');
 				if (el.item(i).getAttribute("alt"))
 					t = "Alt="+el.item(i).getAttribute("alt") +" ";
+				else if (el.item(i).hasAttribute('alt'))
+					t = "Alt=\"\"";
 				if (el.item(i).getAttribute("title"))
 					t = t + "Title="+el.item(i).getAttribute("title") +" ";
 				if (el.item(i).getAttribute("aria-label"))
