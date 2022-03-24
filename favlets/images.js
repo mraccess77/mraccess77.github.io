@@ -24,7 +24,7 @@ function traverseFrames(doc,_framesObj) {
 
 function displayAlt(doc,_framesObj){
 
-	var el = doc.querySelectorAll("img,*[role='img']");
+	var el = doc.querySelectorAll("img,*[role='image']");
 	_framesObj.foundCount = _framesObj.foundCount + el.length;
 	var str;
 	var headers=[];
