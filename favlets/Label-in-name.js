@@ -55,7 +55,7 @@ function showLabels(doc) {
       text = col[i].textContent;      
     }
 
-    if (text && !props.name.includes(text)) {
+    if (text.trim() && !props.name.includes(text)) {
       
       var node = document.createElement("span");
       node.style.color = "black";
