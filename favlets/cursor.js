@@ -10,6 +10,6 @@ function setup() {
 	window.addEventListener("mousemove",cursor);
 }
 function cursor(e) {
-    d.style.left = e.pageX + "px";
-	d.style.top = e.pageY + "px";
+    d.style.left = e.pageX-12 + "px";
+	d.style.top = e.pageY-12 + "px";
 }
