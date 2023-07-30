@@ -27,6 +27,7 @@
       z-index: 1;
     }
 
+    /* Custom background image for checkmark */
     #a11yForm>.custom input+label {
       background: url(inputs.png) 0 -1px no-repeat transparent;
       height: 18px;
@@ -51,12 +52,13 @@
       background-position: 0 -260px;
     }
 
+    /* Green rectangle around label and input */
     #a11yForm>.custom input:focus+label,
     #a11yForm>.custom input:hover+label {
       outline: 1px solid green;
     }
 
-    /* FOR IE 10 AND ABOVE; must be placed at end of css */
+    /* High contrast FOR IE 10 AND ABOVE; must be placed at end of css */
     @media screen and (-ms-high-contrast: active),
     (-ms-high-contrast: none) {
       #a11yForm>.custom input+label {
@@ -86,7 +88,6 @@
       </div>
 
       <div class="custom rdio">
-
         <h3>Radio buttons</h3>
         <fieldset>
           <legend>Ice cream</legend>
