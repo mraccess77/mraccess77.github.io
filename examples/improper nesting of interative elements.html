@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Improper nesting of interactive elements</title>
+</head>
+
+<body>
+    <h1>Improper nesting of interactive elements</h1>
+    <a href="https://www.google.com"><button onclick="alert('button');">google</button></a>
+    <button onclick="alert('button');"><a href="https://www.google.com">Google</a></button>
+    <a href="https://www.google.com"><label><input type="checkbox">Acceptlabel</label></a>
+</body>
+
+</html>
