@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Grayscale page</title>
+</head>
+
+<body>
+    <main>
+
+        Note: It is recommended to use the Stylus extension for Firefox or Chrome to test this to make sure this favlet
+        is not blocked by certain page policies. Install Stylus (not the stylish extension) and then left click or
+        activate the toolbar icon. Choose manage styles and then choose New Style. The CSS below can be put into Stylus
+        - name and then save the style. then the style should be activate. You can check or uncheck teh style from
+        running by clicking/activating the Stylus icon on the toolbar and checking the stylus to have active for the
+        page.
+        <pre>
+html { 
+   filter: grayscale(100%) !important;
+   -webkit-filter: grayscale(1) !important;
+}
+</pre>
+        Grayscale test for WCAG 2
+
+        <div style="padding-bottom:1em;">
+            <a
+                href="javascript:(function(){ var element=document.createElement('script'); element.setAttribute('src','https://mraccess77.github.io/favlets/grayscale.js'); document.body.appendChild(element); } ) ();">
+                Grayscale Favlet </a>
+        </div>
+
+        Code below is provided to demonstrate what is being changed. Favlet actually runs latest JavaScript from github
+        site.
+        <iframe style="width:100%;" src="https://mraccess77.github.io/favlets/grayscale.js">
+        </iframe>
+    </main>
+</body>
+
+</html>

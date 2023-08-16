@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>
+        Display code of the active element
+    </title>
+</head>
+
+<body>
+    <h1>Display code of the active element</h1>
+    <main>
+        <p>Sometimes there is no visible keyboard focus on an element and you want to know what element has keyboard
+            focus. This Favlet will display the outer HTML code of the active element. If frames are used this will show
+            the current frame -- the Favlet could be updated to drill down through the frames to the active element of
+            the current frame.</p>
+
+        <a href="javascript:function activeElement(element) {
+  if (element.tagName == 'IFRAME') {
+		activeElement(element.contentWindow.document.activeElement);
+  }
+  else {
+		alert(element.outerHTML);
+  }
+}
+
+(function() {
+activeElement(document.activeElement);
+})();
+
+"> Display the active element's outer HTML code Favlet </a>
+
+  <h2>Code from favlet<h2>
+    <iframe style="width:100%;" src="https://mraccess77.github.io/favlets/activeElement.js"></iframe>
+  </main>
+</body>
+
+</html>
