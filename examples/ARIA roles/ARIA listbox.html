@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>ARIA Listobx</title>
+        <style>
+            main {
+                width: 500px;
+                margin: 0 auto;
+            }
+            ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+            li {
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-bottom: none;
+                cursor: pointer;
+            }
+            li:last-child {
+                border-bottom: 1px solid #ccc;
+            }
+          
+            li:hover {
+                background: #eee;
+                color: black;
+            }
+            li[aria-selected="true"] {
+                background: blue;
+                color: white;
+            }  
+        </style>
+        <script>
+            function select(e) {
+                
+             if (e.which) {
+                    var key = e.which;
+                } else {
+                    var key = e.keyCode;
+             }
+             
+             if ((key == "38") || (key == "40")) {
+                var listbox = document.querySelector("[role=listbox]");
+                var option = document.querySelector("[role=option]");
+                var selected = document.querySelector("[aria-selected=true]");
+                if (key == "38") {
+                    if (selected.previousElementSibling) {
+                        selected.previousElementSibling.setAttribute("aria-selected", "true");
+                        selected.removeAttribute("aria-selected");
+                        listbox.setAttribute("aria-activedescendant", selected.previousElementSibling.id);
+                    }
+                } else if (key == "40") {
+                    if (selected.nextElementSibling) {
+                        selected.nextElementSibling.setAttribute("aria-selected", "true");
+                        selected.removeAttribute("aria-selected");
+                        listbox.setAttribute("aria-activedescendant", selected.nextElementSibling.id);
+                    }
+                }
+            }
+        }
+        document.addEventListener("DOMContentLoaded", run);
+
+        function run() {
+            
+                document.querySelectorAll("[role=option]").forEach(element => {
+                    
+                element.addEventListener("click", update)});
+                }
+
+        function update(element) {
+            
+            var listbox = document.querySelector("[role=listbox]");
+            var selected = document.querySelector("[aria-selected=true]");
+            selected.removeAttribute("aria-selected");
+            listbox.setAttribute("aria-activedescendant", element.id);
+            element.target.setAttribute("aria-selected", "true");   
+        }
+
+        </script>
+    </head>
+    <body>
+        <main>
+            <h1>ARIA Listobx</h1>
+            <span id="listFruits">Fruits:</span>
+            <ul role="listbox" aria-labelledyb="listFruits" aria-activedescendant="l1" tabindex="0" onkeyup="select(event);">
+                <li id="l1" role="option" aria-selected="true">Apple</li>
+                <li id="l2" role="option">Banana</li>
+                <li id="l3" role="option">Orange</li>
+                <li id="l4" role="option">Pineapple</li>
+                <li id="l5" role="option">Strawberry</li>
+            </ul>
+        </main>
+    </body>
+    </html>
+
