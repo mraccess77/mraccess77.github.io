@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Fieldset legend is not first child</title>
+</head>
+
+<body>
+  <main>
+    <h1>Fieldset legend is not first child</h1>
+    <form id="a11yForm">
+      <div>
+        <h2>Check boxes</h2>
+        <fieldset>
+          <p>Some instructions</p>
+          <legend>Favorite Music</legend>
+          <div>
+            <input type="checkbox" value="rock" id="cbRockandRoll" />
+            <label for="cbRockandRoll">Rock and Roll</label>
+          </div>
+          <div>
+            <input type="checkbox" value="Jazz" id="cbJazz" />
+            <label for="cbJazz">Jazz</label>
+          </div>
+        </fieldset>
+      </div>
+
+      <div>
+
+        <h2>Radio buttons</h2>
+        <fieldset>
+          <p>Some instructions</p>
+          
+          <div>
+            <input type="radio" value="vanilla" id="rbVanilla" name="icecream" />
+            <label for="rbVanilla">Vanilla</label>
+          </div>
+          <div>
+            <input type="radio" value="chocolate" id="rbChocolate" name="icecream" />
+            <label for="rbChocolate">Chocolate</label>
+          </div>
+          <legend>Ice cream</legend>
+        </fieldset>
+      </div>
+    </form>
+  </main>
+</body>
+
+</html>
