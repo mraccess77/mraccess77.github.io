@@ -177,9 +177,9 @@ function check(e)
 		var reg = new RegExp("^#([A-Fa-f0-9]{6})");
 		if (!color1.match(reg) || !color2.match(reg)) {
 			document.getElementById('errtxt').textContent = "Error: ";
-		  document.getElementById('error').style.display = "block";
-			document.getElementById('error').tabIndex = -1;
-			document.getElementById('error').focus();
+		  document.getElementById('instructions').style.display = "block";
+			document.getElementById('instructions').tabIndex = -1;
+			document.getElementById('instructions').focus();
 		  return;
 		}
 
@@ -370,7 +370,7 @@ checkQSP();
   </script>
 </head>
   <body onload="check(window.event); setup();">
-    <div id="error" class="error">
+    <div id="instructions">
       <p>
       <span id="errtxt"></span>
 			Enter a foreground and background color in #hex or RGB integer format to check contrast for accessibility (pressing enter or tab after changing the value will update the color selection).</p>
