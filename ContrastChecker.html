@@ -148,7 +148,7 @@ function check(e)
     var l1R, l1G, l1B, l2R, l2G, l2B;
     var txtSizeOp;
 
-		color1 = document.getElementById('fg').value;
+	color1 = document.getElementById('fg').value;
     color2 = document.getElementById('bg').value;
     txtSizeOp = document.getElementById('fontSize').selectedIndex;
 
@@ -373,14 +373,14 @@ checkQSP();
     <div id="error" class="error">
       <p>
       <span id="errtxt"></span>
-			Enter a RGB foreground and background color in #hex or integer format to check contrast for accessibility.</p>
+			Enter a foreground and background color in #hex or RGB integer format to check contrast for accessibility (pressing enter or tab after chaning the value to update).</p>
     </div>
 
 		<form onchange="check(event);">
 		  <!-- foreground -->
 		  <div class="group">
 				<div class="topgroup">
-					<label for="fg">Foreground RGB in hex:</label>
+					<label for="fg">Foreground color in hex:</label>
 					<input id="fg" type="text" value="#000000" size="7" pattern="^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$" title="Enter # followed by a six digit hex number between #000000 and #ffffff">
 					<input aria-label="Forground color picker" id="fgc" type="color" value="#000000">
 				</div>
@@ -404,7 +404,7 @@ checkQSP();
 			<!-- background -->
 			<div class="group">
 			<div class="topgroup">
-			  <label for="bg">Background RGB in hex:</label>
+			  <label for="bg">Background color in hex:</label>
         <input id="bg" type="text" value="#FFFFFF" size="7" >
 				<input aria-label="Background color picker" id="bgc" type="color" value="#ffffff">
 			</div>
