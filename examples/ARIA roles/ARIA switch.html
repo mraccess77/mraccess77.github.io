@@ -41,6 +41,10 @@
 [role="switch"][aria-checked="true"] {
     background-color: #4CAF50;
 }
+[role="switch"]:focus {
+     outline-offset: .2em;;
+     box-shadow: 0 0 0 2px #4CAF50;    
+}
 .sr-only {
     position: absolute;
     width: 1px;
@@ -66,14 +70,21 @@
     
     <script>
     document.querySelectorAll('[role="switch"]').forEach((elem) => {
-    elem.addEventListener('click', function() {
+    elem.addEventListener('click', toggleSwitch);
+    elem.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+            toggleSwitch.call(this, event);
+        }
+    });
+
+    function toggleSwitch() {
         if (this.getAttribute('aria-checked') === 'true') {
             this.setAttribute('aria-checked', 'false');
         } else {
-        
             this.setAttribute('aria-checked', 'true');
         }
-    })});
+    }
+});
     </script>
 </body>
 </html>
