@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title>Accessibility Examples</title>
   <style>
     /* Styles for header section */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     header {
       display: flex;
@@ -83,7 +90,7 @@
       height: 10em;
       border: thin solid rgb(56, 55, 55);
       border-radius: 5%;
-      border-top: thick solid #450e53;  
+      border-top: thick solid #450e53;
     }
 
     .cardbtn {
@@ -97,28 +104,31 @@
       padding: .2em;
       text-decoration: none;
     }
+
     .cardbtn:hover {
       text-decoration: underline;
     }
+
     .cardbtn:focus {
-      outline-offset: .2em;;
+      outline-offset: .2em;
+      ;
       box-shadow: 0 0 0 2px white;
     }
 
     .card h2 {
       font-size: 1.8em;
       text-align: center;
-      padding-left:.2em;
+      padding-left: .2em;
       margin-bottom: .1em;
-      margin-top:0em;      
+      margin-top: 0em;
     }
+
     .card p {
-      padding-top:0;
-      margin:0;
-      padding-left:.2em;
-      text-align: center; 
+      padding-top: 0;
+      margin: 0;
+      padding-left: .2em;
+      text-align: center;
     }
-    
   </style>
 </head>
 
@@ -184,13 +194,14 @@
       </div>
       <div class="column">
         <div class="card">
-          <h2 id="hdr_fails">Fails</h2>         
+          <h2 id="hdr_fails">Fails</h2>
           <p>Various accessibility fails</p>
-          <div><a href="./Fails/index.html" id="btn_fails" class="cardbtn" aria-labelledby="btn_fails hdr_fails">Explore</a></div>
+          <div><a href="./Fails/index.html" id="btn_fails" class="cardbtn"
+              aria-labelledby="btn_fails hdr_fails">Explore</a></div>
         </div>
       </div>
     </div>
-  
+
     <footer>
       <div class="row">
         <div class="column">
@@ -207,4 +218,5 @@
     </footer>
   </main>
 </body>
+
 </html>
