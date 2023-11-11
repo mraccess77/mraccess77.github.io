@@ -1,0 +1,143 @@
+/* Reset some default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Styles for header section */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  background-color: #f9f9f9;
+}
+
+.logo img {
+  width: 100px;
+  height: auto;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+}
+
+nav ul li {
+  margin-left: 20px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #000000;
+  font-weight: bold;
+}
+
+/* Styles for hero section */
+.hero {
+  background-image: url("hero-bg.png");
+  background-size: cover;
+  background-position: center;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-content {
+  text-align: center;
+  color: #fff;
+}
+
+.hero-content h1 {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.company-name {
+  color: rgb(22, 110, 125);
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 15px 30px;
+  background-color: rgb(22, 110, 125);
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: rgb(16, 78, 88);
+}
+
+/* Styles for footer section */
+footer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  
+}
+
+#cookie {
+  background-color:#003865;
+  color: white;
+  padding: .5em;
+  position: fixed;
+  bottom: .1em;
+  right: .1em;
+}
+
+a.cookie:link {
+  color: lightgray;
+}
+button {
+  background-color: #9e0073;
+  color:white;
+  padding:.5em;
+}
+
+footer a:link {
+  color: white;
+}
+
+.column {
+  
+  float: left;
+  width: 32%;
+  justify-content: center;
+  margin: .1em;
+  padding:.2em;  
+}
+
+.row {
+  padding: .3em;
+  margin: .3em;
+}
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.i1 {
+ width: 10em;
+ height: 10em;
+ 
+}
+
+.card {
+  position: relative;
+  height: 17em;
+  border: thin solid lightgray;
+  border-radius: 5%;
+  
+}
+.cardbtn {
+  position: absolute;
+  bottom: 1em;  
+  left: 5em;
+}

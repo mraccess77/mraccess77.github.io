@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessible Drag and Drop List</title>
+    <style>
+        /* Add your CSS styles here */
+        .list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .list li {
+            cursor: grab;
+            background-color: lightgray;
+            border: thin solid darkgray;
+            padding-bottom: 0px;
+            margin-bottom: 0px;
+        }
+
+        .list li.dragging {
+            background-color: #d3d3d3;
+        }
+
+        span {          
+            
+            vertical-align: middle;
+        }
+
+        svg {
+            vertical-align: middle;
+            
+            
+        }
+    </style>
+    <script>
+        const list = document.querySelector('.list');
+        let draggingItem = null;
+
+        list.addEventListener('dragstart', (e) => {
+            draggingItem = e.target;
+            e.dataTransfer.setData('text/plain', e.target.textContent);
+            setTimeout(() => {
+                e.target.style.display = 'none';
+            }, 0);
+        });
+
+        list.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            const afterElement = getDragAfterElement(list, e.clientY);
+            const container = afterElement || list;
+            container.insertBefore(draggingItem, afterElement);
+        });
+
+        list.addEventListener('dragend', () => {
+            draggingItem.style.display = '';
+            draggingItem = null;
+        });
+
+        function getDragAfterElement(container, y) {
+            const draggableElements = [...container.querySelectorAll('[draggable=true]:not(.dragging)')];
+            return draggableElements.reduce((closest, child) => {
+                const box = child.getBoundingClientRect();
+                const offset = y - box.top - box.height / 2;
+                if (offset < 0 && offset > closest.offset) {
+                    return { offset, element: child };
+                }
+                return closest;
+            }, { offset: Number.NEGATIVE_INFINITY }).element;
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Accessible Drag and Drop List</h1>
+    <ul class="list" role="list" aria-labelledby="list-heading">
+        <li draggable="true" role="listitem"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"
+                height="24">
+                <path fill="none" d="M0 0h24v24H0z" />
+                <path d="M4 11h16v2H4zM4 6h16v2H4zM4 16h16v2H4z" />
+            </svg><span>Item 1</span> <span>more</span></li>
+        <li draggable="true" role="listitem">Item 2</li>
+        <li draggable="true" role="listitem">Item 3</li>
+        <li draggable="true" role="listitem">Item 4</li>
+    </ul>
+    <div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="50">
+            <path fill="none" d="M0 0h24v24H0z" />
+            <path d="M4 11h16v2H4zM4 6h16v2H4zM4 16h16v2H4z" />
+        </svg>
+        <span>Item 1</span>
+    </div>
+</body>
+
+</html>

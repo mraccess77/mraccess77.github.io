@@ -1,0 +1,40 @@
+.container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.board {
+    display: inline-block;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.row {
+    display: flex;
+}
+
+.cell {
+    width: 50px;
+    height: 50px;
+    border: 1px solid black;
+    border-radius: 50%;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.cell:hover {
+    background-color: #d3d3d3;
+}
+
+.player-turn {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.restart-btn {
+    font-size: 16px;
+    padding: 10px;
+    border-radius

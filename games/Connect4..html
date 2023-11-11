@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Connect 4</title>
+    <style>
+      .cell {
+        width: 50px;
+        height: 50px;
+        background-color: white;
+        border: 1px solid black;
+      }
+      .red {
+        background-color: red;
+      }
+      .yellow {
+        background-color: yellow;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Connect 4</h1>
+    <table id="board">
+      <tbody>
+        <tr>
+          <td role="button" aria-label="Drop a token in column 1" tabindex="0" class="cell"></td>
+          <td role="button" aria-label="Drop a token in column 2" tabindex="0" class="cell"></td>
+          <td role="button" aria-label="Drop a token in column 3" tabindex="0" class="cell"></td>
+          <td role="button" aria-label="Drop a token in column 4" tabindex="0" class="cell"></td>
+          <td role="button" aria-label="Drop a token in column 5" tabindex="0" class="cell"></td>
+          <td role="button" aria-label="Drop a token in column 6" tabindex="0" class="cell"></td>
+          <td role="button" aria-label="Drop a token in column 7" tabindex="0" class="cell"></td>
+        </tr>
+        <tr>
+          <td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"></td>
+        </tr>
+        <tr>
+          <td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"></td>
+        </tr>
+        <tr>
+          <td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"></td>
+        </tr>
+        <tr>
+          <td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"></td>
+        </tr>
+        <tr>
+          <td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"></td>
+        </tr>
+        <tr>
+          <td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"></td>
+ <tr>
+          <td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"></td>
+          <td class="cell"></td>
+        </tr>
+      </tbody>
+    </table>
+    <p id="turn">Red's turn</p>
+    <script src="connect4.js"></script>
+  </body>
+</html>

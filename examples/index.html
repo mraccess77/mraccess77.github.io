@@ -1,32 +1,212 @@
 <!DOCTYPE html>
 <html>
-  <head>
-     <title>Index</title>
-  </head>
-  <body>
-    <main>
-      <h1>HTML, CSS, ARIA, and Accessibility Examples</h1>
+
+<head>
+  <title>Index</title>
+  <style>
+    /* Styles for header section */
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px;
+      background-color: #e9e9e9;
+    }
+
+    /* Styles for footer section */
+    footer {
+      background-color: #333;
+      color: #fff;
+      padding: 0px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+    }
+
+    nav ul li {
+      margin-left: 20px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: #000000;
+      font-weight: bold;
+    }
+
+    .logo img {
+      width: 60px;
+      height: 60px;
+    }
+
+    [aria-current="page"] {
+      color: #0000ee;
+      font-weight: bold;
+      border-bottom: thick solid blue;
+    }
+
+    h1 {
+      text-align: center;
+      Font-size: 2em;
+      font-weight: bold;
+      color: #450e53;
+    }
+
+    .column {
+      float: left;
+      width: 30%;
+      justify-content: center;
+      margin: .2em;
+      padding: .2em;
+    }
+
+    .row {
+      padding: .3em;
+      margin: .3em;
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+
+    .i1 {
+      width: 0em;
+      height: 0em;
+    }
+
+    .card {
+      position: relative;
+      height: 10em;
+      border: thin solid rgb(56, 55, 55);
+      border-radius: 5%;
+      border-top: thick solid #450e53;  
+    }
+
+    .cardbtn {
+      position: absolute;
+      bottom: 1em;
+      right: 1em;
+      background-color: #450e53;
+      color: white;
+      font-size: 1.2em;
+      border-radius: 12px;
+      padding: .2em;
+      text-decoration: none;
+    }
+    .cardbtn:hover {
+      text-decoration: underline;
+    }
+    .cardbtn:focus {
+      outline-offset: .2em;;
+      box-shadow: 0 0 0 2px white;
+    }
+
+    .card h2 {
+      font-size: 1.8em;
+      text-align: center;
+      padding-left:.2em;
+      margin-bottom: .1em;
+      margin-top:0em;      
+    }
+    .card p {
+      padding-top:0;
+      margin:0;
+      padding-left:.2em;
+      text-align: center; 
+    }
+    
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="logo">
+      <img src="mraccess logo.png" alt="Mraccess Accessibility logo">
+    </div>
+    <nav>
       <ul>
-        <li><a href="./label used by itself.html">Label used by itself</a></li>
-        <li><a href="./empty_data_cells.html">Empty data cells</a></li>
-        <li><a href="./fieldset.html">Fieldsets</a></li>
-        <li><a href="./link in button and button in link.html">Link in button and button in link</a></li>
-        
+        <li><a aria-current="page" href="./index.html">Home</a></li>
+        <li><a href="./Html elements/index.html">HTML Elements</a></li>
+        <li><a href="./Html attributes/index.html">HTML Attributes</a></li>
+        <li><a href="./ARIA roles/index.html">ARIA Roles</a></li>
+        <li><a href="./ARIA roles/index.html">ARIA States & Properties</a></li>
+        <li><a href="./CSS/index.html">CSS</a></li>
+        <li><a href="./Fails/index.html">Fails</a></li>
+        <li><a href="about.html">About</a></li>
       </ul>
+    </nav>
+  </header>
+  <main>
 
-      <h2>HTML Elements</h2>
-      <ul>
-        <li><a href="./Table TH using abbr attribute.html">Table TH using abbr attribute</a></li>
-      </ul>
-      <h2>ARIA Roles</h2>
-      <ul>
-      <li> <a href="./ARIA roles/ARIA listbox.html">ARIA listbox.html</a></li>
-      </ul>
+    <h1>Accessibility Examples</h1>
+    <div class="row">
+      <div class="column">
+        <div class="card">
+          <h2>HTML Elements</h2>
+          <p>Semantic elements of various types</p>
+          <div><button class="cardbtn">Explore</button></div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="card">
+          <h2>HTML Attributes</h2>
+          Standard attributes of various types
+          <div><button class="cardbtn">Explore</button></div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="card">
+          <h2>ARIA Roles</h2>
+          <p>Different ARIA widget and document roles</p>
+          <div><button class="cardbtn">ARIA Roles</button></div>
+        </div>
+      </div>
+    </div>
+    <!--------------------------------->
+    <div class="row">
+      <div class="column">
+        <div class="card">
+          <h2>ARIA States & Properties</h2>
+          <p>Various states and properties</p>
+          <div><button class="cardbtn">Explore</button></div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="card">
+          <h2>CSS</h2>
+          <p>CSS Examples</p>
+          <div><button class="cardbtn">Explore</button></div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="card">
+          <h2 id="hdr_fails">Fails</h2>         
+          <p>Various accessibility fails</p>
+          <div><a href="./Fails/index.html" id="btn_fails" class="cardbtn" aria-labelledby="btn_fails hdr_fails">Explore</a></div>
+        </div>
+      </div>
+    </div>
+  
+    <footer>
+      <div class="row">
+        <div class="column">
+          X
+        </div>
+        <div class="column">
+          Accessibility
+        </div>
+        <div class="column">
+          Mraccess 2023
+        </div>
+      </div>
+      <p></p>
+    </footer>
+  </main>
+</body>
 
-      <h2>ARIA States</h2>
-
-      <h2>CSS</h2>
-
-    </main>
-  </body>
 </html>
