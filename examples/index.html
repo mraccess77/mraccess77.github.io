@@ -11,6 +11,18 @@
       padding: 0;
       box-sizing: border-box;
     }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      height: 100%;
+    }
+    html {
+      font-size: 16px;      
+      height: 20%;
+    }
+
+    main {
+      height:40%;
+    }
 
     header {
       display: flex;
@@ -24,7 +36,7 @@
     footer {
       background-color: #333;
       color: #fff;
-      padding: 0px;
+      height:100%;
     }
 
     nav ul {
@@ -68,7 +80,7 @@
       padding: .2em;
     }
 
-    .row {
+    .row:not(:last-child) {
       padding: .3em;
       margin: .3em;
     }
@@ -213,10 +225,8 @@
         <div class="column">
           Mraccess 2023
         </div>
-      </div>
-      <p></p>
+      </div>      
     </footer>
   </main>
 </body>
-
 </html>
