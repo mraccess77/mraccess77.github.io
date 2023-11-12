@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>ARIA sort</title>
+  <script>
+    function toggle(obj) {
+      sortTable();
+      if (obj.parentNode.getAttribute('aria-sort') == 'ascending') {
+        obj.parentNode.setAttribute('aria-sort', 'descending');        
+      }
+      else {
+        obj.parentNode.setAttribute('aria-sort', 'ascending');
+      }
+    }
+
+    function sortTable() {
+  var table, rows, switching, i, x, y, shouldSwitch;
+  table = document.getElementById("myTable");
+  switching = true;
+
+  alert('jon');
+  while (switching) {
+    switching = false;
+    rows = table.rows;
+
+    for (i = 1; i < (rows.length - 1); i++) {
+      shouldSwitch = false;
+      x = rows[i].getElementsByTagName("TD")[0];
+      y = rows[i + 1].getElementsByTagName("TD")[0];
+
+      if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+        shouldSwitch = true;
+        break;
+      }
+    }
+
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+  }
+}
+  </script>
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      border: 1px solid black;
+      padding: 0.5em;
+    }
+
+    th[aria-sort="ascending"] {
+      background-color: #ccc;
+    }
+
+    th[aria-sort="descending"] {
+      background-color: #ccc;
+    }
+
+    th[aria-sort="ascending"] button::after {
+      content: "\2193";
+    }
+
+    th[aria-sort="descending"] button::after {
+        content: "\2191";
+      }
+    }
+    
+  </style>
+</head>
+
+<body>
+  <main>
+    <h1>ARIA sort</h1>
+    <h2>ARIA sort Ascending</h2>
+    <table id="myTable">
+      <tr>
+        <th scope="col" aria-live="polite" aria-sort="ascending"><button
+            onclick="toggle(this);">City</button></th>
+        <th scope="col">State</th>
+        <th scope="col">Zip</th>
+      </tr>
+      <tr>
+        <td>Fairfax</td>
+        <td>VA</td>
+        <td>22030</td>
+      </tr>
+        <tr>
+        <td>Richmond</td>
+        <td>VA</td>
+        <td>23220</td>
+      </tr>
+      <tr>
+        <td>Washington</td>
+        <td>DC</td>
+        <td>20001</td>
+      </tr>
+    </table>
+</body>
+
+</html>
