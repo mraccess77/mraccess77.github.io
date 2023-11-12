@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        input {
+            border: thin solid #red !important;
+        }
+
+        .screen-reader-text {
+            position: absolute !important;
+            height: 1px;
+            width: 1px;
+            overflow: hidden;
+            clip: rect(1px 1px 1px 1px);
+            clip-path: polygon(0px 0px, 0px 0px, 0px 0px, 0px 0px);
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <h1>Input type text</h1>
+    <h2>Input text with title (required, placeholder, autofocus)</h2>
+    <input style="border: thin solid #eeeeee;" autofocus required placeholder="enter search term here" title="search"
+        type="text" />
+    <button> Go </button>
+
+    <h2>Input text with label (required)</h2>
+    <input required id="i1" placeholder="enter search term here" type="text" />
+    <label style="border:solid thin;" for="i1"> Search </label>
+
+    <h2>Input text with aria-label</h2>
+    <input aria-label="search" id="i1" placeholder="enter search term here" type="text" />
+    <span style="border:solid thin;"> Search </span>
+
+    <h2>Input text with aria-labelledby</h2>
+    <input aria-labelledby="s1" id="i1" placeholder="enter search term here" type="text" />
+    <span id="s1" style="border:solid thin;"> Search </span>
+
+    <h2>Input with implicit label</h2>
+    <label>
+        <input id="i1" placeholder="enter search term here" type="text" />
+        <span id="s1" style="border:solid thin;"> Search </span>
+    </label>
+
+    <h2>Input with explicit and implicit label</h2>
+    <label for="ie1">
+        <input id="ie1" placeholder="enter search term here" type="text" />
+        <span id="s1" style="border:solid thin;"> Search </span>
+    </label>
+
+    <h2>Input text with label and aria-describedby==</h2>
+    <input aria-describedby="s2" id="il1" placeholder="enter search term here" type="text" />
+    <label for="il1" style="border:solid thin;"> Search </label>
+    <span id="s2">You can search for anything you want.</span>
+
+    <h2>Disabled Input text with label</h2>
+    <input disabled id="id1" placeholder="enter search term here" type="text" />
+    <label style="border:solid thin;" for="id1"> Search </label>
+
+    <h2>Readonly Input text with label</h2>
+    <input readonly value="hello world" id="ir1" placeholder="enter search term here" type="text" />
+    <label for="ir1" style="border:solid thin;"> Search </label>
+
+    <h2>Input text with label (autocomplete on)</h2>
+    <input autocomplete="on" id="ia1" placeholder="enter search term here" type="text" />
+    <label for="ia1" style="border:solid thin;"> Search </label>
+    <input autocomplete="on" id="ia2" placeholder="enter search term here" type="text" />
+    <label for="ia2"> Search </label>
+
+    <h2>Input with only title</h2>
+    <input type="text" title="this is a title" />
+    <h2>Input with only placeholder</h2>
+    <input type="text" placeholder="This is a placeholder" />
+
+    <h2>Input with maxlength 3</h2>
+    <input type="text" maxlength="3" />
+
+    <h2>Input with multiple aria-labelledby IDREF's</h2>
+        <label id="lbl1">Price</label>
+        <label id="lbl2" class="screen-reader-text">From</label>
+        <input aria-labelledby="lbl1 lbl2" type="text" />
+    
+    <h2>Input with aria-labelledby label immediately preceding the text element</h2>
+            <label id="lbl3">Price</label>
+        <input aria-labelledby="lbl3" type="text" />
+    
+    <h2>Input with aria-labelledby label element wrapping text element</h2>
+        <label id="lbl3">Price
+            <input aria-labelledby="lbl3" type="text" />
+        </label>
+
+    <h2>Input with aria-labelledby label element not immediately preceding the text element</h2>
+        <label id="lbl3">Price</label>
+        <span>(lowest)</span>
+        <input aria-labelledby="lbl3" type="text" />
+    
+    <h2>Input using aria-label</h2>
+        <label>Price</label>
+        <input aria-label="Price range from" type="text" />
+        <span aria-hidden="true">&nbsp;to&nbsp;</span>
+        <input aria-label="Price range to" type="text" />
+    
+    <h2>Input with alt attribute and no accessible name</h2>
+        <input alt="test" type="text" />
+
+    <h2>Input with no other attributes or accessible name</h2>
+    <input type="text" />
+    </main>
+    </body>    
+    </html>

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Offscreen text</title>
+
+    <style type="text/css">
+        .offscreen {
+            position: absolute;
+            clip: rect(1px 1px 1px 1px);
+            /* IE6, IE7 */
+            clip: rect(1px, 1px, 1px, 1px);
+            clip-path: inset(50%);
+            padding: 0;
+            border: 0;
+            height: 1px;
+            width: 1px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .offscreen:focus {
+            position: absolute;
+            clip: auto;
+            clip-path: none;
+            padding: 3px 4px;
+            border: none;
+            height: auto;
+            width: auto;
+            overflow: visible;
+            white-space: normal;
+            text-decoration: none;
+            background: #F2D3A1;
+            color: #000;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <code><pre>
+        .offscreen {
+            position: absolute!important;
+            clip: rect(1px 1px 1px 1px)!important;
+            clip: rect(1px, 1px, 1px, 1px)!important;
+            clip-path: inset(50%)!important;
+            padding: 0!important;
+            border: 0!important;
+            height: 1px!important; 
+            width: 1px!important; 
+            overflow: hidden!important;
+            white-space: nowrap!important;
+        }
+        </pre></code>
+        <code><pre>
+        .offscreen {
+            /* For defensive coding, !important is appropriate here. If any one of these declarations gets overridden, it will cause 
+            hard-to-detect bugs, in some cases just for certain content in a specific browser or screen reader.
+            
+            If a web developer needs to override some or all of the declarations, they may increase selector specificity. Example: 
+            body .offscreen {}
+            
+            In user-defined style sheets, user !important declarations can be written to override author !important declarations.
+            */
+            position: absolute!important; /* Take the element out of the page flow - for visual hiding */
+            clip: rect(1px 1px 1px 1px)!important; /* For IE6 and IE7 - for visual hiding */
+            clip: rect(1px, 1px, 1px, 1px)!important; /* clip:rect is deprecated, but required for browsers that don't yet support clip-path */
+            clip-path: inset(50%)!important; /* For modern browsers - for visual hiding */
+            padding: 0!important; /* Prevent visual glitches */
+            border: 0!important; /* Prevent visual glitches */
+            height: 1px!important; /* Necessary so assistive technologies won't treat it as completely hidden */
+            width: 1px!important; /* Necessary so assistive technologies won't treat it as completely hidden */
+            overflow: hidden!important; /* Combined with clipping - for visual hiding */
+            white-space: nowrap!important; /* Without this, certain assistive technologies will announce a sentence as if it has no whitespace between words */
+        }
+</pre></code>
+
+        <div>
+            This is a sentence that is visible to all sighted users.
+        </div>
+        <div class="offscreen">
+            This is a sentence that is positioned off screen so it cannot be seen visually.
+        </div>
+
+        <div>
+            <a onclick="document.getElementById(this.getAttribute('href').split('#')[1]).focus(); return false;"
+                href="#mainId" class="offscreen"> Skip to content </a>
+            <div role="banner">
+                <br>
+                This is a example of page header content that is visible on screen, though the skip link above it is not
+                currently visible. Focusing on the skip link, however, will cause it to be rendered visibly until focus
+                moves
+                away.
+            </div>
+            <br>
+            <br>
+            <p role="main" tabindex="-1" id="mainId">
+                This is the main content that the skip link moves focus to when activated.
+            </p>
+        </div>
+        <br>
+        <br>
+        <p>Click on this <button type="button">focusable button</button> to move focus to this part of the page, and
+            then press
+            the key combination <kbd>Shift-Tab</kbd> to move focus back to the off-screen skip link.</p>
+        <br>
+        <br>
+
+The following additional CSS causes the offscreen skip link to become visible when it receives focus:
+
+<code><pre>
+.offscreen:focus {
+position: absolute;
+clip: auto;
+clip-path: none;
+padding: 3px 4px;
+border: none;
+height: auto;
+width: auto;
+overflow: visible;
+white-space: normal;
+text-decoration: none;
+background: #F2D3A1;
+color: #000;
+}
+</pre></code>
+
+<div>
+    <script type="text/javascript">
+        var intVal = 0,
+            intFN = function () {
+                setInterval(function () {
+                    document.getElementById('tst1').innerHTML = (intVal++);
+                }, 1000);
+            };
+    </script>
+    <button onclick="intFN()"> Test offscreen positioned live region announcement </button>
+</div>
+<span class="offscreen" aria-live="polite" id="tst1"></span>
+</div>
+
+<h2>Browser and Assistive Technology Support</h2>
+<table>
+    <tr>
+        <th>
+            Platform, Browser, & AT
+        </th>
+        <th>
+            Static Offscreen Content
+        </th>
+        <th>
+            Focusable Offscreen Skiplink
+        </th>
+        <th>
+            Offscreen Live Region
+        </th>
+    </tr>
+
+    <tr>
+        <th>
+            <!-- Platform, Browser, AT -->
+            Windows7, IE11, JAWS18
+        </th>
+        <td>
+            <!-- Offscreen Static Content -->
+            Yes
+        </td>
+        <td>
+            <!-- Focusable Offscreen Skiplink -->
+            Yes
+        </td>
+        <td>
+            <!-- Offscreen Live Region -->
+            Yes
+        </td>
+    </tr>
+
+    <tr>
+        <th>
+            <!-- Platform, Browser, AT -->
+            Windows7, Firefox (Latest), JAWS18
+        </th>
+        <td>
+            <!-- Offscreen Static Content -->
+            Yes
+        </td>
+        <td>
+            <!-- Focusable Offscreen Skiplink -->
+            Yes
+        </td>
+        <td>
+            <!-- Offscreen Live Region -->
+            Yes
+        </td>
+    </tr>
+
+    <tr>
+        <th>
+            <!-- Platform, Browser, AT -->
+            Windows7, Chrome (Latest), JAWS18
+        </th>
+        <td>
+            <!-- Offscreen Static Content -->
+            Yes
+        </td>
+        <td>
+            <!-- Focusable Offscreen Skiplink -->
+            Yes
+        </td>
+        <td>
+            <!-- Offscreen Live Region -->
+            Yes
+        </td>
+    </tr>
+
+    <tr>
+
+    <tr>
+        <th>
+            <!-- Platform, Browser, AT -->
+            Windows7, IE11, NVDA 2016.3
+        </th>
+        <td>
+            <!-- Offscreen Static Content -->
+            Yes
+        </td>
+        <td>
+            <!-- Focusable Offscreen Skiplink -->
+            Yes
+        </td>
+        <td>
+            <!-- Offscreen Live Region -->
+            Yes
+        </td>
+    </tr>
+
+    <tr>
+        <th>
+            <!-- Platform, Browser, AT -->
+            Windows7, Firefox (Latest), NVDA 2016.3
+        </th>
+        <td>
+            <!-- Offscreen Static Content -->
+            Yes
+        </td>
+        <td>
+            <!-- Focusable Offscreen Skiplink -->
+            Yes
+        </td>
+        <td>
+            <!-- Offscreen Live Region -->
+            Yes
+        </td>
+    </tr>
+
+    <tr>
+        <th>
+            <!-- Platform, Browser, AT -->
+            Windows7, Chrome (Latest), NVDA 2016.3
+        </th>
+        <td>
+            <!-- Offscreen Static Content -->
+            Yes
+        </td>
+        <td>
+            <!-- Focusable Offscreen Skiplink -->
+            Yes
+        </td>
+        <td>
+            <!-- Offscreen Live Region -->
+            Yes
+        </td>
+    </tr>
+
+    <tr>
+        <th>
+            <!-- Platform, Browser, AT -->
+            Windows7, IE11, Window-eyes 9.5.3
+        </th>
+        <td>
+            <!-- Offscreen Static Content -->
+            Yes
+        </td>
+        <td>
+            <!-- Focusable Offscreen Skiplink -->
+            Yes
+        </td>
+        <td>
+            <!-- Offscreen Live Region -->
+            Yes
+        </td>
+    </tr>
+
+    <tr>
+        <th>
+            <!-- Platform, Browser, AT -->
+            Windows7, Firefox (Latest), Window-eyes 9.5.3
+        </th>
+        <td>
+            <!-- Offscreen Static Content -->
+            Yes
+        </td>
+        <td>
+            <!-- Focusable Offscreen Skiplink -->
+            Yes
+        </td>
+        <td>
+            <!-- Offscreen Live Region -->
+            Yes
+        </td>
+    </tr>
+
+    <tr>
+        <th>
+            <!-- Platform, Browser, AT -->
+            Windows7, Chrome (Latest), Window-eyes 9.5.3
+        </th>
+        <td>
+            <!-- Offscreen Static Content -->
+            No
+        </td>
+        <td>
+            <!-- Focusable Offscreen Skiplink -->
+            Yes
+        </td>
+        <td>
+            <!-- Offscreen Live Region -->
+            Yes
+        </td>
+    </tr>
+
+    <th>
+        <!-- Platform, Browser, AT -->
+        iOS (iPhone 6), Safari (Latest), VoiceOver
+    </th>
+    <td>
+        <!-- Offscreen Static Content -->
+        Yes
+    </td>
+    <td>
+        <!-- Focusable Offscreen Skiplink -->
+        Yes
+    </td>
+    <td>
+        <!-- Offscreen Live Region -->
+        Yes
+    </td>
+    </tr>
+
+    <tr>
+        <th>
+            <!-- Platform, Browser, AT -->
+            Android Chrome (Latest), TalkBack 5.04
+        </th>
+        <td>
+            <!-- Offscreen Static Content -->
+            Yes
+        </td>
+        <td>
+            <!-- Focusable Offscreen Skiplink -->
+            Yes
+        </td>
+        <td>
+            <!-- Offscreen Live Region -->
+            Yes
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <!-- Platform, Browser, AT -->
+            Android FireFox (Latest), TalkBack 5.04
+        </th>
+        <td>
+            <!-- Offscreen Static Content -->
+            Yes
+        </td>
+        <td>
+            <!-- Focusable Offscreen Skiplink -->
+            Yes
+        </td>
+        <td>
+            <!-- Offscreen Live Region -->
+            No
+        </td>
+    </tr>
+
+</table>
+</main>
+</body>
+</html>

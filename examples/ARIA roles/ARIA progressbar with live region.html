@@ -1,0 +1,139 @@
+<html lang="en">
+	<head>
+	<title>ARIA  Progress Bar with Live Region</title>
+	<style>
+		progress { background-color:#000000; border: 0; height: 40px; border-radius: 9px; }  
+		button { height:50px; width:50px; }
+		#summary {} 
+		#content { width:600px; margin:10px auto; border:4px solid #000000; padding:10px; } 
+		#message { height:30px; background-color:yellow; margin:10px 0 10px 0; padding:5px; font-weight:bold; border:1px solid #000000; text-align:center; }
+		#progressBar { width:100%; margin-bottom:10px;  }
+		#progressLabel, #progressPercent { font-size:20px; font-weight:bold; }
+		#progressBarFallback1 { background:black; width:400px;  height:30px; border:1px solid black; display:block;  } 
+		#progressBarFallback2 { background:yellow; width:0;  display:inline-block; line-height:30px;   ) 
+
+	</style>
+	</head>
+	<body>
+<main>
+			
+			<h1>ARIA Progress with live region</h1>
+
+			<p id="summary">
+				This HTML5 progress bar has been implemented with <code>aria-live="polite"</code> as the only ARIA in use. The separate announcements by screen readers for the progress bar and textual updates are achieved by putting them in separate live regions.
+			</p>
+
+			<progress id="progressBar" max='100' value='0'>
+
+				<!-- Fallback -->
+				<div id="progressBarFallback1"><span id="progressBarFallback2">&nbsp;</span></div>
+
+			</progress>
+
+			<div>
+				<span id="progressLabel">Progress: </span>
+
+				<!-- Separate live region for the progress -->
+				<span aria-live="polite" id="progressPercent">0%</span>
+			</div>
+
+			<!-- Separate live region for the message -->
+			<div aria-live="polite" id="message">Click the start button to begin testing</div>
+			
+			<button id="startButton">Start</button>
+			<button id="resetButton">Reset</button>
+
+			<h2>Known Issues</h2>
+			<ul>
+				<li>The updates are not announced using JAWS13 on Windows XP and Internet Exporer 8</li>
+			</ul>		
+		
+		<script>
+
+			(function() {	
+				
+				var updateProgress;
+
+				
+				function updateProgress() {
+					var message, progress, progressBar, progressPercent, startButton, resetButton, intervalId, progressBarFallback2;
+					progress = 0;
+					message = document.getElementById('message');
+					resetButton = document.getElementById('resetButton');
+					resetButton.disabled = 'true';
+					progressBarFallback2 = document.getElementById('progressBarFallback2');
+
+					return function () {
+						progressPercent = document.getElementById('progressPercent');
+						progressBar = document.getElementById('progressBar');
+						startButton = document.getElementById('startButton');
+
+						//Update the progress bar
+						if ( progress <= 100 ) {
+							progressBar.value = progress;
+
+							//First update the fallback width
+							progressBarFallback2.style.width = progress + '%';
+
+							
+							progressPercent.innerHTML = progressBar.value + '%';
+							progress += 10;
+						} else {
+							progress = 0;
+							stop();
+						}
+					}
+				}	
+
+           		//Accessing the closure  
+				updateProgress = updateProgress();
+   
+				function preStart() {
+					//Simulate a waiting period
+					message.innerHTML = 'Testing will begin shortly';
+					startButton.disabled = true;
+					setTimeout(function() { start(); }, 3000);
+				}
+
+                function start() {
+					//Start the progress meter 
+					//Disable the start button
+					intervalId = setInterval( function() { updateProgress(); }, 3000); 	
+					message.innerHTML = 'Testing in progress';
+					startButton.disabled = true;
+				} 
+
+				function stop() {
+					//Stop the progress meter
+					clearInterval(intervalId);
+					message.innerHTML = 'Testing is complete. Click the Reset button to test again.';
+					resetButton.disabled = false;
+				}
+
+				function reset () {
+
+					//Reset the progress meter and manage the button states
+					progressBar.value = 0;
+
+					//Reset the fallback width
+					progressBarFallback2.style.width = 0;
+
+					progressPercent.innerHTML = progressBar.value + '%';
+					startButton.disabled = false;
+					resetButton.disabled = true;
+					message.innerHTML = 'Click the start button to begin testing';
+				}
+				
+				startButton.disabled = false;
+				
+				//Event Registration
+			    startButton.onclick = function() { preStart(); };
+			    resetButton.onclick = function() { reset(); };
+				
+			}());
+
+		</script>
+</main>
+	</body>
+</html>
+
