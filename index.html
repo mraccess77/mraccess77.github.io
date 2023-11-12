@@ -3,45 +3,104 @@
 
 <head>
   <title>Accessibility Testing Resources</title>
+  <link rel="stylesheet" type="text/css" href="./mraccess_styles.css">
+  <style>
+    html {
+      height: 100%;
+    }
+
+    main {
+      height: 100%;
+    }
+
+    footer {
+      height: 10%;
+    }
+
+    ul {
+      margin-left: 2em;
+
+    }
+    .card h2 {
+      font-size: 1.1em;
+      text-align: center;
+      padding-left: .2em;
+      margin-bottom: .1em;
+      margin-top: 0em;      
+    }
+  </style>
 </head>
 
 <body>
-  <header></header>
+  <header>
+    <div class="logo">
+      <img src="./mraccess logo.png" alt="Mraccess Accessibility logo">
+    </div>
+    <nav>
+      <ul>
+        <li><a aria-current="page" href="./index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
   <main>
     <h1>Accessibility Testing Resources</h1>
-    <ul>
-      <li><a href="http://mraccess77.github.io/favlets/index.html">Acessibility Testing Favlets</a></li>
-      <li><a href="http://mraccess77.github.io/examples/">Examples</a></li>
-      <li><a href="http://mraccess77.github.io/test_results/ARIA_Mobile_Browser_Support.html">Test Results for ARIA in
-          Mobile Browsers</a>
-      </li>
-      <li>
-        <a href="http://mraccess77.github.io/CanvasContrastChecker.html">Canvas Contrast Checker</a>
-      </li>
-      <li>
-        <a href="http://mraccess77.github.io/ContrastChecker.html">Contrast Checker</a>
-      </li>
-      <!--
-      <li>
-        <a href="http://mraccess77.github.io/viewport_test.html">View port test</a>
-      </li>
-      <li>
-        <a href="http://mraccess77.github.io/12pointTimes.html">12 Point Times New Roman</a>
-      </li>
-      <li>
-        <a href="http://mraccess77.github.io/reflow.html">reflow</a>
-      </li>
-      <li>
-        <a href="http://mraccess77.github.io/spider.html">Spider</a>
-      </li>
-      -->
-    </ul>
-    <div>
-      <img src="https://mraccess77.github.io/images/help.png">
+    <div class="row">
+      <div class="column">
+        <div class="card">
+          <h2>Acessibility Testing Favlets</h2>
+          <div>
+            <a href="http://mraccess77.github.io/favlets/index.html" class="cardbtn">Explore</a>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="card">
+          <h2>HTML, ARIA, CSS, and other accessibility Examples</h2>
+          <div>
+            <a href="http://mraccess77.github.io/examples/" class="cardbtn">Explore1</a>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="card">
+          <h2>Test Results for ARIA in
+            Mobile Browsers</h2>
+          <div>
+            <a href="http://mraccess77.github.io/test_results/ARIA_Mobile_Browser_Support.html" class="cardbtn">Explore</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="column">
+        <div class="card">
+          <h2>Canvas Contrast Checker</h2>
+          <div>
+            <a href="http://mraccess77.github.io/CanvasContrastChecker.html" class="cardbtn">Explore</a>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="card">
+          <h2>Contrast Checker</h2>
+          <div>
+            <a href="http://mraccess77.github.io/ContrastChecker.html" class="cardbtn">Explore</a>
+          </div>
+        </div>
+      </div>
     </div>
 
   </main>
-  <Footer></Footer>
+  <footer>
+    <div class="row">
+      <div class="column">X</div>
+      <div class="column">Accessibility</div>
+      <div class="column" style="text-align:right">Mraccess 2023</div>
+    </div>
+  </footer>
 </body>
 
 </html>

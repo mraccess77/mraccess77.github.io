@@ -3,159 +3,22 @@
 
 <head>
   <title>Accessibility Examples</title>
-  <style>
-    /* Styles for header section */
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      height: 100%;
-    }
-    html {
-      font-size: 16px;      
-      height: 20%;
-    }
-
-    main {
-      height:40%;
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 5px;
-      background-color: #e9e9e9;
-    }
-
-    /* Styles for footer section */
-    footer {
-      background-color: #333;
-      color: #fff;
-      height:100%;
-    }
-
-    nav ul {
-      list-style: none;
-      display: flex;
-    }
-
-    nav ul li {
-      margin-left: 20px;
-    }
-
-    nav ul li a {
-      text-decoration: none;
-      color: #000000;
-      font-weight: bold;
-    }
-
-    .logo img {
-      width: 60px;
-      height: 60px;
-    }
-
-    [aria-current="page"] {
-      color: #0000ee;
-      font-weight: bold;
-      border-bottom: thick solid blue;
-    }
-
-    h1 {
-      text-align: center;
-      Font-size: 2em;
-      font-weight: bold;
-      color: #450e53;
-    }
-
-    .column {
-      float: left;
-      width: 30%;
-      justify-content: center;
-      margin: .2em;
-      padding: .2em;
-    }
-
-    .row:not(:last-child) {
-      padding: .3em;
-      margin: .3em;
-    }
-
-    /* Clear floats after the columns */
-    .row:after {
-      content: "";
-      display: table;
-      clear: both;
-    }
-
-    .i1 {
-      width: 0em;
-      height: 0em;
-    }
-
-    .card {
-      position: relative;
-      height: 10em;
-      border: thin solid rgb(56, 55, 55);
-      border-radius: 5%;
-      border-top: thick solid #450e53;
-    }
-
-    .cardbtn {
-      position: absolute;
-      bottom: 1em;
-      right: 1em;
-      background-color: #450e53;
-      color: white;
-      font-size: 1.2em;
-      border-radius: 12px;
-      padding: .2em;
-      text-decoration: none;
-    }
-
-    .cardbtn:hover {
-      text-decoration: underline;
-    }
-
-    .cardbtn:focus {
-      outline-offset: .2em;
-      ;
-      box-shadow: 0 0 0 2px white;
-    }
-
-    .card h2 {
-      font-size: 1.8em;
-      text-align: center;
-      padding-left: .2em;
-      margin-bottom: .1em;
-      margin-top: 0em;
-    }
-
-    .card p {
-      padding-top: 0;
-      margin: 0;
-      padding-left: .2em;
-      text-align: center;
-    }
-  </style>
+  <link rel="stylesheet" type="text/css" href="../mraccess_styles.css">
 </head>
 
 <body>
   <header>
     <div class="logo">
-      <img src="mraccess logo.png" alt="Mraccess Accessibility logo">
+      <img src="../mraccess logo.png" alt="Mraccess Accessibility logo">
     </div>
     <nav>
       <ul>
-        <li><a aria-current="page" href="./index.html">Home</a></li>
-        <li><a href="./Html elements/index.html">HTML Elements</a></li>
-        <li><a href="./Html attributes/index.html">HTML Attributes</a></li>
+        <li><a href="../index.html">Home</a></li>
+        <li><a aria-current="page" href="./HTML elements/index.html">Accessibility Examples</a></li>
+        <li><a href="./HTML elements/index.html">HTML Elements</a></li>
+        <li><a href="./HTML attributes/index.html">HTML Attributes</a></li>
         <li><a href="./ARIA roles/index.html">ARIA Roles</a></li>
-        <li><a href="./ARIA roles/index.html">ARIA States & Properties</a></li>
+        <li><a href="./ARIA states and properties/index.html">ARIA States & Properties</a></li>
         <li><a href="./CSS/index.html">CSS</a></li>
         <li><a href="./Fails/index.html">Fails</a></li>
         <li><a href="about.html">About</a></li>
@@ -168,23 +31,25 @@
     <div class="row">
       <div class="column">
         <div class="card">
-          <h2>HTML Elements</h2>
+          <h2 id="hdr_html_elements">HTML Elements</h2>
           <p>Semantic elements of various types</p>
-          <div><button class="cardbtn">Explore</button></div>
+          <div><a href="./HTML elements/index.html" aria-labelledby="hdr_html_elements btn_html_elements"
+              id="btn_html_elements" class="cardbtn">Explore</a></div>
         </div>
       </div>
       <div class="column">
         <div class="card">
-          <h2>HTML Attributes</h2>
+          <h2 id="hdr_html_attributes">HTML Attributes</h2>
           Standard attributes of various types
-          <div><button class="cardbtn">Explore</button></div>
+          <div><a href="./HTML attributes/index.html" id="btn_html_attributes"
+              aria-labelledby="hdr_html_attributes btn_html_attributes" class="cardbtn">Explore</a></div>
         </div>
       </div>
       <div class="column">
         <div class="card">
-          <h2>ARIA Roles</h2>
+          <h2 id="hdr_aria_roles">ARIA Roles</h2>
           <p>Different ARIA widget and document roles</p>
-          <div><button class="cardbtn">ARIA Roles</button></div>
+          <div><a href="./ARIA roles/index.html" id="btn_aria_roles" class="cardbtn" aria-labelledby="hdr_aria_roles btn_aria_roles">ARIA Roles</a></div>
         </div>
       </div>
     </div>
@@ -192,16 +57,18 @@
     <div class="row">
       <div class="column">
         <div class="card">
-          <h2>ARIA States & Properties</h2>
+          <h2 id="hdr_aria_states">ARIA States & Properties</h2>
           <p>Various states and properties</p>
-          <div><button class="cardbtn">Explore</button></div>
+          <div><a href="./ARIA states and properties/index.html" id="btn_aria_states"
+              aria-labelledby="hdr_aria_states btn_aria_states" class="cardbtn">Explore</a></div>
         </div>
       </div>
       <div class="column">
         <div class="card">
-          <h2>CSS</h2>
+          <h2 id="hdr_css">CSS</h2>
           <p>CSS Examples</p>
-          <div><button class="cardbtn">Explore</button></div>
+          <div><a href="./CSS/index.html" id="btn_css" aria-labelledby="hdr_css btn_css" class="cardbtn">Explore</a>
+          </div>
         </div>
       </div>
       <div class="column">
@@ -225,8 +92,9 @@
         <div class="column">
           Mraccess 2023
         </div>
-      </div>      
+      </div>
     </footer>
   </main>
 </body>
+
 </html>
