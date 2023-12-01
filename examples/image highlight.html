@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Image Highlight</title>
+</head>
+
+<body>
+    <main>
+        <h1>Image Highlight</h1>
+        <img src="https://www.w3schools.com/html/pic_trulli.jpg" alt="Trulli" width="500" height="333">
+        <p>This is a bunch of text.</p>
+        <button>Test</button>
+        <p>GitHub Copilot: Web accessibility refers to the inclusive practice of ensuring there are no barriers that
+            prevent interaction with, or access to, websites on the World Wide Web by people with physical disabilities,
+            situational disabilities, and socio-economic restrictions on bandwidth. When sites are correctly designed,
+            developed and edited, generally all users have equal access to information and functionality. It also
+            benefits people without disabilities, for example mobile phone users.</p>
+    </main>
+
+
+    <script>
+        // Select all img, role=img, and svg elements
+        var images = document.querySelectorAll('img, [role="img"], svg');
+
+        // Loop through all selected elements
+        for (var i = 0; i < images.length; i++) {
+            // Create a new div element
+            var magnetBox = document.createElement('div');
+
+            // Set the style of the div to act as a border
+            magnetBox.style.border = '2px solid magenta';
+            magnetBox.style.position = 'absolute';
+            magnetBox.style.pointerEvents = 'none'; // To allow clicks to pass through
+
+            // Get the accessible name
+    var accessibleName = images[i].getAttribute('aria-label') || images[i].alt || '';
+
+// Add the accessible name to the div
+
+            // Position the div around the original element
+            var rect = images[i].getBoundingClientRect();
+            var magnetSpan = document.createElement('span');
+            magnetSpan.style.backgroundColor = 'rgba(255, 0, 255, 0.5)';
+            magnetSpan.style.color = 'white';
+            magnetSpan.textContent = accessibleName;
+            magnetSpan.style.padding = '2px';
+            magnetBox.appendChild(magnetSpan)
+            magnetBox.style.top = rect.top + 'px';
+            magnetBox.style.left = rect.left + 'px';
+            magnetBox.style.width = rect.width + 'px';
+            magnetBox.style.height = rect.height + 'px';
+
+            // Add the div to the body
+            document.body.appendChild(magnetBox);
+        }
+    </script>
+</body>
