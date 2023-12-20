@@ -2,19 +2,19 @@
 <html lang="en">
 
 <head>
-    <title>Page with ARIA Described Button</title>
+    <title>Page with aria-describedby and aria-description</title>
 </head>
 
 <body>
     <main>
-        <h1>aria-describedby example</h1>
-        <button aria-describedby="trash-desc">Move to trash</button>
+        <h1>aria-describedby wtih aria-description example</h1>
+        <button aria-describedby="trash-desc" aria-description="This is a description">Move to trash</button>
         <p id="trash-desc">
             Items in the trash will be permanently removed after 30 days.
         </p>
         <label for="temp">Temperature</label>
         <input type="text" aria-describedby="desc_temp" id="temp">
-        <p id="desc_temp">
+        <p id="desc_temp" aria-description="This is a description">
             Temp in Celcius.
     </main>
 </body>
