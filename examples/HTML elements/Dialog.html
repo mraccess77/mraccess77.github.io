@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Dialog Example</title>
+</head>
+<body>
+    <button id="openDialog">Open Dialog</button>
+
+    <dialog id="myDialog" aria-modal="false">
+        <h2>Hello, this is a dialog box!</h2>
+        <button id="closeDialog">Close</button>
+    </dialog>
+
+    <script>
+        var dialog = document.getElementById('myDialog');
+        var showDialogButton = document.getElementById('openDialog');
+        var closeDialogButton = document.getElementById('closeDialog');
+
+        showDialogButton.addEventListener('click', function() {
+            dialog.showModal();
+        });
+
+        closeDialogButton.addEventListener('click', function() {
+            dialog.close();
+        });
+    </script>
+</body>
+</html>
