@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Keypress Example</title>
+</head>
+<body>
+    <h1>Keypress Example</h1>
+    <p>Press any key to see the current keypress:</p>
+    <input type="text"> 
+    <p id="keypress"></p>
+
+    <script>
+        document.addEventListener('keydown', function(event) {
+            document.getElementById('keypress').innerText = event.key;
+        });
+    </script>
+</body>
+</html>
