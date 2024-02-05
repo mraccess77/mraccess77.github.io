@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ARIA Error Message Example</title>
+    <style>
+        .hidden {
+            display: block;
+        }
+    </style>
+    <script>
+        function focusOnInput() {
+            document.getElementById('inputField').focus();
+        }
+    </script>
+</head>
+<body>
+    <input type="text" id="inputField" aria-errormessage="errorMsg" aria-describedby="errorMsg" aria-invalid="false">
+    <div id="errorMsg" class="hidden">Error: Invalid input</div>
+    <button onclick="focusOnInput()">Focus on Input Field</button>
+</body>
+</html>
