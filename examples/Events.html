@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+   <style type="text/css">
+     #a1::before {
+       content: "Our ";
+     }
+     #log1 {
+        height:15em;
+        overflow:scroll;
+     }
+   </style>
+
+    <script type="text/javascript">
+       document.ondocumentready = setTimeout(function(){setup();},1000);
+              
+       function test(e) {
+          var evt = e ? e : window.event;
+           var c = e.keyCode ? e.keyCode : "";
+           var d = document.createElement("div");
+           var k = "";
+           if (c) {
+             k = "(" + keyCode(c) + ")";
+           }
+           var t = document.createTextNode(evt.type+" " + evt.target + " " + c + " " + k);
+           d.appendChild(t);
+           var log1 = document.getElementById("log1");
+           log1.appendChild(d);
+           log1.scrollTop = log1.scrollHeight - log1.clientHeight;
+           //Log the event to Console, so that the event object details may be inspected if desired.
+           console.log(e);
+       }
+
+       function notused() {
+          var d = document.createElement("div");
+          var t = document.createTextNode("hello");
+          d.appendChild(t);
+          document.getElementById("d1").appendChild(d);
+       }
+
+       function setup() {
+var elements = ['s1','i1','b1','a1','d1','d2','d3','d4','r1','c1'];
+var el;
+
+for (var i=0; i< elements.length; i++) {
+  el = document.getElementById(elements[i]);
+  el.addEventListener("touchstart", test, false);
+  el.addEventListener("touchend", test, false);
+  el.addEventListener("touchcancel", test, false);
+  el.addEventListener("touchenter", test, false);
+  el.addEventListener("touchleave", test, false);
+  el.addEventListener("touchmove", test, false);
+  el.addEventListener("focus", test, false);
+  el.addEventListener("blur", test, false);
+  el.addEventListener("keypress", test, false);
+  el.addEventListener("keyup", test, false);
+  el.addEventListener("keydown", test, false);
+  el.addEventListener("mouseover", test, false);
+  el.addEventListener("mousedown", test, false);
+  el.addEventListener("mouseup", test, false);
+  el.addEventListener("mouseout", test, false);
+  el.addEventListener("click", test, false);
+  el.addEventListener("dbclick", test, false);
+}
+       }
+     function goSomewhere() {
+
+     }
+    </script>
+  </head>
+
+  <body>
+   <div id="d1">
+    <select id="s1" title="Entry" type="text" >
+      <option> Apple </option>
+      <option> Cherry</option>
+      <option> Pumpkin</option>
+    </select>
+
+    <input title="Entry" type="text" id="i1" />
+    
+    <button onfocus="test(event);" id="b1"> Do nothing </button>
+
+    <a aria-label="Level Access" tabindex="0" href="#a1" id="a1">Level Access</a>
+    <label><input type="checkbox" id="c1" >Order now!</label>
+    <div id="d1" tabindex="0" onclick="goSomewhere();" > div area with tabindex </div>
+    <div id="d2" onclick="goSomewhere();" > div area with no tabindex </div>
+    <div id="d3" onclick="goSomewhere();" > 
+     <div id="d4" >div area with no tabindex and delegate </div>
+     <input type="radio" id="r1"> <span>Unlabeled radio button</span>
+    </div>
+   <h3>Log area</h3>
+    <div id="log1" aria-live="polite" >
+      </div>
+     <button onclick="setup();"> start</button>
+    <script type="text/javascript">
+        module = [];
+    </script>
+    <script type="text/javascript" src="https://unpkg.com/keycode">
+ </body>
+</html>
+[[Category:Techniques]]
