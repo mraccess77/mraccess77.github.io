@@ -16,13 +16,14 @@
               
        function test(e) {
           var evt = e ? e : window.event;
-           var c = e.keyCode ? e.keyCode : "";
+          
+           
+            if (e.type == "keypress" || e.type == "keydown" || e.type == "keyup") {
+              var c = e.charCode;            
+            }
            var d = document.createElement("div");
-           var k = "";
-           if (c) {
-             k = "(" + keyCode(c) + ")";
-           }
-           var t = document.createTextNode(evt.type+" " + evt.target + " " + c + " " + k);
+                    
+           var t = document.createTextNode(evt.type+" " + evt.target + " " + c);
            d.appendChild(t);
            var log1 = document.getElementById("log1");
            log1.appendChild(d);
