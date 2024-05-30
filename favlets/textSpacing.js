@@ -4,6 +4,7 @@ function traverseFrames(doc,_framesObj) {
 	// check for title class in current document and then check it's frames
 	
 	adjustSpacing(doc,_framesObj);
+	_framesObj.foundCount = _framesObj.foundCount + 1;
 	
 	// go through for each frame's document if there are any frames
 	var frametypes= ['frame','iframe'];
@@ -12,6 +13,7 @@ function traverseFrames(doc,_framesObj) {
 		for (var z=0;z<myframes.length;z++) {
 			try {
 		    traverseFrames(myframes[z].contentWindow.document,_framesObj);
+			
 		  } catch(e) {
 			  //errors are stored in _framesObj too
 				_framesObj.extFrameSrcList = _framesObj.extFrameSrcList + '\n' + myframes[z].src;
@@ -22,13 +24,14 @@ function traverseFrames(doc,_framesObj) {
 	return _framesObj;
 }
 
+// ****************************************** //
 function adjustSpacing(doc, _framesObj) {
- var style = doc.createElement('style');
- style.type = 'text/css';
- //style.appendChild(document.createTextNode());
- doc.head.appendChild(style);
- style.sheet.insertRule('*{line-height:1.5 !important; letter-spacing: 0.12em !important; word-spacing: 0.16em !important;}', style.sheet.cssRules.length);
-style.sheet.insertRule('p{margin-bottom: 2em !important;}', style.sheet.cssRules.length);
+	var style = doc.createElement('style');
+	style.type = 'text/css';
+	//style.appendChild(document.createTextNode());
+	doc.head.appendChild(style);
+	style.sheet.insertRule('*{line-height:1.5 !important; letter-spacing: 0.12em !important; word-spacing: 0.16em !important;}', style.sheet.cssRules.length);
+	style.sheet.insertRule('p{margin-bottom: 2em !important;}', style.sheet.cssRules.length);
 }
 
 // *********************************** //
@@ -48,6 +51,7 @@ function run(doc){
 
   // Recurse through document and frames
   _framesObj = traverseFrames(doc,_framesObj);
+  console.log(_framesObj.foundCount);
 }
 
 run(document);
