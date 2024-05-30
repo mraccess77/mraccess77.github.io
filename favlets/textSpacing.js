@@ -28,10 +28,10 @@ function adjustSpacing(doc, _framesObj) {
  //style.appendChild(document.createTextNode());
  doc.head.appendChild(style);
  style.sheet.insertRule('*{line-height:1.5 !important; letter-spacing: 0.12em !important; word-spacing: 0.16em !important;}', style.sheet.cssRules.length);
- style.sheet.insertRule('p{margin-bottom: 2em !important;}', style.sheet.cssRules.length);
+style.sheet.insertRule('p{margin-bottom: 2em !important;}', style.sheet.cssRules.length);
 }
 
-/ *********************************** //
+// *********************************** //
 function run(doc){
 
   // initialize variables
