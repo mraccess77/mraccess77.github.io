@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiplication Flashcard Game</title>
+    <style>
+        html {
+            height: 100%;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            background-color: #f0f0f0;            
+            margin: 6em;
+        }
+        .game-container {
+            text-align: center;
+            background: #fff;
+            padding: 2em;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            height:70%;
+            margin:2em;
+        }
+        .flashcard {
+            font-size: 20em;
+            margin-bottom: 2em;
+            align-items: center;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="flashcard" id="flashcard">
+        </div>        
+    </div>
+
+    <script>
+        let num1, num2, correctAnswer;
+        question = false;
+
+        function generateQuestion() {
+            if (!question) {
+                num1 = Math.floor(Math.random() * 12) + 1;
+                num2 = Math.floor(Math.random() * 12) + 1;
+                rCr = Math.floor(Math.random() * 200) + 1;
+                rCb = Math.floor(Math.random() * 200) + 1;
+                rCg = Math.floor(Math.random() * 200) + 1;
+                correctAnswer = num1 * num2;
+                document.getElementById('flashcard').innerText = num1 + "x" + num2;
+                document.getElementById('flashcard').style.color = "rgb("+rCr+","+rCb+","+rCg+")";
+                question = true;
+            }
+            else {
+                document.getElementById('flashcard').innerText = correctAnswer;
+                question = false;
+            }
+            //document.getElementById('flashcard').innerText = `${num1} x ${num2} = ?`;
+        }
+
+        document.getElementById('flashcard').addEventListener('click', function() {
+            generateQuestion();            
+        });
+        generateQuestion();            
+    </script>
+</body>
+</html>

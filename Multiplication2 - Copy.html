@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiplication Flashcard Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        .game-container {
+            text-align: center;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .flashcard {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        .input-container {
+            margin-bottom: 20px;
+        }
+        .input-container input {
+            font-size: 1.5rem;
+            padding: 10px;
+            width: 100px;
+            text-align: center;
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+        .button-container button {
+            font-size: 1rem;
+            padding: 10px 20px;
+            cursor: pointer;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+        }
+        .button-container button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="flashcard" id="flashcard">Click "Start Game" to begin!</div>
+        <div class="input-container">
+            <input type="number" id="answerInput" placeholder="Your answer">
+        </div>
+        <div class="button-container">
+            <button id="startButton">Start Game</button>
+            <button id="checkButton" style="display: none;">Check Answer</button>
+        </div>
+    </div>
+
+    <script>
+        let num1, num2, correctAnswer;
+
+        function generateQuestion() {
+            num1 = Math.floor(Math.random() * 12) + 1;
+            num2 = Math.floor(Math.random() * 12) + 1;
+            correctAnswer = num1 * num2;
+            document.getElementById('flashcard').innerText = `${num1} x ${num2} = ?`;
+        }
+
+        document.getElementById('startButton').addEventListener('click', function() {
+            generateQuestion();
+            document.getElementById('checkButton').style.display = 'inline-block';
+            document.getElementById('startButton').innerText = 'Next Question';
+        });
+
+        document.getElementById('checkButton').addEventListener('click', function() {
+            const userAnswer = parseInt(document.getElementById('answerInput').value);
+            if (userAnswer === correctAnswer) {
+                alert('Correct!');
+            } else {
+                alert(`Wrong! The correct answer is ${correctAnswer}`);
+            }
+            document.getElementById('answerInput').value = '';
+            generateQuestion();
+        });
+    </script>
+</body>
+</html>
