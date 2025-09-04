@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ARIA Details Example</title>
+</head>
+<body>
+
+  <p>
+    The <strong>cubic-bezier()</strong> function defines a cubic 
+    <span role="term" aria-details="bezierDetails">Bézier curve</span>.
+  </p>
+
+  <section id="bezierDetails" role="definition" aria-label="Bézier Curve Details">
+    <h2>Bézier Curve Explanation</h2>
+    <p>
+      A Bézier curve is a parametric curve frequently used in computer graphics and animation.
+      It’s defined by control points that determine the curve’s shape.
+    </p>
+    <figure>
+      <img src="bezier-curve.png" alt="Visual representation of a Bézier curve">
+      <figcaption>Diagram showing control points and curve path</figcaption>
+    </figure>
+    <ul>
+      <li>Used for smooth transitions and easing functions</li>
+      <li>Defined by four control points in cubic form</li>
+      <li>Common in CSS animations and SVG paths</li>
+    </ul>
+  </section>
+
+</body>
+</html>
+
