@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Accessible English Page</title>
+	<meta name="description" content="A simple accessible English example page with ARIA landmarks, skip link, keyboard focus, and semantic structure.">
+	<style>
+		:focus { outline: 3px solid #ffbf47; outline-offset: 2px; }
+		body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; line-height: 1.6; color:#111; background:#fff; margin:0; }
+		.container { max-width: 900px; margin: 1.5rem auto; padding:1rem; }
+		header, main, nav, footer { padding: 0.5rem 0; }
+		a.skip-link { position: absolute; left: -999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+		a.skip-link:focus { position: static; left: auto; width: auto; height: auto; background: #000; color:#fff; padding:0.5rem; z-index:1000; }
+		nav ul { list-style: none; padding:0; display:flex; gap:1rem; }
+		label { display:block; margin-top:0.5rem; }
+		input, textarea, select, button { font: inherit; padding:0.5rem; margin-top:0.25rem; }
+		.visually-hidden { position:absolute !important; height:1px; width:1px; overflow:hidden; clip:rect(1px,1px,1px,1px); white-space:nowrap; }
+	</style>
+</head>
+<body>
+	<a class="skip-link" href="#main">Skip to main content</a>
+	<div class="container">
+		<header role="banner">
+			<h1 id="site-title">Accessible English Example</h1>
+			<p id="tagline">A minimal, semantic, and ARIA-friendly page.</p>
+			<nav role="navigation" aria-label="Primary navigation">
+				<ul>
+					<li><a href="#main">Home</a></li>
+					<li><a href="#contact">Contact</a></li>
+					<li><a href="#about">About</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main" role="main" aria-labelledby="main-heading">
+			<h2 id="main-heading">Welcome</h2>
+			<p>This page demonstrates accessible patterns: semantic headings, landmarks, keyboard focus, and form labeling. All content is in English (lang="en").</p>
+
+			<section aria-labelledby="form-heading">
+				<h3 id="form-heading">Contact form</h3>
+				<form id="contact" action="#" method="post">
+					<span id="label">Birthday:</span>
+                    <div contenteditable role="searchbox" aria-labelledby="label" aria-placeholder="MM-DD-YYYY">03-14-1879</div>
+
+                    <div>
+						<label for="name">Full name</label>
+						<input id="name" name="name" type="text" autocomplete="name" required aria-required="true" placeholder="e.g., Jane Doe">
+					</div>
+					<div>
+						<label for="email">Email address</label>
+						<input id="email" name="email" type="email" autocomplete="email" required aria-required="true" placeholder="you@example.com">
+					</div>
+					<div>
+						<label for="reason">Reason for contact</label>
+						<select id="reason" name="reason">
+							<option value="general">General question</option>
+							<option value="support">Support</option>
+							<option value="feedback">Feedback</option>
+						</select>
+					</div>
+					<div>
+						<label for="message">Message</label>
+						<textarea id="message" name="message" rows="6" placeholder="Write your message here"></textarea>
+					</div>
+					<div>
+						<button type="submit">Send message</button>
+					</div>
+				</form>
+			</section>
+
+			<section aria-labelledby="about" id="about">
+				<h3 id="about-heading">About this page</h3>
+				<p>This page uses ARIA landmarks (role="banner", role="navigation", role="main", role="contentinfo"), clear labels, and a visible skip link to improve keyboard and screen reader access.</p>
+			</section>
+		</main>
+
+		<footer role="contentinfo">
+			<p>&copy; <span aria-hidden="true">2026</span> Accessible Example. <span class="visually-hidden">All rights reserved.</span></p>
+		</footer>
+	</div>
+</body>
+</html>

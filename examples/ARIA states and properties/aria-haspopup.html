@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>aria-haspopup non-allowed values</title>
+    </head>
+    <body>
+        <main>
+            <h1>aria-haspopup non-allowed values</h1>
+            <div>
+                <button aria-haspopup="list">Test</button> -- list is not an allowed value for aria-haspopup
+            </div>
+            <div>
+                <button aria-haspopup="lst">Save</button> -- lst is misspelled error
+            </div>
+            <div>
+                <button aria-haspopup="lst">Save</button> -- empty
+            </div>
+        </main>
+    </body>
+</html>
