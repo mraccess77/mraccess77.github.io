@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>30-Second Alert Example</title>
+</head>
+<body>
+
+  <h1>Welcome to the Page</h1>
+  <p>Wait 10 seconds for the JavaScript alert box to appear.</p>
+
+  <script>
+    // Wait until the page finishes loading before starting the timer
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        alert('10 seconds have passed!');
+      }, 10000); // 10,000 milliseconds = 10 seconds
+    });
+  </script>
+
+</body>
+</html>
