@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Contact form</title>
+	<style>
+		body { font: 1rem/1.5 system-ui, sans-serif; margin: 2rem auto; max-width: 42rem; padding: 0 1rem; color: #202124; }
+		form { border: 1px solid #767676; border-radius: .4rem; padding: 1.5rem; }
+		.field { margin: 1.25rem 0; }
+		label { display: block; font-weight: 600; margin-bottom: .35rem; }
+		input, textarea { box-sizing: border-box; font: inherit; max-width: 100%; padding: .5rem; width: 100%; }
+		button { font: inherit; padding: .55rem 1rem; }
+		.errors { border: 2px solid #b00020; margin-bottom: 1.5rem; padding: 1rem; }
+		.errors h2 { color: #8b0019; font-size: 1.2rem; margin-top: 0; }
+		.errors a { color: #8b0019; }
+		[hidden] { display: none; }
+		:focus-visible { outline: 3px solid #1457a6; outline-offset: 2px; }
+	</style>
+</head>
+<body>
+	<main>
+		<h1>Contact us</h1>
+		<p>Complete the form below. Fields marked “(required)” must be completed.</p>
+
+		<form id="contact-form" novalidate>
+			<section id="error-summary" class="errors" aria-labelledby="error-heading" hidden>
+				<h2 id="error-heading">There is a problem</h2>
+				<p>Correct the following errors and submit the form again:</p>
+				<ul id="error-list"></ul>
+			</section>
+
+			<div class="field">
+				<label for="name">Name (required)</label>
+				<input id="name" name="name" autocomplete="name" required aria-describedby="name-error">
+			</div>
+			<div class="field">
+				<label for="email">Email address (required)</label>
+				<input id="email" name="email" type="email" autocomplete="email" required aria-describedby="email-error">
+			</div>
+			<div class="field">
+				<label for="message">Message (required)</label>
+				<textarea id="message" name="message" rows="5" required aria-describedby="message-error"></textarea>
+			</div>
+			<button type="submit">Submit</button>
+		</form>
+	</main>
+
+	<script>
+		const form = document.getElementById('contact-form');
+		const summary = document.getElementById('error-summary');
+		const errorList = document.getElementById('error-list');
+		const fields = [
+			{ input: document.getElementById('name'), label: 'Name', message: 'Enter your name.' },
+			{ input: document.getElementById('email'), label: 'Email address', message: 'Enter a valid email address.' },
+			{ input: document.getElementById('message'), label: 'Message', message: 'Enter a message.' }
+		];
+
+		form.addEventListener('submit', (event) => {
+			const errors = fields.filter(({ input }) => !input.validity.valid);
+			errorList.replaceChildren();
+
+			fields.forEach(({ input }) => input.removeAttribute('aria-invalid'));
+			if (errors.length) {
+				event.preventDefault();
+				errors.forEach(({ input, label, message }) => {
+					input.setAttribute('aria-invalid', 'true');
+					const item = document.createElement('li');
+					const link = document.createElement('a');
+					link.href = `#${input.id}`;
+					link.textContent = `${label}: ${message}`;
+					item.append(link);
+					errorList.append(item);
+				});
+				summary.hidden = false;
+				// Keep focus where the user submitted; the summary is not a live region.
+			} else {
+				summary.hidden = true;
+			}
+		});
+	</script>
+</body>
+</html>
